@@ -41,6 +41,31 @@ type BucketInfo = {
   lastModified: string | null
 }
 
+type S3FileType = 'folder' | 'image' | 'audio' | 'video' | 'text' | 'data' | 'other'
+
+type FileEntry = {
+  name: string
+  type: S3FileType
+  size: string
+  modified: string
+  mime: string
+}
+
+type ListFilesRequest = {
+  connId: string
+  bucket: string
+  prefix: string
+  continuationToken?: string
+  maxKeys?: number
+}
+
+type ListFilesResult = {
+  files: FileEntry[]
+  nextContinuationToken?: string
+  isTruncated: boolean
+  keyCount: number
+}
+
 /**
  * Narrow IPC surface: only whitelisted channels and validated arguments cross the bridge.
  * Never expose ipcRenderer, Node, or process to the renderer.
@@ -137,7 +162,35 @@ const buckets = {
   }
 }
 
-const api = { settings, connections, buckets }
+function assertListFilesRequest(req: unknown): asserts req is ListFilesRequest {
+  if (
+    !req ||
+    typeof req !== 'object' ||
+    typeof (req as Record<string, unknown>).connId !== 'string' ||
+    !(req as Record<string, unknown>).connId ||
+    typeof (req as Record<string, unknown>).bucket !== 'string' ||
+    !(req as Record<string, unknown>).bucket ||
+    typeof (req as Record<string, unknown>).prefix !== 'string'
+  ) {
+    throw new Error('Invalid list files request')
+  }
+  const r = req as Record<string, unknown>
+  if (r.continuationToken !== undefined && typeof r.continuationToken !== 'string') {
+    throw new Error('Invalid list files request: continuationToken must be a string')
+  }
+  if (r.maxKeys !== undefined && typeof r.maxKeys !== 'number') {
+    throw new Error('Invalid list files request: maxKeys must be a number')
+  }
+}
+
+const files = {
+  list: (req: ListFilesRequest): Promise<ListFilesResult> => {
+    assertListFilesRequest(req)
+    return ipcRenderer.invoke(IPC.files.list, req)
+  }
+}
+
+const api = { settings, connections, buckets, files }
 
 if (!process.contextIsolated) {
   throw new Error(
@@ -150,4 +203,5 @@ contextBridge.exposeInMainWorld('api', api)
 export type EasyS3Settings = typeof settings
 export type EasyS3Connections = typeof connections
 export type EasyS3Buckets = typeof buckets
+export type EasyS3Files = typeof files
 export type EasyS3Api = typeof api

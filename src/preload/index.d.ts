@@ -39,6 +39,31 @@ export type BucketInfo = {
   lastModified: string | null
 }
 
+export type S3FileType = 'folder' | 'image' | 'audio' | 'video' | 'text' | 'data' | 'other'
+
+export type FileEntry = {
+  name: string
+  type: S3FileType
+  size: string
+  modified: string
+  mime: string
+}
+
+export type ListFilesRequest = {
+  connId: string
+  bucket: string
+  prefix: string
+  continuationToken?: string
+  maxKeys?: number
+}
+
+export type ListFilesResult = {
+  files: FileEntry[]
+  nextContinuationToken?: string
+  isTruncated: boolean
+  keyCount: number
+}
+
 export interface EasyS3Settings {
   getAllSync: () => AppSettings
   getAll: () => Promise<AppSettings>
@@ -61,10 +86,15 @@ export interface EasyS3Buckets {
   list: (id: string) => Promise<BucketInfo[]>
 }
 
+export interface EasyS3Files {
+  list: (req: ListFilesRequest) => Promise<ListFilesResult>
+}
+
 export interface EasyS3Api {
   settings: EasyS3Settings
   connections: EasyS3Connections
   buckets: EasyS3Buckets
+  files: EasyS3Files
 }
 
 declare global {

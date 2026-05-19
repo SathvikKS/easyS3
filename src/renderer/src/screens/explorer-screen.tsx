@@ -1,6 +1,8 @@
 import * as React from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { ActionBar } from '@/components/action-bar'
+import { Button } from '@/components/ui/button'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { FileCard } from '@/components/file-card'
 import { FileListHeader, FileRow } from '@/components/file-row'
@@ -8,7 +10,6 @@ import { FooterBar } from '@/components/footer-bar'
 import { NavBar } from '@/components/nav-bar'
 import { NewFolderCard, NewFolderRow } from '@/components/new-folder'
 import { PreviewPanel } from '@/components/preview-panel'
-import { getFilesAtPath } from '@/lib/data'
 import { sortFiles, type SortDirection, type SortField } from '@/lib/sort-files'
 import type { Bucket, Connection, LayoutMode, S3File } from '@/lib/types'
 
@@ -50,22 +51,73 @@ export function ExplorerScreen({
   onCrumb
 }: ExplorerScreenProps): React.JSX.Element {
   const [path, setPath] = React.useState<string[]>([])
-  const [extraFolders, setExtraFolders] = React.useState<S3File[]>([])
   const [newFolderName, setNewFolderName] = React.useState<string | null>(null)
   const [search, setSearch] = React.useState('')
   const debouncedSearch = useDebouncedValue(search, 300)
   const [sortField, setSortField] = React.useState<SortField>('name')
   const [sortDirection, setSortDirection] = React.useState<SortDirection>('asc')
 
+  // Real S3 data state
+  const [realFiles, setRealFiles] = React.useState<S3File[]>([])
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState<string | null>(null)
+  const [isTruncated, setIsTruncated] = React.useState(false)
+  const [pageTokens, setPageTokens] = React.useState<Array<string | undefined>>([undefined])
+  const [pageIdx, setPageIdx] = React.useState(0)
+
+  // Reset all state when bucket changes
   React.useEffect(() => {
     setPath([])
-    setExtraFolders([])
     setNewFolderName(null)
     setSearch('')
+    setRealFiles([])
+    setError(null)
+    setIsTruncated(false)
+    setPageTokens([undefined])
+    setPageIdx(0)
   }, [bucket.name])
 
-  const baseFiles = React.useMemo(() => getFilesAtPath(path), [path])
-  const allFiles = React.useMemo(() => [...extraFolders, ...baseFiles], [extraFolders, baseFiles])
+  // Reset pagination when path changes (but not bucket, that's handled above)
+  React.useEffect(() => {
+    setPageTokens([undefined])
+    setPageIdx(0)
+    setRealFiles([])
+  }, [path])
+
+  const fetchFiles = React.useCallback(async (): Promise<void> => {
+    setLoading(true)
+    setError(null)
+    try {
+      const prefix = path.length > 0 ? path.join('/') + '/' : ''
+      const result = await window.api.files.list({
+        connId: conn.id,
+        bucket: bucket.name,
+        prefix,
+        continuationToken: pageTokens[pageIdx],
+        maxKeys: 100
+      })
+      setRealFiles(result.files as S3File[])
+      setIsTruncated(result.isTruncated)
+      setPageTokens((prev) => {
+        const next = [...prev]
+        next[pageIdx + 1] = result.nextContinuationToken
+        return next
+      })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load files')
+    } finally {
+      setLoading(false)
+    }
+  }, [conn.id, bucket.name, path, pageIdx, pageTokens])
+
+  // Fetch whenever conn, bucket, path, or pageIdx changes
+  React.useEffect(() => {
+    void fetchFiles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [conn.id, bucket.name, path, pageIdx])
+
+  const allFiles = realFiles
+
   const filteredFiles = React.useMemo(
     () => filterFiles(allFiles, debouncedSearch),
     [allFiles, debouncedSearch]
@@ -97,7 +149,7 @@ export function ExplorerScreen({
   const finalizeFolder = (val: string): void => {
     const trimmed = val.trim()
     if (trimmed) {
-      setExtraFolders((prev) => [
+      setRealFiles((prev) => [
         { name: trimmed, type: 'folder', size: '—', modified: 'just now', mime: 'folder' },
         ...prev
       ])
@@ -116,11 +168,17 @@ export function ExplorerScreen({
     setSelFiles(s)
   }
 
+  const resetPagination = (): void => {
+    setPageTokens([undefined])
+    setPageIdx(0)
+  }
+
   const navigateIntoFolder = (folder: S3File): void => {
     setPath((prev) => [...prev, folder.name])
     setSelFiles(new Set())
     setPreviewFile(null)
     setViewerFile(null)
+    resetPagination()
   }
 
   const handleOpenItem = (file: S3File): void => {
@@ -138,10 +196,12 @@ export function ExplorerScreen({
       setPath([])
       setSelFiles(new Set())
       setPreviewFile(null)
+      resetPagination()
     } else {
       setPath((prev) => prev.slice(0, idx - 1))
       setSelFiles(new Set())
       setPreviewFile(null)
+      resetPagination()
     }
   }
 
@@ -150,10 +210,51 @@ export function ExplorerScreen({
       setPath((prev) => prev.slice(0, -1))
       setSelFiles(new Set())
       setPreviewFile(null)
+      resetPagination()
     } else {
       onCrumb(0)
     }
   }
+
+  const goNextPage = (): void => {
+    setPageIdx((prev) => prev + 1)
+  }
+  const goPrevPage = (): void => {
+    setPageIdx((prev) => Math.max(0, prev - 1))
+  }
+
+  const showPagination = pageIdx > 0 || isTruncated
+
+  const paginationBar = showPagination ? (
+    <div className="flex shrink-0 items-center justify-between border-t bg-background px-3 py-1.5">
+      <Button variant="ghost" size="xs" disabled={pageIdx === 0 || loading} onClick={goPrevPage}>
+        <ChevronLeft className="size-3.5" />
+        <span>Previous</span>
+      </Button>
+      <span className="text-[11.5px] text-muted-foreground">Page {pageIdx + 1}</span>
+      <Button variant="ghost" size="xs" disabled={!isTruncated || loading} onClick={goNextPage}>
+        <span>Next</span>
+        <ChevronRight className="size-3.5" />
+      </Button>
+    </div>
+  ) : null
+
+  const skeletonRows = loading && realFiles.length === 0
+    ? [...Array(8)].map((_, i) => (
+        <div
+          key={i}
+          className="grid h-9 grid-cols-[32px_1fr_80px_120px_34px] items-center border-b pr-1"
+        >
+          <div className="flex justify-center px-2">
+            <div className="size-3.5 rounded bg-muted animate-pulse" />
+          </div>
+          <div className="h-3.5 w-40 rounded bg-muted animate-pulse" />
+          <div className="h-3 w-12 rounded bg-muted animate-pulse" />
+          <div className="h-3 w-16 rounded bg-muted animate-pulse" />
+          <div />
+        </div>
+      ))
+    : null
 
   return (
     <div className="flex flex-1 overflow-hidden">
@@ -179,7 +280,7 @@ export function ExplorerScreen({
           onNewFolder={handleNewFolder}
         />
         {layout === 'list' ? (
-          <div className="flex-1 overflow-y-auto">
+          <>
             <FileListHeader
               allSelected={allSel}
               someSelected={someSel}
@@ -188,57 +289,88 @@ export function ExplorerScreen({
               sortDirection={sortDirection}
               onSort={handleSort}
             />
-            {newFolderName !== null && (
-              <NewFolderRow name={newFolderName} onFinalize={finalizeFolder} />
-            )}
-            {sortedFiles.length === 0 && debouncedSearch.trim() ? (
-              <div className="px-3.5 py-8 text-center text-[12.5px] text-muted-foreground">
-                No files match{' '}
-                <span className="font-medium text-foreground/80">
-                  &ldquo;{debouncedSearch.trim()}&rdquo;
-                </span>
-              </div>
-            ) : null}
-            {sortedFiles.map((f) => (
-              <FileRow
-                key={f.name}
-                file={f}
-                selected={selFiles.has(f.name)}
-                onSelect={() => toggleFile(f.name)}
-                onClick={() => setPreviewFile(f)}
-                onDoubleClick={() => handleOpenItem(f)}
-              />
-            ))}
-          </div>
+            <div className="flex-1 overflow-y-auto min-h-0">
+              {newFolderName !== null && (
+                <NewFolderRow name={newFolderName} onFinalize={finalizeFolder} />
+              )}
+              {skeletonRows}
+              {error && (
+                <div className="px-4 py-8 text-center">
+                  <p className="text-[12.5px] text-destructive">{error}</p>
+                  <button
+                    type="button"
+                    onClick={fetchFiles}
+                    className="mt-2 text-[12px] text-muted-foreground underline-offset-2 hover:underline"
+                  >
+                    Try again
+                  </button>
+                </div>
+              )}
+              {!loading && !error && sortedFiles.length === 0 && debouncedSearch.trim() ? (
+                <div className="px-3.5 py-8 text-center text-[12.5px] text-muted-foreground">
+                  No files match{' '}
+                  <span className="font-medium text-foreground/80">
+                    &ldquo;{debouncedSearch.trim()}&rdquo;
+                  </span>
+                </div>
+              ) : null}
+              {sortedFiles.map((f) => (
+                <FileRow
+                  key={f.name}
+                  file={f}
+                  selected={selFiles.has(f.name)}
+                  onSelect={() => toggleFile(f.name)}
+                  onClick={() => setPreviewFile(f)}
+                  onDoubleClick={() => handleOpenItem(f)}
+                />
+              ))}
+            </div>
+            {paginationBar}
+          </>
         ) : (
-          <div className="flex flex-1 flex-wrap content-start gap-2 overflow-y-auto p-3">
-            {newFolderName !== null && (
-              <NewFolderCard name={newFolderName} onFinalize={finalizeFolder} />
-            )}
-            {sortedFiles.length === 0 && debouncedSearch.trim() ? (
-              <div className="w-full px-3.5 py-8 text-center text-[12.5px] text-muted-foreground">
-                No files match{' '}
-                <span className="font-medium text-foreground/80">
-                  &ldquo;{debouncedSearch.trim()}&rdquo;
-                </span>
-              </div>
-            ) : null}
-            {sortedFiles.map((f) => (
-              <FileCard
-                key={f.name}
-                file={f}
-                selected={selFiles.has(f.name)}
-                onSelect={() => toggleFile(f.name)}
-                onClick={() => setPreviewFile(f)}
-                onDoubleClick={() => handleOpenItem(f)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="flex flex-1 flex-wrap content-start gap-2 overflow-y-auto p-3 min-h-0">
+              {newFolderName !== null && (
+                <NewFolderCard name={newFolderName} onFinalize={finalizeFolder} />
+              )}
+              {!loading && !error && sortedFiles.length === 0 && debouncedSearch.trim() ? (
+                <div className="w-full px-3.5 py-8 text-center text-[12.5px] text-muted-foreground">
+                  No files match{' '}
+                  <span className="font-medium text-foreground/80">
+                    &ldquo;{debouncedSearch.trim()}&rdquo;
+                  </span>
+                </div>
+              ) : null}
+              {error && (
+                <div className="w-full px-4 py-8 text-center">
+                  <p className="text-[12.5px] text-destructive">{error}</p>
+                  <button
+                    type="button"
+                    onClick={fetchFiles}
+                    className="mt-2 text-[12px] text-muted-foreground underline-offset-2 hover:underline"
+                  >
+                    Try again
+                  </button>
+                </div>
+              )}
+              {sortedFiles.map((f) => (
+                <FileCard
+                  key={f.name}
+                  file={f}
+                  selected={selFiles.has(f.name)}
+                  onSelect={() => toggleFile(f.name)}
+                  onClick={() => setPreviewFile(f)}
+                  onDoubleClick={() => handleOpenItem(f)}
+                />
+              ))}
+            </div>
+            {paginationBar}
+          </>
         )}
         <FooterBar
           bucket={bucket.name}
           region={bucket.region}
-          count={debouncedSearch.trim() ? sortedFiles.length : allFiles.length}
+          count={debouncedSearch.trim() ? sortedFiles.length : realFiles.length}
           usedGb={2.1}
           totalGb={10}
         />

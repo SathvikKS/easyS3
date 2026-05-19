@@ -117,9 +117,9 @@ export function BucketsScreen({
   ]
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-5 animate-in fade-in">
+    <div className="flex flex-col flex-1 overflow-hidden animate-in fade-in">
       {/* Header */}
-      <div className="mb-4 flex items-start justify-between">
+      <div className="mb-4 flex shrink-0 items-start justify-between px-6 pt-5">
         <div>
           <div className="mb-1 flex items-center gap-2.5">
             <h1 className="text-[20px] font-semibold tracking-tight">{conn.name}</h1>
@@ -157,7 +157,7 @@ export function BucketsScreen({
       </div>
 
       {/* Stats */}
-      <div className="mb-5 grid grid-cols-4 gap-2.5">
+      <div className="mb-5 grid shrink-0 grid-cols-4 gap-2.5 px-6">
         {stats.map((s) => (
           <div key={s.label} className="flex flex-col gap-1 rounded-lg border bg-card px-4 py-3.5">
             <span className="text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
@@ -179,7 +179,7 @@ export function BucketsScreen({
       </div>
 
       {/* Buckets list */}
-      <div className="mb-2 flex items-center justify-between">
+      <div className="mb-2 flex shrink-0 items-center justify-between px-6">
         <span className="text-sm font-semibold">Buckets</span>
         <div className="flex h-[30px] w-[200px] items-center gap-1.5 rounded-md border bg-background px-2 transition-colors focus-within:border-[color:var(--info)] focus-within:shadow-[0_0_0_2px_var(--info-soft)]">
           <Search className="size-3 shrink-0 text-muted-foreground" />
@@ -193,9 +193,9 @@ export function BucketsScreen({
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-lg border">
+      <div className="mx-6 flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border">
         {/* Table header */}
-        <div className="grid grid-cols-[32px_1fr_140px_90px_110px_130px] gap-1 border-b bg-muted/60 px-3.5 py-2 text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
+        <div className="grid shrink-0 grid-cols-[32px_1fr_140px_90px_110px_130px] gap-1 border-b bg-muted/60 px-3.5 py-2 text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
           <span />
           <span>Bucket Name</span>
           <span>Region</span>
@@ -204,6 +204,7 @@ export function BucketsScreen({
           <span>Created</span>
         </div>
 
+        <div className="flex-1 overflow-y-auto">
         {/* Error state */}
         {error && !loading && (
           <div className="px-3.5 py-6 text-center">
@@ -288,9 +289,10 @@ export function BucketsScreen({
               </div>
             </div>
           ))}
+        </div>
       </div>
 
-      <div className="mt-3.5 rounded-lg border border-dashed bg-muted/40 px-3.5 py-2.5 text-[12.5px] text-muted-foreground">
+      <div className="mx-6 mt-3.5 mb-5 shrink-0 rounded-lg border border-dashed bg-muted/40 px-3.5 py-2.5 text-[12.5px] text-muted-foreground">
         ↳ Click <strong className="text-foreground/70">Browse →</strong> to enter the file explorer
         for that bucket
       </div>

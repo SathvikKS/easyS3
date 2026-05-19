@@ -18,5 +18,8 @@ export const IPC = {
   },
   buckets: {
     list: 'buckets:list'
+  },
+  files: {
+    list: 'files:list'
   }
 } as const

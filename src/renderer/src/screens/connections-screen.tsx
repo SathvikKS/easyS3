@@ -33,8 +33,8 @@ export function ConnectionsScreen({
   onDuplicate
 }: ConnectionsScreenProps): React.JSX.Element {
   return (
-    <div className="flex-1 overflow-y-auto px-8 py-7 animate-in fade-in">
-      <div className="mb-5 flex items-center justify-between">
+    <div className="flex flex-col flex-1 overflow-hidden px-8 py-7 animate-in fade-in">
+      <div className="mb-5 flex shrink-0 items-center justify-between">
         <h1 className="text-lg font-semibold tracking-tight">Connections</h1>
         <Button size="sm" onClick={onAdd}>
           <Plus />
@@ -42,12 +42,12 @@ export function ConnectionsScreen({
         </Button>
       </div>
       {connections.length === 0 ? (
-        <div className="flex items-center justify-center py-20 text-[13px] text-muted-foreground">
+        <div className="flex flex-1 items-center justify-center py-20 text-[13px] text-muted-foreground">
           No connections configured — click <span className="mx-1 font-medium text-foreground/70">Add Connection</span> to get started.
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border">
-          <div className="grid grid-cols-[18px_200px_1fr_190px_80px_170px] gap-3 border-b bg-muted/60 px-4 py-2 text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg border">
+          <div className="grid grid-cols-[18px_200px_1fr_190px_80px_170px] shrink-0 gap-3 border-b bg-muted/60 px-4 py-2 text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
             <span />
             <span>Name</span>
             <span>Endpoint</span>
@@ -55,6 +55,7 @@ export function ConnectionsScreen({
             <span>Buckets</span>
             <span />
           </div>
+          <div className="flex-1 overflow-y-auto">
           {connections.map((c) => {
             const isConnected = c.status === 'connected'
             const isConnecting = connectingId === c.id
@@ -152,6 +153,7 @@ export function ConnectionsScreen({
               </div>
             )
           })}
+          </div>
         </div>
       )}
     </div>
