@@ -1,5 +1,3 @@
-import { ElectronAPI } from '@electron-toolkit/preload'
-
 import type { AppSettings, ThemeMode } from '../shared/settings'
 
 export type { AppSettings, ThemeMode }
@@ -18,7 +16,6 @@ export interface EasyS3Api {
 
 declare global {
   interface Window {
-    electron: ElectronAPI
     api: EasyS3Api
   }
 }

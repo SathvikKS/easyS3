@@ -1,3 +1,27 @@
+# easyS3 — Agent guidelines
+
+## Electron IPC security
+
+**Read [`docs/IPC_SECURITY.md`](docs/IPC_SECURITY.md) before adding or changing IPC, preload, or `BrowserWindow` `webPreferences`.**
+
+### Always do
+
+- Expose renderer APIs only through `contextBridge` on `window.api` (`src/preload/index.ts`).
+- Add channel names to `src/shared/ipc.ts` and register handlers under `src/main/ipc/`.
+- Call `assertTrustedSender()` and parse all IPC arguments as `unknown` in every main handler.
+- Validate payloads in both preload and main (shared validators in `src/shared/` when applicable).
+- Keep `contextIsolation: true`, `sandbox: true`, and `nodeIntegration: false` on all windows.
+
+### Never do
+
+- Never expose `ipcRenderer`, `process`, `require`, or `window.electron` to the renderer.
+- Never register `ipcMain` handlers in `src/main/index.ts` — use `src/main/ipc/`.
+- Never add generic IPC helpers that accept arbitrary channel names.
+- Never disable context isolation or assign APIs directly to `window` when isolation is off.
+- Never trust renderer-supplied types without runtime validation in main.
+
+---
+
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence
 
