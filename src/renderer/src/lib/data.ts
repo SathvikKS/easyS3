@@ -73,3 +73,30 @@ export const SAMPLE_FILES: S3File[] = [
   { name: 'intro.mp3', type: 'audio', size: '2.1 MB', modified: 'Jan 12', mime: 'audio/mpeg' },
   { name: 'data.csv', type: 'data', size: '15.4 KB', modified: 'Jan 17', mime: 'text/csv' }
 ]
+
+const FILES_BY_PATH: Record<string, S3File[]> = {
+  images: [
+    { name: 'hero.png', type: 'image', size: '120 KB', modified: 'Jan 16', mime: 'image/png' },
+    { name: 'logo.svg', type: 'image', size: '8 KB', modified: 'Jan 15', mime: 'image/svg+xml' },
+    {
+      name: 'thumbnails',
+      type: 'folder',
+      size: '—',
+      modified: 'Jan 14',
+      mime: 'folder'
+    }
+  ],
+  'images/thumbnails': [
+    { name: 'thumb-01.jpg', type: 'image', size: '24 KB', modified: 'Jan 14', mime: 'image/jpeg' },
+    { name: 'thumb-02.jpg', type: 'image', size: '22 KB', modified: 'Jan 14', mime: 'image/jpeg' }
+  ],
+  videos: [
+    { name: 'demo.mp4', type: 'video', size: '12.4 MB', modified: 'Jan 11', mime: 'video/mp4' },
+    { name: 'clip.webm', type: 'video', size: '4.8 MB', modified: 'Jan 10', mime: 'video/webm' }
+  ]
+}
+
+export function getFilesAtPath(path: string[]): S3File[] {
+  if (path.length === 0) return SAMPLE_FILES
+  return FILES_BY_PATH[path.join('/')] ?? []
+}

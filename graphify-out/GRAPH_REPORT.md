@@ -1,34 +1,44 @@
-# Graph Report - .  (2026-05-19)
+# Graph Report - easyS3  (2026-05-19)
 
 ## Corpus Check
-- Corpus is ~17,536 words - fits in a single context window. You may not need a graph.
+- 63 files · ~15,451 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 389 nodes · 666 edges · 23 communities (20 shown, 3 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.88)
+- 434 nodes · 708 edges · 27 communities (24 shown, 3 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
+## Graph Freshness
+- Built from commit: `c86f2829`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
+
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_File Browser UI Components|File Browser UI Components]]
-- [[_COMMUNITY_Dialog & Form Logic|Dialog & Form Logic]]
-- [[_COMMUNITY_IPC Security & Settings Handlers|IPC Security & Settings Handlers]]
-- [[_COMMUNITY_Runtime Dependencies|Runtime Dependencies]]
-- [[_COMMUNITY_S3 Connection Management|S3 Connection Management]]
-- [[_COMMUNITY_Agent & Security Guidelines|Agent & Security Guidelines]]
-- [[_COMMUNITY_Dev Toolchain|Dev Toolchain]]
-- [[_COMMUNITY_ShadcnUI Aliases|Shadcn/UI Aliases]]
-- [[_COMMUNITY_Theme System|Theme System]]
-- [[_COMMUNITY_Navigation & Layout|Navigation & Layout]]
-- [[_COMMUNITY_GitNexus Index Metadata|GitNexus Index Metadata]]
-- [[_COMMUNITY_Web TypeScript Config|Web TypeScript Config]]
-- [[_COMMUNITY_Root TypeScript Config|Root TypeScript Config]]
-- [[_COMMUNITY_Node TypeScript Config|Node TypeScript Config]]
-- [[_COMMUNITY_Build & Distribution|Build & Distribution]]
-- [[_COMMUNITY_VS Code Editor Settings|VS Code Editor Settings]]
-- [[_COMMUNITY_VS Code Launch Config|VS Code Launch Config]]
-- [[_COMMUNITY_Claude Code Permissions|Claude Code Permissions]]
-- [[_COMMUNITY_VS Code Extensions|VS Code Extensions]]
-- [[_COMMUNITY_App Icon|App Icon]]
+- [[_COMMUNITY_Community 0|Community 0]]
+- [[_COMMUNITY_Community 1|Community 1]]
+- [[_COMMUNITY_Community 2|Community 2]]
+- [[_COMMUNITY_Community 3|Community 3]]
+- [[_COMMUNITY_Community 4|Community 4]]
+- [[_COMMUNITY_Community 5|Community 5]]
+- [[_COMMUNITY_Community 6|Community 6]]
+- [[_COMMUNITY_Community 7|Community 7]]
+- [[_COMMUNITY_Community 8|Community 8]]
+- [[_COMMUNITY_Community 9|Community 9]]
+- [[_COMMUNITY_Community 10|Community 10]]
+- [[_COMMUNITY_Community 11|Community 11]]
+- [[_COMMUNITY_Community 12|Community 12]]
+- [[_COMMUNITY_Community 13|Community 13]]
+- [[_COMMUNITY_Community 14|Community 14]]
+- [[_COMMUNITY_Community 15|Community 15]]
+- [[_COMMUNITY_Community 16|Community 16]]
+- [[_COMMUNITY_Community 17|Community 17]]
+- [[_COMMUNITY_Community 18|Community 18]]
+- [[_COMMUNITY_Community 22|Community 22]]
+- [[_COMMUNITY_Community 23|Community 23]]
+- [[_COMMUNITY_Community 24|Community 24]]
+- [[_COMMUNITY_Community 25|Community 25]]
+- [[_COMMUNITY_Community 26|Community 26]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 61 edges
@@ -36,11 +46,11 @@
 3. `Button()` - 11 edges
 4. `IPC Security Documentation` - 10 edges
 5. `S3File` - 9 edges
-6. `easyS3 CLAUDE Agent Guidelines` - 9 edges
-7. `Connection` - 8 edges
-8. `easyS3 Agent Guidelines` - 8 edges
-9. `GitNexus Guide Skill` - 8 edges
-10. `stats` - 7 edges
+6. `IPC Security` - 9 edges
+7. `easyS3 CLAUDE Agent Guidelines` - 9 edges
+8. `Connection` - 8 edges
+9. `easyS3 Agent Guidelines` - 8 edges
+10. `GitNexus Guide Skill` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `cn()` --calls--> `clsx`  [INFERRED]
@@ -59,95 +69,111 @@
 - **GitNexus Agent Workflow Skills** — skill_gitnexus_cli, skill_gitnexus_debugging, skill_gitnexus_exploring, skill_gitnexus_guide, skill_gitnexus_impact_analysis, skill_gitnexus_refactoring [EXTRACTED 1.00]
 - **Electron Build and Distribution Pipeline** — electron_builder_yml_build_config, dev_app_update_yml_auto_update, resources_icon_png, readme_project_overview [INFERRED 0.85]
 
-## Communities (23 total, 3 thin omitted)
+## Communities (27 total, 3 thin omitted)
 
-### Community 0 - "File Browser UI Components"
+### Community 0 - "Community 0"
 Cohesion: 0.06
-Nodes (47): AddConnectionDialog(), FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps (+39 more)
+Nodes (48): AddConnectionDialog(), FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps (+40 more)
 
-### Community 1 - "Dialog & Form Logic"
+### Community 1 - "Community 1"
 Cohesion: 0.06
-Nodes (44): AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS, SettingsDialogProps, THEME_OPTIONS, cn() (+36 more)
+Nodes (45): ActionBar(), ActionBarProps, LayoutToggle(), LayoutToggleProps, AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef (+37 more)
 
-### Community 2 - "IPC Security & Settings Handlers"
+### Community 2 - "Community 2"
 Cohesion: 0.08
 Nodes (31): assertTrustedSender(), isTrustedWebContents(), parseOptionalPath(), parseSettingKey(), parseSettingValue(), getAllSettings(), getSetting(), getStore() (+23 more)
 
-### Community 3 - "Runtime Dependencies"
+### Community 3 - "Community 3"
 Cohesion: 0.06
 Nodes (33): author, dependencies, @aws-sdk/client-s3, class-variance-authority, clsx, electron-store, @electron-toolkit/utils, electron-updater (+25 more)
 
-### Community 4 - "S3 Connection Management"
+### Community 4 - "Community 4"
 Cohesion: 0.12
 Nodes (21): Connection, ConnectionFormValues, ConnectResult, formatLastSeen(), registerConnectionIpcHandlers(), toConnection(), registerIpcHandlers(), registerSettingsIpcHandlers() (+13 more)
 
-### Community 5 - "Agent & Security Guidelines"
+### Community 5 - "Community 5"
 Cohesion: 0.18
 Nodes (21): easyS3 Agent Guidelines, easyS3 CLAUDE Agent Guidelines, Context Isolation Requirement, Content Security Policy for Renderer, Mandatory Impact Analysis Before Edits, GitNexus Code Knowledge Graph, Electron IPC Security Pattern, IPC Security Documentation (+13 more)
 
-### Community 6 - "Dev Toolchain"
+### Community 6 - "Community 6"
 Cohesion: 0.10
 Nodes (20): devDependencies, electron, electron-builder, @electron-toolkit/eslint-config-prettier, @electron-toolkit/eslint-config-ts, @electron-toolkit/tsconfig, electron-vite, eslint (+12 more)
 
-### Community 7 - "Shadcn/UI Aliases"
+### Community 7 - "Community 7"
 Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
-### Community 8 - "Theme System"
-Cohesion: 0.15
-Nodes (13): SettingsDialogBody(), applyThemeClass(), initialState, resolveAppliedTheme(), ThemeProvider(), ThemeProviderContext, ThemeProviderProps, ThemeProviderState (+5 more)
+### Community 8 - "Community 8"
+Cohesion: 0.18
+Nodes (11): applyThemeClass(), initialState, resolveAppliedTheme(), ThemeProvider(), ThemeProviderContext, ThemeProviderProps, ThemeProviderState, getSettingsSync() (+3 more)
 
-### Community 9 - "Navigation & Layout"
-Cohesion: 0.16
-Nodes (11): ActionBar(), ActionBarProps, LayoutToggle(), LayoutToggleProps, Crumb, NavBar(), NavBarProps, NavButton() (+3 more)
+### Community 9 - "Community 9"
+Cohesion: 0.13
+Nodes (13): ConnectionsScreen(), ConnectionsScreenProps, DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem() (+5 more)
 
-### Community 10 - "GitNexus Index Metadata"
+### Community 10 - "Community 10"
 Cohesion: 0.18
 Nodes (10): indexedAt, lastCommit, repoPath, stats, communities, edges, embeddings, files (+2 more)
 
-### Community 11 - "Web TypeScript Config"
+### Community 11 - "Community 11"
 Cohesion: 0.20
 Nodes (9): compilerOptions, baseUrl, composite, jsx, paths, extends, include, @/* (+1 more)
 
-### Community 12 - "Root TypeScript Config"
+### Community 12 - "Community 12"
 Cohesion: 0.29
 Nodes (6): compilerOptions, baseUrl, paths, files, @/*, references
 
-### Community 13 - "Node TypeScript Config"
+### Community 13 - "Community 13"
 Cohesion: 0.33
 Nodes (5): compilerOptions, composite, types, extends, include
 
-### Community 14 - "Build & Distribution"
+### Community 14 - "Community 14"
 Cohesion: 0.40
 Nodes (6): Electron + React + TypeScript Application, Dev App Auto-Update Config, Electron Builder Build Configuration, Prettier Configuration, easyS3 Project README, easyS3 Application Icon
 
-### Community 15 - "VS Code Editor Settings"
+### Community 15 - "Community 15"
 Cohesion: 0.40
 Nodes (6): [javascript], editor.defaultFormatter, [json], editor.defaultFormatter, [typescript], editor.defaultFormatter
 
-### Community 16 - "VS Code Launch Config"
+### Community 16 - "Community 16"
 Cohesion: 0.50
 Nodes (3): compounds, configurations, version
 
+### Community 23 - "Community 23"
+Cohesion: 0.18
+Nodes (10): Always do, Always Do, CLI, easyS3 — Agent guidelines, Electron IPC security, GitNexus — Code Intelligence, graphify, Never do (+2 more)
+
+### Community 24 - "Community 24"
+Cohesion: 0.18
+Nodes (10): Always do, Always Do, CLI, easyS3 — Agent guidelines, Electron IPC security, GitNexus — Code Intelligence, graphify, Never do (+2 more)
+
+### Community 25 - "Community 25"
+Cohesion: 0.18
+Nodes (10): Adding a new IPC capability, Architecture, BrowserWindow defaults, code:block1 (Renderer (untrusted)  →  window.api  →  Preload (bridge)  → ), Current channels (settings), IPC Security, Main-process handler rules, Preload rules (+2 more)
+
+### Community 26 - "Community 26"
+Cohesion: 0.20
+Nodes (9): Build, code:bash ($ npm install), code:bash ($ npm run dev), code:bash (# For windows), Development, easys3, Install, Project Setup (+1 more)
+
 ## Knowledge Gaps
-- **155 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+150 more)
+- **182 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+177 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Dialog & Form Logic` to `File Browser UI Components`, `Navigation & Layout`, `Runtime Dependencies`, `Theme System`?**
-  _High betweenness centrality (0.287) - this node is a cross-community bridge._
-- **Why does `clsx` connect `Runtime Dependencies` to `Dialog & Form Logic`?**
-  _High betweenness centrality (0.167) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 1` to `Community 0`, `Community 9`, `Community 3`?**
+  _High betweenness centrality (0.232) - this node is a cross-community bridge._
+- **Why does `clsx` connect `Community 3` to `Community 1`?**
+  _High betweenness centrality (0.135) - this node is a cross-community bridge._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**
-  _156 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `File Browser UI Components` be split into smaller, more focused modules?**
-  _Cohesion score 0.05926251097453907 - nodes in this community are weakly interconnected._
-- **Should `Dialog & Form Logic` be split into smaller, more focused modules?**
-  _Cohesion score 0.06321334503950835 - nodes in this community are weakly interconnected._
-- **Should `IPC Security & Settings Handlers` be split into smaller, more focused modules?**
+  _183 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.058384547848990345 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.06377204884667571 - nodes in this community are weakly interconnected._
+- **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08478513356562137 - nodes in this community are weakly interconnected._
-- **Should `Runtime Dependencies` be split into smaller, more focused modules?**
+- **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._

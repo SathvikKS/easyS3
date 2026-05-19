@@ -8,7 +8,7 @@ import { FooterBar } from '@/components/footer-bar'
 import { NavBar } from '@/components/nav-bar'
 import { NewFolderCard, NewFolderRow } from '@/components/new-folder'
 import { PreviewPanel } from '@/components/preview-panel'
-import { SAMPLE_FILES } from '@/lib/data'
+import { getFilesAtPath } from '@/lib/data'
 import { sortFiles, type SortDirection, type SortField } from '@/lib/sort-files'
 import type { Bucket, Connection, LayoutMode, S3File } from '@/lib/types'
 
@@ -49,6 +49,7 @@ export function ExplorerScreen({
   setViewerFile,
   onCrumb
 }: ExplorerScreenProps): React.JSX.Element {
+  const [path, setPath] = React.useState<string[]>([])
   const [extraFolders, setExtraFolders] = React.useState<S3File[]>([])
   const [newFolderName, setNewFolderName] = React.useState<string | null>(null)
   const [search, setSearch] = React.useState('')
@@ -56,7 +57,15 @@ export function ExplorerScreen({
   const [sortField, setSortField] = React.useState<SortField>('name')
   const [sortDirection, setSortDirection] = React.useState<SortDirection>('asc')
 
-  const allFiles = React.useMemo(() => [...extraFolders, ...SAMPLE_FILES], [extraFolders])
+  React.useEffect(() => {
+    setPath([])
+    setExtraFolders([])
+    setNewFolderName(null)
+    setSearch('')
+  }, [bucket.name])
+
+  const baseFiles = React.useMemo(() => getFilesAtPath(path), [path])
+  const allFiles = React.useMemo(() => [...extraFolders, ...baseFiles], [extraFolders, baseFiles])
   const filteredFiles = React.useMemo(
     () => filterFiles(allFiles, debouncedSearch),
     [allFiles, debouncedSearch]
@@ -107,16 +116,59 @@ export function ExplorerScreen({
     setSelFiles(s)
   }
 
+  const navigateIntoFolder = (folder: S3File): void => {
+    setPath((prev) => [...prev, folder.name])
+    setSelFiles(new Set())
+    setPreviewFile(null)
+    setViewerFile(null)
+  }
+
+  const handleOpenItem = (file: S3File): void => {
+    if (file.type === 'folder') {
+      navigateIntoFolder(file)
+    } else {
+      setViewerFile(file)
+    }
+  }
+
+  const handleNavCrumb = (idx: number): void => {
+    if (idx === 0) {
+      onCrumb(0)
+    } else if (idx === 1) {
+      setPath([])
+      setSelFiles(new Set())
+      setPreviewFile(null)
+    } else {
+      setPath((prev) => prev.slice(0, idx - 1))
+      setSelFiles(new Set())
+      setPreviewFile(null)
+    }
+  }
+
+  const goUpOneLevel = (): void => {
+    if (path.length > 0) {
+      setPath((prev) => prev.slice(0, -1))
+      setSelFiles(new Set())
+      setPreviewFile(null)
+    } else {
+      onCrumb(0)
+    }
+  }
+
   return (
     <div className="flex flex-1 overflow-hidden">
       <div className="flex flex-1 flex-col overflow-hidden">
         <NavBar
-          crumbs={[{ label: conn.name }, { label: bucket.name }, { label: 'images' }]}
+          crumbs={[
+            { label: conn.name },
+            { label: bucket.name },
+            ...path.map((segment) => ({ label: segment }))
+          ]}
           canBack
           canFwd={false}
-          onBack={() => onCrumb(1)}
-          onUp={() => onCrumb(1)}
-          onCrumb={onCrumb}
+          onBack={goUpOneLevel}
+          onUp={goUpOneLevel}
+          onCrumb={handleNavCrumb}
         />
         <ActionBar
           selCount={selFiles.size}
@@ -154,7 +206,7 @@ export function ExplorerScreen({
                 selected={selFiles.has(f.name)}
                 onSelect={() => toggleFile(f.name)}
                 onClick={() => setPreviewFile(f)}
-                onDoubleClick={() => setViewerFile(f)}
+                onDoubleClick={() => handleOpenItem(f)}
               />
             ))}
           </div>
@@ -178,7 +230,7 @@ export function ExplorerScreen({
                 selected={selFiles.has(f.name)}
                 onSelect={() => toggleFile(f.name)}
                 onClick={() => setPreviewFile(f)}
-                onDoubleClick={() => setViewerFile(f)}
+                onDoubleClick={() => handleOpenItem(f)}
               />
             ))}
           </div>

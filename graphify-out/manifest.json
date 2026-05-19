@@ -250,9 +250,9 @@
     "semantic_hash": "1cad5f33da8610499bb4718daaeaa889"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\lib\\data.ts": {
-    "mtime": 1779197364.8085227,
-    "ast_hash": "41683e0bf6900d72f573c01ca08f32c3",
-    "semantic_hash": "41683e0bf6900d72f573c01ca08f32c3"
+    "mtime": 1779200434.5242877,
+    "ast_hash": "73872c0e9e0399ff8178a1ef90f214fc",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\lib\\settings.ts": {
     "mtime": 1779195041.5841048,
@@ -285,9 +285,9 @@
     "semantic_hash": "4b422e56c51ab6032cbca5854804a61f"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\screens\\explorer-screen.tsx": {
-    "mtime": 1779189683.9094698,
-    "ast_hash": "f9fe1c28a6d3ffa4ebeaaee83f0cb93c",
-    "semantic_hash": "f9fe1c28a6d3ffa4ebeaaee83f0cb93c"
+    "mtime": 1779200457.8744173,
+    "ast_hash": "0028cc608a3dfd4e60f03ae6f55079aa",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\shared\\ipc.ts": {
     "mtime": 1779197354.1340888,
@@ -310,14 +310,14 @@
     "semantic_hash": "0494080f0af72e414e6fb29f89c49d89"
   },
   "C:\\Users\\sathv\\work\\easyS3\\AGENTS.md": {
-    "mtime": 1779195987.4967113,
-    "ast_hash": "372d1237532d728f6be10f4574bd830d",
-    "semantic_hash": "372d1237532d728f6be10f4574bd830d"
+    "mtime": 1779199966.1158328,
+    "ast_hash": "c0470c6d82dd331633e17a9268e49043",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\CLAUDE.md": {
-    "mtime": 1779195990.861648,
-    "ast_hash": "372d1237532d728f6be10f4574bd830d",
-    "semantic_hash": "372d1237532d728f6be10f4574bd830d"
+    "mtime": 1779199976.6566854,
+    "ast_hash": "c57f39fb8a1c6b0e6af29fc3d53ecf7a",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\dev-app-update.yml": {
     "mtime": 1779169069.1576197,
