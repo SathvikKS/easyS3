@@ -37,23 +37,29 @@ export const SAMPLE_BUCKETS: Bucket[] = [
   {
     name: 'production-assets',
     region: 'us-east-1',
-    objects: '456',
-    size: '2.1 GB',
-    modified: 'Jan 22'
+    createdAt: '2024-01-22T00:00:00.000Z',
+    objectCount: 456,
+    totalBytes: 2254857830,
+    isTruncated: false,
+    lastModified: '2024-01-22T14:32:00.000Z'
   },
   {
     name: 'user-uploads',
     region: 'us-east-1',
-    objects: '1,234',
-    size: '8.3 GB',
-    modified: 'Jan 21'
+    createdAt: '2024-01-21T00:00:00.000Z',
+    objectCount: 1000,
+    totalBytes: 8913700249,
+    isTruncated: true,
+    lastModified: '2024-01-21T09:15:00.000Z'
   },
   {
     name: 'logs-archive',
     region: 'eu-west-1',
-    objects: '50,218',
-    size: '45.2 GB',
-    modified: 'Jan 20'
+    createdAt: '2024-01-20T00:00:00.000Z',
+    objectCount: 1000,
+    totalBytes: 48550155878,
+    isTruncated: true,
+    lastModified: '2024-01-20T23:59:00.000Z'
   }
 ]
 

@@ -21,9 +21,11 @@ export type ConnectResult = {
 export type Bucket = {
   name: string
   region: string
-  objects: string
-  size: string
-  modified: string
+  createdAt: string | null
+  objectCount: number
+  totalBytes: number
+  isTruncated: boolean
+  lastModified: string | null
 }
 
 export type S3FileType = 'folder' | 'image' | 'audio' | 'video' | 'text' | 'data' | 'other'

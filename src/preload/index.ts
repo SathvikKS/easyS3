@@ -31,6 +31,16 @@ type ConnectResult = {
   error?: string
 }
 
+type BucketInfo = {
+  name: string
+  region: string
+  createdAt: string | null
+  objectCount: number
+  totalBytes: number
+  isTruncated: boolean
+  lastModified: string | null
+}
+
 /**
  * Narrow IPC surface: only whitelisted channels and validated arguments cross the bridge.
  * Never expose ipcRenderer, Node, or process to the renderer.
@@ -120,7 +130,14 @@ const connections = {
   }
 }
 
-const api = { settings, connections }
+const buckets = {
+  list: (id: string): Promise<BucketInfo[]> => {
+    assertId(id)
+    return ipcRenderer.invoke(IPC.buckets.list, id)
+  }
+}
+
+const api = { settings, connections, buckets }
 
 if (!process.contextIsolated) {
   throw new Error(
@@ -132,4 +149,5 @@ contextBridge.exposeInMainWorld('api', api)
 
 export type EasyS3Settings = typeof settings
 export type EasyS3Connections = typeof connections
+export type EasyS3Buckets = typeof buckets
 export type EasyS3Api = typeof api

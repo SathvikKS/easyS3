@@ -29,6 +29,16 @@ export type ConnectResult = {
   error?: string
 }
 
+export type BucketInfo = {
+  name: string
+  region: string
+  createdAt: string | null
+  objectCount: number
+  totalBytes: number
+  isTruncated: boolean
+  lastModified: string | null
+}
+
 export interface EasyS3Settings {
   getAllSync: () => AppSettings
   getAll: () => Promise<AppSettings>
@@ -47,9 +57,14 @@ export interface EasyS3Connections {
   testConnect: (values: ConnectionFormValues) => Promise<ConnectResult>
 }
 
+export interface EasyS3Buckets {
+  list: (id: string) => Promise<BucketInfo[]>
+}
+
 export interface EasyS3Api {
   settings: EasyS3Settings
   connections: EasyS3Connections
+  buckets: EasyS3Buckets
 }
 
 declare global {

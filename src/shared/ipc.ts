@@ -15,5 +15,8 @@ export const IPC = {
     duplicate: 'connections:duplicate',
     connect: 'connections:connect',
     testConnect: 'connections:testConnect'
+  },
+  buckets: {
+    list: 'buckets:list'
   }
 } as const

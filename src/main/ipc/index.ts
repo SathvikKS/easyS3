@@ -1,3 +1,4 @@
+import { registerBucketIpcHandlers } from './bucket-handlers'
 import { registerConnectionIpcHandlers } from './connection-handlers'
 import { registerSettingsIpcHandlers } from './settings-handlers'
 
@@ -5,4 +6,5 @@ import { registerSettingsIpcHandlers } from './settings-handlers'
 export function registerIpcHandlers(): void {
   registerSettingsIpcHandlers()
   registerConnectionIpcHandlers()
+  registerBucketIpcHandlers()
 }

@@ -24,6 +24,9 @@ function EasyS3App(): React.JSX.Element {
   const [openConns, setOpenConns] = React.useState<Connection[]>([])
   const [activeConn, setActiveConn] = React.useState<Connection | null>(null)
   const [activeBucket, setActiveBucket] = React.useState<Bucket | null>(null)
+  const [buckets, setBuckets] = React.useState<Bucket[]>([])
+  const [bucketsLoading, setBucketsLoading] = React.useState(false)
+  const [bucketsError, setBucketsError] = React.useState<string | null>(null)
   const [layout, setLayout] = React.useState<LayoutMode>('list')
   const [selFiles, setSelFiles] = React.useState<Set<string>>(new Set())
   const [previewFile, setPreviewFile] = React.useState<S3File | null>(null)
@@ -39,6 +42,20 @@ function EasyS3App(): React.JSX.Element {
     })
   }, [])
 
+  const fetchBuckets = React.useCallback((connId: string): void => {
+    setBucketsLoading(true)
+    setBucketsError(null)
+    window.api.buckets
+      .list(connId)
+      .then((list) => setBuckets(list))
+      .catch((err: unknown) => {
+        const msg = err instanceof Error ? err.message : 'Failed to load buckets'
+        setBucketsError(msg)
+        setBuckets([])
+      })
+      .finally(() => setBucketsLoading(false))
+  }, [])
+
   const resetExplorerState = (): void => {
     setSelFiles(new Set())
     setPreviewFile(null)
@@ -51,11 +68,18 @@ function EasyS3App(): React.JSX.Element {
     setActiveBucket(null)
     setScreen('buckets')
     resetExplorerState()
+    setBuckets([])
+    fetchBuckets(conn.id)
   }
 
   const switchTab = (conn: Connection): void => {
+    const nextScreen = activeBucket && screen === 'explorer' ? 'explorer' : 'buckets'
     setActiveConn(conn)
-    setScreen(activeBucket && screen === 'explorer' ? 'explorer' : 'buckets')
+    setScreen(nextScreen)
+    if (nextScreen === 'buckets' && conn.id !== activeConn?.id) {
+      setBuckets([])
+      fetchBuckets(conn.id)
+    }
   }
 
   const closeTab = (name: string): void => {
@@ -196,9 +220,13 @@ function EasyS3App(): React.JSX.Element {
       {screen === 'buckets' && activeConn && (
         <BucketsScreen
           conn={activeConn}
+          buckets={buckets}
+          loading={bucketsLoading}
+          error={bucketsError}
           onBrowse={browseBucket}
           onDisconnect={disconnect}
           onEdit={(c) => setEditConn(c)}
+          onRefresh={() => fetchBuckets(activeConn.id)}
         />
       )}
 
