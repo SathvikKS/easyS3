@@ -5,11 +5,11 @@ import { SettingsDialog } from '@/components/settings-dialog'
 import { FileViewer } from '@/components/file-viewer'
 import { TabBar } from '@/components/tab-bar'
 import { ThemeProvider } from '@/components/theme-provider'
-import { SAMPLE_CONNECTIONS } from '@/lib/data'
 import type {
   Bucket,
   Connection,
   ConnectionFormValues,
+  ConnectionStatus,
   LayoutMode,
   S3File,
   Screen
@@ -19,7 +19,7 @@ import { ConnectionsScreen } from '@/screens/connections-screen'
 import { ExplorerScreen } from '@/screens/explorer-screen'
 
 function EasyS3App(): React.JSX.Element {
-  const [connections, setConnections] = React.useState<Connection[]>(SAMPLE_CONNECTIONS)
+  const [connections, setConnections] = React.useState<Connection[]>([])
   const [screen, setScreen] = React.useState<Screen>('connections')
   const [openConns, setOpenConns] = React.useState<Connection[]>([])
   const [activeConn, setActiveConn] = React.useState<Connection | null>(null)
@@ -31,6 +31,13 @@ function EasyS3App(): React.JSX.Element {
   const [showAddConn, setShowAddConn] = React.useState(false)
   const [editConn, setEditConn] = React.useState<Connection | null>(null)
   const [showSettings, setShowSettings] = React.useState(false)
+  const [connectingId, setConnectingId] = React.useState<string | null>(null)
+
+  React.useEffect(() => {
+    window.api.connections.getAll().then((all) => {
+      setConnections(all)
+    })
+  }, [])
 
   const resetExplorerState = (): void => {
     setSelFiles(new Set())
@@ -96,32 +103,70 @@ function EasyS3App(): React.JSX.Element {
     }
   }
 
-  const handleSaveNew = (values: ConnectionFormValues): void => {
-    const newConn: Connection = {
-      name: values.name || 'Untitled',
-      endpoint: values.endpoint,
-      status: 'connected',
-      lastSeen: 'just now',
-      buckets: 0,
-      key: values.key,
-      secret: values.secret,
-      bucket: values.bucket,
-      region: values.region
+  const handleSaveNew = async (values: ConnectionFormValues): Promise<void> => {
+    const newConn = await window.api.connections.add(values)
+    setConnections((prev) => [...prev, newConn])
+    const result = await window.api.connections.connect(newConn.id)
+    if (result.success) {
+      const connected: Connection = {
+        ...newConn,
+        buckets: result.buckets,
+        lastSeen: result.lastSeen
+      }
+      setConnections((prev) => prev.map((c) => (c.id === connected.id ? connected : c)))
+      openConn(connected)
+    } else {
+      openConn(newConn)
     }
-    setConnections((prev) =>
-      prev.find((c) => c.name === newConn.name) ? prev : [...prev, newConn]
-    )
-    openConn(newConn)
   }
 
-  const handleSaveEdit = (values: ConnectionFormValues): void => {
+  const handleSaveEdit = async (values: ConnectionFormValues): Promise<void> => {
     if (!editConn) return
-    const updated: Connection = { ...editConn, ...values, status: editConn.status }
-    setConnections((prev) => prev.map((c) => (c.name === editConn.name ? updated : c)))
-    setOpenConns((prev) => prev.map((c) => (c.name === editConn.name ? updated : c)))
-    if (activeConn?.name === editConn.name) setActiveConn(updated)
+    const updated = await window.api.connections.update(editConn.id, values)
+    setConnections((prev) => prev.map((c) => (c.id === editConn.id ? updated : c)))
+    setOpenConns((prev) => prev.map((c) => (c.id === editConn.id ? updated : c)))
+    if (activeConn?.id === editConn.id) setActiveConn(updated)
     setEditConn(null)
   }
+
+  const handleDelete = async (conn: Connection): Promise<void> => {
+    await window.api.connections.delete(conn.id)
+    setConnections((prev) => prev.filter((c) => c.id !== conn.id))
+    closeTab(conn.name)
+  }
+
+  const handleDuplicate = async (conn: Connection): Promise<void> => {
+    const duped = await window.api.connections.duplicate(conn.id)
+    setConnections((prev) => [...prev, duped])
+  }
+
+  const handleConnect = async (conn: Connection): Promise<void> => {
+    setConnectingId(conn.id)
+    try {
+      const result = await window.api.connections.connect(conn.id)
+      if (result.success) {
+        const updated: Connection = {
+          ...conn,
+          buckets: result.buckets,
+          lastSeen: result.lastSeen
+        }
+        setConnections((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
+        setOpenConns((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
+        openConn(updated)
+      } else {
+        console.error('Connect failed:', result.error)
+      }
+    } catch (err) {
+      console.error('Connect error:', err)
+    } finally {
+      setConnectingId(null)
+    }
+  }
+
+  const connectionsWithStatus = connections.map((c) => ({
+    ...c,
+    status: (openConns.some((o) => o.id === c.id) ? 'connected' : 'disconnected') as ConnectionStatus
+  }))
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden bg-background">
@@ -137,11 +182,14 @@ function EasyS3App(): React.JSX.Element {
 
       {screen === 'connections' && (
         <ConnectionsScreen
-          connections={connections}
+          connections={connectionsWithStatus}
+          connectingId={connectingId}
           onOpen={openConn}
-          onConnect={openConn}
+          onConnect={handleConnect}
           onAdd={() => setShowAddConn(true)}
           onEdit={(c) => setEditConn(c)}
+          onDelete={handleDelete}
+          onDuplicate={handleDuplicate}
         />
       )}
 

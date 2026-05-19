@@ -4,6 +4,33 @@ import { IPC } from '../shared/ipc'
 import type { AppSettings } from '../shared/settings'
 import { isAppSettingKey, isValidSettingValue } from '../shared/settings-validation'
 
+type Connection = {
+  id: string
+  name: string
+  endpoint: string
+  region: string
+  bucket: string
+  status: 'connected' | 'disconnected'
+  lastSeen: string | null
+  buckets: number | null
+}
+
+type ConnectionFormValues = {
+  name: string
+  endpoint: string
+  key: string
+  secret: string
+  bucket: string
+  region: string
+}
+
+type ConnectResult = {
+  success: boolean
+  buckets: number | null
+  lastSeen: string | null
+  error?: string
+}
+
 /**
  * Narrow IPC surface: only whitelisted channels and validated arguments cross the bridge.
  * Never expose ipcRenderer, Node, or process to the renderer.
@@ -39,7 +66,61 @@ const settings = {
   }
 }
 
-const api = { settings }
+function assertId(id: unknown): asserts id is string {
+  if (typeof id !== 'string' || !id) throw new Error('Invalid connection id')
+}
+
+function assertFormValues(values: unknown): asserts values is ConnectionFormValues {
+  if (
+    !values ||
+    typeof values !== 'object' ||
+    typeof (values as Record<string, unknown>).name !== 'string' ||
+    typeof (values as Record<string, unknown>).endpoint !== 'string' ||
+    typeof (values as Record<string, unknown>).key !== 'string' ||
+    typeof (values as Record<string, unknown>).secret !== 'string' ||
+    typeof (values as Record<string, unknown>).bucket !== 'string' ||
+    typeof (values as Record<string, unknown>).region !== 'string'
+  ) {
+    throw new Error('Invalid connection form values')
+  }
+}
+
+const connections = {
+  getAll: (): Promise<Connection[]> => ipcRenderer.invoke(IPC.connections.getAll),
+
+  add: (values: ConnectionFormValues): Promise<Connection> => {
+    assertFormValues(values)
+    return ipcRenderer.invoke(IPC.connections.add, values)
+  },
+
+  update: (id: string, values: ConnectionFormValues): Promise<Connection> => {
+    assertId(id)
+    assertFormValues(values)
+    return ipcRenderer.invoke(IPC.connections.update, id, values)
+  },
+
+  delete: (id: string): Promise<void> => {
+    assertId(id)
+    return ipcRenderer.invoke(IPC.connections.delete, id)
+  },
+
+  duplicate: (id: string): Promise<Connection> => {
+    assertId(id)
+    return ipcRenderer.invoke(IPC.connections.duplicate, id)
+  },
+
+  connect: (id: string): Promise<ConnectResult> => {
+    assertId(id)
+    return ipcRenderer.invoke(IPC.connections.connect, id)
+  },
+
+  testConnect: (values: ConnectionFormValues): Promise<ConnectResult> => {
+    assertFormValues(values)
+    return ipcRenderer.invoke(IPC.connections.testConnect, values)
+  }
+}
+
+const api = { settings, connections }
 
 if (!process.contextIsolated) {
   throw new Error(
@@ -50,4 +131,5 @@ if (!process.contextIsolated) {
 contextBridge.exposeInMainWorld('api', api)
 
 export type EasyS3Settings = typeof settings
+export type EasyS3Connections = typeof connections
 export type EasyS3Api = typeof api

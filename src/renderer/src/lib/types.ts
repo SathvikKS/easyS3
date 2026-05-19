@@ -1,16 +1,21 @@
 export type ConnectionStatus = 'connected' | 'disconnected'
 
 export type Connection = {
+  id: string
   name: string
   endpoint: string
+  region: string
+  bucket: string
   status: ConnectionStatus
-  lastSeen: string
+  lastSeen: string | null
   buckets: number | null
-  /** Optional credentials, persisted only for the lifetime of the UI mock. */
-  key?: string
-  secret?: string
-  bucket?: string
-  region?: string
+}
+
+export type ConnectResult = {
+  success: boolean
+  buckets: number | null
+  lastSeen: string | null
+  error?: string
 }
 
 export type Bucket = {

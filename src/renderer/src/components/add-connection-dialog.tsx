@@ -18,7 +18,7 @@ type AddConnectionDialogProps = {
   open: boolean
   initialValues?: Connection | null
   onOpenChange: (open: boolean) => void
-  onSave: (values: ConnectionFormValues) => void
+  onSave: (values: ConnectionFormValues) => void | Promise<void>
 }
 
 type FieldDef = {
@@ -95,8 +95,8 @@ export function AddConnectionDialog({
         <AddConnectionDialogBody
           initialValues={initialValues}
           onCancel={() => onOpenChange(false)}
-          onSave={(values) => {
-            onSave(values)
+          onSave={async (values) => {
+            await onSave(values)
             onOpenChange(false)
           }}
         />
@@ -108,7 +108,7 @@ export function AddConnectionDialog({
 type DialogBodyProps = {
   initialValues?: Connection | null
   onCancel: () => void
-  onSave: (values: ConnectionFormValues) => void
+  onSave: (values: ConnectionFormValues) => Promise<void>
 }
 
 function AddConnectionDialogBody({
@@ -120,8 +120,43 @@ function AddConnectionDialogBody({
   const [form, setForm] = React.useState<ConnectionFormValues>(() =>
     buildInitialForm(initialValues)
   )
+  const [isSaving, setIsSaving] = React.useState(false)
+  const [saveError, setSaveError] = React.useState<string | null>(null)
+  const [isTesting, setIsTesting] = React.useState(false)
+  const [testResult, setTestResult] = React.useState<{
+    success: boolean
+    error?: string
+    buckets?: number | null
+  } | null>(null)
 
   const set = (k: keyof ConnectionFormValues, v: string): void => setForm((f) => ({ ...f, [k]: v }))
+
+  const handleSave = async (): Promise<void> => {
+    setIsSaving(true)
+    setSaveError(null)
+    try {
+      await onSave(form)
+    } catch (err) {
+      setIsSaving(false)
+      setSaveError(err instanceof Error ? err.message : 'Failed to save connection')
+    }
+  }
+
+  const handleTest = async (): Promise<void> => {
+    setIsTesting(true)
+    setTestResult(null)
+    try {
+      const result = await window.api.connections.testConnect(form)
+      setTestResult(result)
+    } catch (err) {
+      setTestResult({
+        success: false,
+        error: err instanceof Error ? err.message : 'Test failed'
+      })
+    } finally {
+      setIsTesting(false)
+    }
+  }
 
   return (
     <DialogContent className="sm:max-w-[480px]">
@@ -138,25 +173,41 @@ function AddConnectionDialogBody({
               onChange={(e) => set(field.key, e.target.value)}
               placeholder={isEdit ? field.placeholderEdit : field.placeholderNew}
               className={cn('h-9', field.mono && 'font-mono text-[12px]')}
+              disabled={isSaving}
             />
           </div>
         ))}
       </div>
+      {testResult && (
+        <div
+          className={cn(
+            'rounded-md px-3 py-2 text-[12.5px]',
+            testResult.success
+              ? 'bg-[color:var(--success-soft)] text-[color:var(--success)]'
+              : 'bg-destructive/10 text-destructive'
+          )}
+        >
+          {testResult.success
+            ? `Connected — ${testResult.buckets ?? 0} bucket${testResult.buckets === 1 ? '' : 's'}`
+            : (testResult.error ?? 'Connection failed')}
+        </div>
+      )}
       <DialogFooter className="border-t pt-3.5">
-        <Button variant="outline" size="sm" onClick={onCancel}>
+        <Button variant="outline" size="sm" onClick={onCancel} disabled={isSaving}>
           Cancel
         </Button>
-        {!isEdit && (
-          <Button variant="outline" size="sm">
-            <RefreshCw />
-            <span>Test Connection</span>
-          </Button>
-        )}
-        <Button size="sm" onClick={() => onSave(form)}>
-          <Check />
+        <Button variant="outline" size="sm" disabled={isTesting || isSaving} onClick={handleTest}>
+          {isTesting ? <RefreshCw className="animate-spin" /> : <RefreshCw />}
+          <span>Test Connection</span>
+        </Button>
+        <Button size="sm" disabled={isSaving} onClick={handleSave}>
+          {isSaving ? <RefreshCw className="animate-spin" /> : <Check />}
           <span>{isEdit ? 'Save Changes' : 'Save & Connect'}</span>
         </Button>
       </DialogFooter>
+      {saveError && (
+        <p className="px-1 text-[12px] text-destructive">{saveError}</p>
+      )}
     </DialogContent>
   )
 }

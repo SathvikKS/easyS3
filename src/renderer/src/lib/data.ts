@@ -2,28 +2,34 @@ import type { Bucket, Connection, S3File } from './types'
 
 export const SAMPLE_CONNECTIONS: Connection[] = [
   {
+    id: 'sample-1',
     name: 'my-production',
     endpoint: 's3.amazonaws.com',
     status: 'connected',
     lastSeen: '2m ago',
     buckets: 3,
-    region: 'us-east-1'
+    region: 'us-east-1',
+    bucket: ''
   },
   {
+    id: 'sample-2',
     name: 'staging',
     endpoint: 'minio.company.internal',
     status: 'connected',
     lastSeen: '1h ago',
     buckets: 5,
-    region: 'us-east-1'
+    region: 'us-east-1',
+    bucket: ''
   },
   {
+    id: 'sample-3',
     name: 'local-dev',
     endpoint: 'localhost:9000',
     status: 'disconnected',
     lastSeen: 'Jan 20',
     buckets: null,
-    region: 'us-east-1'
+    region: 'us-east-1',
+    bucket: ''
   }
 ]
 
