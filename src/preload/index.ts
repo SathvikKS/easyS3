@@ -1,15 +1,23 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
-// Custom APIs for renderer
-const api = {
-  selectDownloadDirectory: (): Promise<string | null> =>
-    ipcRenderer.invoke('settings:selectDownloadDirectory')
+import type { AppSettings } from '../shared/settings'
+
+const settings = {
+  getAllSync: (): AppSettings => ipcRenderer.sendSync('settings:getAllSync') as AppSettings,
+  getAll: (): Promise<AppSettings> => ipcRenderer.invoke('settings:getAll'),
+  get: <K extends keyof AppSettings>(key: K): Promise<AppSettings[K]> =>
+    ipcRenderer.invoke('settings:get', key),
+  set: <K extends keyof AppSettings>(key: K, value: AppSettings[K]): Promise<AppSettings[K]> =>
+    ipcRenderer.invoke('settings:set', key, value),
+  selectDownloadDirectory: (currentPath?: string): Promise<string | null> =>
+    ipcRenderer.invoke('settings:selectDownloadDirectory', currentPath)
 }
 
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
+const api = {
+  settings
+}
+
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
@@ -23,3 +31,6 @@ if (process.contextIsolated) {
   // @ts-ignore (define in dts)
   window.api = api
 }
+
+export type EasyS3Settings = typeof settings
+export type EasyS3Api = typeof api

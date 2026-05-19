@@ -12,17 +12,14 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
-  DEFAULT_DOWNLOAD_PATH,
-  getDownloadPath,
-  getDownloadPrompt,
+  getSettingsSync,
   setDownloadPath,
-  setDownloadPrompt
+  setDownloadPrompt,
+  type ThemeMode
 } from '@/lib/settings'
 import { cn } from '@/lib/utils'
 
-type Theme = 'light' | 'dark' | 'system'
-
-const THEME_OPTIONS: { value: Theme; label: string }[] = [
+const THEME_OPTIONS: { value: ThemeMode; label: string }[] = [
   { value: 'light', label: 'Light' },
   { value: 'dark', label: 'Dark' },
   { value: 'system', label: 'System' }
@@ -46,27 +43,31 @@ export function SettingsDialog({
 
 function SettingsDialogBody(): React.JSX.Element {
   const { theme, setTheme } = useTheme()
-  const [downloadPath, setDownloadPathState] = React.useState(getDownloadPath)
-  const [promptBeforeDownload, setPromptBeforeDownload] = React.useState(getDownloadPrompt)
+  const initial = React.useMemo(() => getSettingsSync(), [])
+  const [downloadPath, setDownloadPathState] = React.useState(initial.downloadPath)
+  const [promptBeforeDownload, setPromptBeforeDownload] = React.useState(
+    initial.promptBeforeDownload
+  )
 
   const saveDownloadPath = (path: string): void => {
     setDownloadPathState(path)
-    setDownloadPath(path)
+    void setDownloadPath(path)
   }
 
   const togglePrompt = (): void => {
     const next = !promptBeforeDownload
     setPromptBeforeDownload(next)
-    setDownloadPrompt(next)
+    void setDownloadPrompt(next)
   }
 
   const handleBrowse = async (): Promise<void> => {
-    const selected = await window.api.selectDownloadDirectory()
+    const startPath = promptBeforeDownload ? undefined : downloadPath
+    const selected = await window.api.settings.selectDownloadDirectory(startPath)
     if (selected) {
       saveDownloadPath(selected)
       if (promptBeforeDownload) {
         setPromptBeforeDownload(false)
-        setDownloadPrompt(false)
+        void setDownloadPrompt(false)
       }
     }
   }
@@ -107,7 +108,6 @@ function SettingsDialogBody(): React.JSX.Element {
             value={downloadPath}
             onChange={(e) => saveDownloadPath(e.target.value)}
             disabled={promptBeforeDownload}
-            placeholder={DEFAULT_DOWNLOAD_PATH}
             className="h-9 font-mono text-[12px]"
           />
           <div className="flex gap-2">

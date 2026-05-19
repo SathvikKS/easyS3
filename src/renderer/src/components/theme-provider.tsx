@@ -1,16 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
-type Theme = 'dark' | 'light' | 'system'
-
-type ThemeProviderProps = {
-  children: React.ReactNode
-  defaultTheme?: Theme
-  storageKey?: string
-}
+import { getSettingsSync, setTheme as persistTheme } from '@/lib/settings'
+import type { ThemeMode } from '@/lib/settings'
 
 type ThemeProviderState = {
-  theme: Theme
-  setTheme: (theme: Theme) => void
+  theme: ThemeMode
+  setTheme: (theme: ThemeMode) => void
 }
 
 const initialState: ThemeProviderState = {
@@ -20,43 +15,44 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
-export function ThemeProvider({
-  children,
-  defaultTheme = 'system',
-  storageKey = 'easys3-ui-theme',
-  ...props
-}: ThemeProviderProps): React.JSX.Element {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  )
+function resolveAppliedTheme(theme: ThemeMode): 'light' | 'dark' {
+  if (theme === 'system') {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  }
+  return theme
+}
+
+function applyThemeClass(theme: ThemeMode): void {
+  const root = window.document.documentElement
+  root.classList.remove('light', 'dark')
+  root.classList.add(resolveAppliedTheme(theme))
+}
+
+type ThemeProviderProps = {
+  children: React.ReactNode
+}
+
+export function ThemeProvider({ children, ...props }: ThemeProviderProps): React.JSX.Element {
+  const [theme, setThemeState] = useState<ThemeMode>(() => getSettingsSync().theme)
 
   useEffect(() => {
-    const root = window.document.documentElement
+    applyThemeClass(theme)
 
-    root.classList.remove('light', 'dark')
+    if (theme !== 'system') return
 
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-
-      root.classList.add(systemTheme)
-      return
-    }
-
-    root.classList.add(theme)
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    const onChange = (): void => applyThemeClass('system')
+    media.addEventListener('change', onChange)
+    return () => media.removeEventListener('change', onChange)
   }, [theme])
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme)
-      setTheme(theme)
-    }
+  const setTheme = (next: ThemeMode): void => {
+    setThemeState(next)
+    void persistTheme(next)
   }
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeProviderContext.Provider {...props} value={{ theme, setTheme }}>
       {children}
     </ThemeProviderContext.Provider>
   )
@@ -66,8 +62,7 @@ export function ThemeProvider({
 export const useTheme = (): ThemeProviderState => {
   const context = useContext(ThemeProviderContext)
 
-  if (context === undefined)
-    throw new Error('useTheme must be used within a ThemeProvider')
+  if (context === undefined) throw new Error('useTheme must be used within a ThemeProvider')
 
   return context
 }

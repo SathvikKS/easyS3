@@ -1,10 +1,17 @@
 import { app, shell, BrowserWindow, dialog, ipcMain } from 'electron'
 import { join } from 'path'
+import { promises as fs } from 'fs'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import {
+  type AppSettings,
+  getAllSettings,
+  getSetting,
+  getStore,
+  setSetting
+} from './store'
 
 function createWindow(): void {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 820,
@@ -28,8 +35,6 @@ function createWindow(): void {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
@@ -37,50 +42,75 @@ function createWindow(): void {
   }
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+async function resolveBrowseDefaultPath(candidate: string | undefined): Promise<string> {
+  if (candidate) {
+    try {
+      const stat = await fs.stat(candidate)
+      if (stat.isDirectory()) return candidate
+    } catch {
+      // candidate does not exist or is not accessible — fall through to home
+    }
+  }
+  return app.getPath('home')
+}
 
-  // Default open or close DevTools by F12 in development
-  // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
+function registerSettingsIpc(): void {
+  // Eagerly construct the store so schema defaults are written to disk on first run.
+  getStore()
+
+  // Sync bootstrap so the renderer can read initial settings before first paint
+  // (avoids a flash of unstyled / wrong-theme content).
+  ipcMain.on('settings:getAllSync', (event) => {
+    event.returnValue = getAllSettings()
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.handle('settings:getAll', () => getAllSettings())
 
-  ipcMain.handle('settings:selectDownloadDirectory', async (event) => {
+  ipcMain.handle('settings:get', (_event, key: keyof AppSettings) => getSetting(key))
+
+  ipcMain.handle(
+    'settings:set',
+    <K extends keyof AppSettings>(_event: unknown, key: K, value: AppSettings[K]) => {
+      setSetting(key, value)
+      return getSetting(key)
+    }
+  )
+
+  ipcMain.handle('settings:selectDownloadDirectory', async (event, currentPath?: string) => {
     const win = BrowserWindow.fromWebContents(event.sender)
-    const options = { properties: ['openDirectory', 'createDirectory'] as ['openDirectory', 'createDirectory'] }
+    const defaultPath = await resolveBrowseDefaultPath(currentPath)
+    const options = {
+      defaultPath,
+      properties: ['openDirectory', 'createDirectory'] as ['openDirectory', 'createDirectory']
+    }
     const result = win
       ? await dialog.showOpenDialog(win, options)
       : await dialog.showOpenDialog(options)
     if (result.canceled || result.filePaths.length === 0) return null
     return result.filePaths[0]
   })
+}
+
+app.whenReady().then(() => {
+  electronApp.setAppUserModelId('com.electron')
+
+  app.on('browser-window-created', (_, window) => {
+    optimizer.watchWindowShortcuts(window)
+  })
+
+  ipcMain.on('ping', () => console.log('pong'))
+
+  registerSettingsIpc()
 
   createWindow()
 
   app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

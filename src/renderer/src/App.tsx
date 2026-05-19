@@ -196,7 +196,7 @@ function EasyS3App(): React.JSX.Element {
 
 function App(): React.JSX.Element {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="easys3-ui-theme">
+    <ThemeProvider>
       <EasyS3App />
     </ThemeProvider>
   )
