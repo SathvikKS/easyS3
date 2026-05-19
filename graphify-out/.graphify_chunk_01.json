@@ -1,0 +1,800 @@
+{
+  "nodes": [
+    {
+      "id": "prettierrc_prettier_config",
+      "label": "Prettier Configuration",
+      "file_type": "document",
+      "source_file": ".prettierrc.yaml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_md_agent_guidelines",
+      "label": "easyS3 Agent Guidelines",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "claude_md_agent_guidelines",
+      "label": "easyS3 CLAUDE Agent Guidelines",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dev_app_update_yml_auto_update",
+      "label": "Dev App Auto-Update Config",
+      "file_type": "document",
+      "source_file": "dev-app-update.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "electron_builder_yml_build_config",
+      "label": "Electron Builder Build Configuration",
+      "file_type": "document",
+      "source_file": "electron-builder.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_project_overview",
+      "label": "easyS3 Project README",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_gitnexus_cli",
+      "label": "GitNexus CLI Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/gitnexus/gitnexus-cli/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_gitnexus_debugging",
+      "label": "GitNexus Debugging Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/gitnexus/gitnexus-debugging/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_gitnexus_exploring",
+      "label": "GitNexus Exploring Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/gitnexus/gitnexus-exploring/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_gitnexus_guide",
+      "label": "GitNexus Guide Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/gitnexus/gitnexus-guide/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_gitnexus_impact_analysis",
+      "label": "GitNexus Impact Analysis Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/gitnexus/gitnexus-impact-analysis/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_gitnexus_refactoring",
+      "label": "GitNexus Refactoring Skill",
+      "file_type": "document",
+      "source_file": ".claude/skills/gitnexus/gitnexus-refactoring/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "docs_ipc_security",
+      "label": "IPC Security Documentation",
+      "file_type": "document",
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "renderer_index_html",
+      "label": "Renderer Entry HTML",
+      "file_type": "code",
+      "source_file": "src/renderer/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "resources_icon_png",
+      "label": "easyS3 Application Icon",
+      "file_type": "image",
+      "source_file": "resources/icon.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_ipc_security_pattern",
+      "label": "Electron IPC Security Pattern",
+      "file_type": "rationale",
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "Architecture section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The layered IPC architecture (Renderer -> window.api -> Preload -> Main) enforces defense in depth: renderer never gets direct Node access, contextBridge exposes only curated APIs, channels are whitelisted via shared ipc.ts, all payloads are validated on both sides, and assertTrustedSender guards every main handler. This prevents renderer compromise from escalating to full OS access."
+    },
+    {
+      "id": "concept_context_isolation",
+      "label": "Context Isolation Requirement",
+      "file_type": "rationale",
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "BrowserWindow defaults section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "contextIsolation:true, sandbox:true, nodeIntegration:false are mandatory on every BrowserWindow so the renderer JS runs in an isolated world and cannot access Node.js or Electron APIs directly, even if the renderer is compromised by XSS or a supply-chain attack."
+    },
+    {
+      "id": "concept_gitnexus_knowledge_graph",
+      "label": "GitNexus Code Knowledge Graph",
+      "file_type": "rationale",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "GitNexus indexes the codebase into a graph of symbols and relationships (40 symbols, 35 relationships for easyS3) so agents can reason about blast radius, execution flows, and safe refactoring paths without manually grepping — ensuring changes are made with full dependency awareness."
+    },
+    {
+      "id": "concept_electron_app",
+      "label": "Electron + React + TypeScript Application",
+      "file_type": "rationale",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "easyS3 is built with Electron for cross-platform desktop distribution, React for the UI, and TypeScript for type safety across both main and renderer processes."
+    },
+    {
+      "id": "concept_csp_renderer",
+      "label": "Content Security Policy for Renderer",
+      "file_type": "rationale",
+      "source_file": "src/renderer/index.html",
+      "source_location": "meta http-equiv Content-Security-Policy",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The renderer HTML enforces a strict CSP (default-src 'self', script-src 'self', style-src 'self' 'unsafe-inline', img-src 'self' data:) to prevent XSS and unauthorized resource loading, complementing the IPC security model."
+    },
+    {
+      "id": "concept_gitnexus_impact_before_edit",
+      "label": "Mandatory Impact Analysis Before Edits",
+      "file_type": "rationale",
+      "source_file": "CLAUDE.md",
+      "source_location": "Always Do section",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Agents must run gitnexus_impact before modifying any symbol to surface the blast radius (direct callers, affected processes, risk level) and warn on HIGH/CRITICAL risk, preventing accidental breakage of callers across the codebase."
+    },
+    {
+      "id": "preload_index_ts",
+      "label": "Preload Script (contextBridge)",
+      "file_type": "code",
+      "source_file": "src/preload/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "shared_ipc_ts",
+      "label": "Shared IPC Channel Names",
+      "file_type": "code",
+      "source_file": "src/shared/ipc.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "main_ipc_handlers",
+      "label": "Main IPC Handlers Directory",
+      "file_type": "code",
+      "source_file": "src/main/ipc/",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "main_ipc_guards_ts",
+      "label": "IPC Guards (assertTrustedSender)",
+      "file_type": "code",
+      "source_file": "src/main/ipc-guards.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "shared_settings_validation_ts",
+      "label": "Settings Validation (shared)",
+      "file_type": "code",
+      "source_file": "src/shared/settings-validation.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "main_index_ts",
+      "label": "Main Process Entry (BrowserWindow)",
+      "file_type": "code",
+      "source_file": "src/main/index.ts",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "electron_builder_icon",
+      "label": "Application Icon (Electron icon)",
+      "file_type": "image",
+      "source_file": "resources/icon.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "docs_ipc_security",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "line 5",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "docs_ipc_security",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 5",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "skill_gitnexus_exploring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "skill_gitnexus_impact_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "skill_gitnexus_debugging",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "skill_gitnexus_refactoring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "skill_gitnexus_guide",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "skill_gitnexus_cli",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "skill_gitnexus_exploring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "skill_gitnexus_impact_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "skill_gitnexus_debugging",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "skill_gitnexus_refactoring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "skill_gitnexus_guide",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "skill_gitnexus_cli",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "CLI table",
+      "weight": 1.0
+    },
+    {
+      "source": "skill_gitnexus_guide",
+      "target": "skill_gitnexus_exploring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/gitnexus/gitnexus-guide/SKILL.md",
+      "source_location": "Skills table",
+      "weight": 1.0
+    },
+    {
+      "source": "skill_gitnexus_guide",
+      "target": "skill_gitnexus_impact_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/gitnexus/gitnexus-guide/SKILL.md",
+      "source_location": "Skills table",
+      "weight": 1.0
+    },
+    {
+      "source": "skill_gitnexus_guide",
+      "target": "skill_gitnexus_debugging",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/gitnexus/gitnexus-guide/SKILL.md",
+      "source_location": "Skills table",
+      "weight": 1.0
+    },
+    {
+      "source": "skill_gitnexus_guide",
+      "target": "skill_gitnexus_refactoring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/gitnexus/gitnexus-guide/SKILL.md",
+      "source_location": "Skills table",
+      "weight": 1.0
+    },
+    {
+      "source": "skill_gitnexus_guide",
+      "target": "skill_gitnexus_cli",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/gitnexus/gitnexus-guide/SKILL.md",
+      "source_location": "Skills table",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "preload_index_ts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "Architecture table",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "shared_ipc_ts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "Architecture table",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "main_ipc_handlers",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "Architecture table",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "main_ipc_guards_ts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "Architecture table",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "shared_settings_validation_ts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "Architecture table",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "main_index_ts",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "BrowserWindow defaults section",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "concept_ipc_security_pattern",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "Architecture section",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_ipc_security",
+      "target": "concept_context_isolation",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": "BrowserWindow defaults section",
+      "weight": 1.0
+    },
+    {
+      "source": "concept_ipc_security_pattern",
+      "target": "preload_index_ts",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_context_isolation",
+      "target": "main_index_ts",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/IPC_SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "renderer_index_html",
+      "target": "concept_csp_renderer",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/renderer/index.html",
+      "source_location": "meta CSP tag",
+      "weight": 1.0
+    },
+    {
+      "source": "concept_csp_renderer",
+      "target": "concept_ipc_security_pattern",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "src/renderer/index.html",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "electron_builder_yml_build_config",
+      "target": "dev_app_update_yml_auto_update",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "electron-builder.yml",
+      "source_location": "publish.url field matches dev-app-update.yml url",
+      "weight": 1.0
+    },
+    {
+      "source": "electron_builder_yml_build_config",
+      "target": "resources_icon_png",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "electron-builder.yml",
+      "source_location": "asarUnpack: resources/**",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_project_overview",
+      "target": "electron_builder_yml_build_config",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "Build section (npm run build:win/mac/linux)",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_project_overview",
+      "target": "concept_electron_app",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "line 3",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md_agent_guidelines",
+      "target": "concept_gitnexus_knowledge_graph",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "GitNexus section",
+      "weight": 1.0
+    },
+    {
+      "source": "concept_gitnexus_impact_before_edit",
+      "target": "skill_gitnexus_impact_analysis",
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "CLAUDE.md",
+      "source_location": "Always Do section",
+      "weight": 1.0
+    },
+    {
+      "source": "concept_gitnexus_knowledge_graph",
+      "target": "skill_gitnexus_guide",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "agents_md_agent_guidelines",
+      "target": "claude_md_agent_guidelines",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 0.95
+    },
+    {
+      "source": "skill_gitnexus_cli",
+      "target": "skill_gitnexus_exploring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".claude/skills/gitnexus/gitnexus-cli/SKILL.md",
+      "source_location": "After Indexing section",
+      "weight": 1.0
+    },
+    {
+      "source": "skill_gitnexus_impact_analysis",
+      "target": "skill_gitnexus_refactoring",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".claude/skills/gitnexus/gitnexus-impact-analysis/SKILL.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "prettierrc_prettier_config",
+      "target": "readme_project_overview",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".prettierrc.yaml",
+      "source_location": null,
+      "weight": 0.75
+    },
+    {
+      "source": "resources_icon_png",
+      "target": "concept_electron_app",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "resources/icon.png",
+      "source_location": null,
+      "weight": 0.85
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "ipc_security_layer_stack",
+      "label": "Electron IPC Security Layer Stack",
+      "nodes": [
+        "renderer_index_html",
+        "preload_index_ts",
+        "shared_ipc_ts",
+        "main_ipc_guards_ts",
+        "main_ipc_handlers",
+        "concept_ipc_security_pattern"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "docs/IPC_SECURITY.md"
+    },
+    {
+      "id": "gitnexus_agent_workflow",
+      "label": "GitNexus Agent Workflow Skills",
+      "nodes": [
+        "skill_gitnexus_cli",
+        "skill_gitnexus_debugging",
+        "skill_gitnexus_exploring",
+        "skill_gitnexus_guide",
+        "skill_gitnexus_impact_analysis",
+        "skill_gitnexus_refactoring"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md"
+    },
+    {
+      "id": "electron_build_pipeline",
+      "label": "Electron Build and Distribution Pipeline",
+      "nodes": [
+        "electron_builder_yml_build_config",
+        "dev_app_update_yml_auto_update",
+        "resources_icon_png",
+        "readme_project_overview"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "electron-builder.yml"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
