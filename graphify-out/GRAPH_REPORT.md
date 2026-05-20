@@ -1,16 +1,16 @@
 # Graph Report - easyS3  (2026-05-20)
 
 ## Corpus Check
-- 68 files · ~22,277 words
+- 68 files · ~23,618 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 546 nodes · 1087 edges · 30 communities (27 shown, 3 thin omitted)
+- 547 nodes · 1096 edges · 29 communities (26 shown, 3 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `90ca7036`
+- Built from commit: `def4f149`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -41,13 +41,12 @@
 - [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
-- [[_COMMUNITY_Community 29|Community 29]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 78 edges
-2. `Button()` - 16 edges
-3. `Connection` - 14 edges
-4. `S3File` - 14 edges
+2. `Button()` - 17 edges
+3. `S3File` - 15 edges
+4. `Connection` - 14 edges
 5. `scripts` - 14 edges
 6. `AppSettings` - 11 edges
 7. `Bucket` - 11 edges
@@ -72,27 +71,27 @@
 - **GitNexus Agent Workflow Skills** — skill_gitnexus_cli, skill_gitnexus_debugging, skill_gitnexus_exploring, skill_gitnexus_guide, skill_gitnexus_impact_analysis, skill_gitnexus_refactoring [EXTRACTED 1.00]
 - **Electron Build and Distribution Pipeline** — electron_builder_yml_build_config, dev_app_update_yml_auto_update, resources_icon_png, readme_project_overview [INFERRED 0.85]
 
-## Communities (30 total, 3 thin omitted)
+## Communities (29 total, 3 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.08
-Nodes (52): ActionBar(), AddConnectionDialog(), FileCard(), FileListHeader(), FileRow(), FileViewer(), FileViewerProps, JSON_VIEW_THEME (+44 more)
+Nodes (38): ActionBar(), FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps (+30 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.05
-Nodes (55): ActionBarProps, LayoutToggle(), LayoutToggleProps, FileCardProps, FileIcon(), FileIconProps, FileRowProps, SortableHeader() (+47 more)
+Cohesion: 0.06
+Nodes (57): AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS, SortableHeader(), PreviewPanelProps, PreviewResult (+49 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.06
-Nodes (26): api, BucketInfo, buckets, Connection, ConnectionFormValues, connections, ConnectResult, DeleteFileRequest (+18 more)
+Nodes (36): getSettings(), getSettingsSync(), setDownloadPath(), setDownloadPrompt(), setFetchBucketStats(), setTheme(), api, BucketInfo (+28 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.05
 Nodes (40): author, description, devDependencies, electron, electron-builder, @electron-toolkit/eslint-config-prettier, @electron-toolkit/eslint-config-ts, @electron-toolkit/tsconfig (+32 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.07
-Nodes (46): parseId(), registerBucketIpcHandlers(), Connection, ConnectionFormValues, ConnectResult, formatLastSeen(), registerConnectionIpcHandlers(), toConnection() (+38 more)
+Cohesion: 0.06
+Nodes (56): parseId(), registerBucketIpcHandlers(), Connection, ConnectionFormValues, ConnectResult, formatLastSeen(), registerConnectionIpcHandlers(), toConnection() (+48 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.19
@@ -107,8 +106,8 @@ Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.10
-Nodes (29): AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS, SettingsDialogBody(), SettingsDialogProps, THEME_OPTIONS (+21 more)
+Cohesion: 0.15
+Nodes (26): AddConnectionDialog(), FileViewer(), SettingsDialog(), TabBar(), TabBarProps, applyThemeClass(), initialState, resolveAppliedTheme() (+18 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.09
@@ -163,32 +162,28 @@ Cohesion: 0.29
 Nodes (11): useDebouncedValue(), BucketsScreen(), BucketsScreenProps, filterBuckets(), formatBytes(), formatCount(), formatDate(), formatRelative() (+3 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.29
-Nodes (10): assertTrustedSender(), isTrustedWebContents(), parseOptionalPath(), parseSettingKey(), parseSettingValue(), AppSettings, ThemeMode, isAppSettingKey() (+2 more)
-
-### Community 29 - "Community 29"
-Cohesion: 0.61
-Nodes (4): getAllSettings(), getSetting(), getStore(), setSetting()
+Cohesion: 0.24
+Nodes (9): ActionBarProps, LayoutToggle(), LayoutToggleProps, Crumb, formatPath(), NavBarProps, NavButton(), NavButtonProps (+1 more)
 
 ## Knowledge Gaps
-- **214 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+209 more)
+- **211 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+206 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 1` to `Community 8`, `Community 0`, `Community 27`, `Community 6`?**
+- **Why does `cn()` connect `Community 1` to `Community 0`, `Community 6`, `Community 8`, `Community 27`, `Community 28`?**
   _High betweenness centrality (0.273) - this node is a cross-community bridge._
-- **Why does `AppSettings` connect `Community 28` to `Community 8`, `Community 9`, `Community 2`, `Community 29`?**
+- **Why does `AppSettings` connect `Community 2` to `Community 9`, `Community 4`?**
   _High betweenness centrality (0.189) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `Community 6` to `Community 3`?**
   _High betweenness centrality (0.142) - this node is a cross-community bridge._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**
-  _215 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _212 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.07785602503912363 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08350168350168351 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.05420054200542006 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05622489959839357 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05939716312056738 - nodes in this community are weakly interconnected._

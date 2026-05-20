@@ -75,8 +75,8 @@
     "semantic_hash": "41acdf0e819ba83ce736bf734e6de0e8"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\s3-client.ts": {
-    "mtime": 1779262541.3497002,
-    "ast_hash": "3729a8e60808df806a04d41ccf8f878e",
+    "mtime": 1779263341.8571846,
+    "ast_hash": "55499eca1253e1a5d3c20b17e5985536",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\store.ts": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\preload\\index.ts": {
-    "mtime": 1779260353.8242214,
-    "ast_hash": "ebecc8b736b8d29e29440dee3d379d8e",
+    "mtime": 1779263417.613688,
+    "ast_hash": "13e669e24f858bc73a1f3fad6e9a30af",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\App.tsx": {
@@ -150,8 +150,8 @@
     "semantic_hash": "77bec36c431d87aff089d36ccde36fa4"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\file-viewer.tsx": {
-    "mtime": 1779260353.8242214,
-    "ast_hash": "9c53dde38fb6110dc7399bb8e7d8d0da",
+    "mtime": 1779263294.154573,
+    "ast_hash": "fa6ece83c3ef21a8fb8711b1beaec73e",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\footer-bar.tsx": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\shared\\ipc.ts": {
-    "mtime": 1779249841.9506967,
-    "ast_hash": "6701e2080aebc88f30653096663cc2a4",
+    "mtime": 1779263329.1206927,
+    "ast_hash": "2060d6ff04473dc4daf5553413e87a06",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\shared\\settings-validation.ts": {
@@ -385,8 +385,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\ipc\\files-handlers.ts": {
-    "mtime": 1779260353.8222187,
-    "ast_hash": "eb36a53f177a3afbde5849b66c23e0f5",
+    "mtime": 1779263386.7041798,
+    "ast_hash": "2539016c8228e3b54c748f4c87e73dc5",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\ui\\alert-dialog.tsx": {
