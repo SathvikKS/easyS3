@@ -11,7 +11,8 @@ import { NavBar } from '@/components/nav-bar'
 import { NewFolderCard, NewFolderRow } from '@/components/new-folder'
 import { PreviewPanel } from '@/components/preview-panel'
 import { sortFiles, type SortDirection, type SortField } from '@/lib/sort-files'
-import type { Bucket, Connection, LayoutMode, S3File } from '@/lib/types'
+import { toastError } from '@/lib/toast'
+import type { Bucket, Connection, LayoutMode, S3File, ViewerContext } from '@/lib/types'
 
 function filterFiles(files: S3File[], query: string): S3File[] {
   const q = query.trim().toLowerCase()
@@ -34,7 +35,7 @@ type ExplorerScreenProps = {
   setSelFiles: (s: Set<string>) => void
   previewFile: S3File | null
   setPreviewFile: (f: S3File | null) => void
-  setViewerFile: (f: S3File | null) => void
+  setViewerFile: (ctx: ViewerContext | null) => void
   onCrumb: (idx: number) => void
 }
 
@@ -185,7 +186,13 @@ export function ExplorerScreen({
     if (file.type === 'folder') {
       navigateIntoFolder(file)
     } else {
-      setViewerFile(file)
+      setViewerFile({
+        file,
+        connId: conn.id,
+        bucket: bucket.name,
+        keyPrefix: path.length > 0 ? path.join('/') + '/' : '',
+        siblings: sortedFiles.filter((f) => f.type !== 'folder')
+      })
     }
   }
 
@@ -223,6 +230,75 @@ export function ExplorerScreen({
       setPreviewFile(null)
       resetPagination()
     }
+  }
+
+  const handleNavigate = async (rawPath: string): Promise<void> => {
+    const trimmed = rawPath.trim()
+    if (!trimmed) return
+
+    let segments: string[] = []
+
+    if (trimmed.startsWith('s3://')) {
+      const parts = trimmed.slice(5).split('/').filter(Boolean)
+      if (parts[0] !== bucket.name) {
+        toastError('Navigation failed', 'Path belongs to a different bucket')
+        return
+      }
+      segments = parts.slice(1)
+    } else if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+      try {
+        const url = new URL(trimmed)
+        const pathParts = url.pathname.split('/').filter(Boolean)
+        const hostBucket = url.hostname.startsWith(bucket.name + '.') ? bucket.name : null
+        if (hostBucket) {
+          segments = pathParts
+        } else if (pathParts[0] === bucket.name) {
+          segments = pathParts.slice(1)
+        } else {
+          toastError('Navigation failed', 'URL belongs to a different bucket')
+          return
+        }
+      } catch {
+        toastError('Navigation failed', 'Invalid URL')
+        return
+      }
+    } else {
+      const parts = trimmed.split('/').map((s) => s.trim()).filter(Boolean)
+      if (parts.length < 2 || parts[1] !== bucket.name) {
+        toastError('Navigation failed', 'Path belongs to a different bucket')
+        return
+      }
+      segments = parts.slice(2)
+    }
+
+    const lastSeg = segments[segments.length - 1]
+    const isLikelyFile = lastSeg && lastSeg.includes('.') && !lastSeg.endsWith('/')
+    const pathToSet = isLikelyFile ? segments.slice(0, -1) : segments
+
+    if (pathToSet.length > 0) {
+      try {
+        const prefix = pathToSet.join('/') + '/'
+        const result = await window.api.files.list({
+          connId: conn.id,
+          bucket: bucket.name,
+          prefix,
+          maxKeys: 1
+        })
+        if (result.files.length === 0 && !result.isTruncated) {
+          toastError('Path not found', prefix)
+          return
+        }
+      } catch {
+        toastError('Path not found', pathToSet.join('/'))
+        return
+      }
+    }
+
+    setPath(pathToSet)
+    setSelFiles(new Set())
+    setPreviewFile(null)
+    setViewerFile(null)
+    resetPagination()
   }
 
   const goUpOneLevel = (): void => {
@@ -290,6 +366,7 @@ export function ExplorerScreen({
           onBack={goUpOneLevel}
           onUp={goUpOneLevel}
           onCrumb={handleNavCrumb}
+          onNavigate={handleNavigate}
         />
         <ActionBar
           selCount={selFiles.size}
