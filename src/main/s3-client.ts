@@ -1,11 +1,13 @@
-import { writeFile } from 'fs/promises'
+import { readFile, writeFile } from 'fs/promises'
 
 import {
   DeleteObjectCommand,
+  DeleteObjectsCommand,
   GetBucketLocationCommand,
   GetObjectCommand,
   ListBucketsCommand,
   ListObjectsV2Command,
+  PutObjectCommand,
   S3Client
 } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
@@ -250,6 +252,58 @@ export async function deleteObject(
   key: string
 ): Promise<void> {
   await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }))
+}
+
+export async function deleteObjects(
+  client: S3Client,
+  bucket: string,
+  keys: string[]
+): Promise<void> {
+  if (keys.length === 0) return
+  await client.send(
+    new DeleteObjectsCommand({
+      Bucket: bucket,
+      Delete: { Objects: keys.map((Key) => ({ Key })), Quiet: true }
+    })
+  )
+}
+
+export async function listAllObjects(
+  client: S3Client,
+  bucket: string,
+  prefix: string
+): Promise<string[]> {
+  const keys: string[] = []
+  let continuationToken: string | undefined
+  do {
+    const response = await client.send(
+      new ListObjectsV2Command({ Bucket: bucket, Prefix: prefix, ContinuationToken: continuationToken })
+    )
+    for (const obj of response.Contents ?? []) {
+      if (obj.Key) keys.push(obj.Key)
+    }
+    continuationToken = response.NextContinuationToken
+  } while (continuationToken)
+  return keys
+}
+
+export async function uploadFile(
+  client: S3Client,
+  bucket: string,
+  key: string,
+  localPath: string
+): Promise<void> {
+  const body = await readFile(localPath)
+  await client.send(new PutObjectCommand({ Bucket: bucket, Key: key, Body: body }))
+}
+
+export async function createFolder(
+  client: S3Client,
+  bucket: string,
+  key: string
+): Promise<void> {
+  const folderKey = key.endsWith('/') ? key : key + '/'
+  await client.send(new PutObjectCommand({ Bucket: bucket, Key: folderKey, Body: '' }))
 }
 
 export async function getPresignedUrl(

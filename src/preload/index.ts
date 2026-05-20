@@ -169,7 +169,9 @@ type PreviewResult =
 
 type DownloadItem = { key: string; name: string }
 type DownloadJobRequest = { connId: string; bucket: string; files: DownloadItem[] }
-type DeleteFileRequest = { connId: string; bucket: string; key: string }
+type DeleteRequest = { connId: string; bucket: string; keys: string[] }
+type UploadRequest = { connId: string; bucket: string; destPrefix: string }
+type CreateFolderRequest = { connId: string; bucket: string; key: string }
 type PresignedUrlRequest = { connId: string; bucket: string; key: string; expiresIn?: number }
 type S3UrlRequest = { connId: string; bucket: string; key: string }
 type PreviewRequest = { connId: string; bucket: string; key: string; fileType: string }
@@ -212,6 +214,33 @@ function assertFileOpBase(
   }
 }
 
+function assertDeleteRequest(req: unknown): asserts req is DeleteRequest {
+  if (!req || typeof req !== 'object') throw new Error('Invalid delete request')
+  const r = req as Record<string, unknown>
+  if (typeof r.connId !== 'string' || !r.connId) throw new Error('Invalid delete request: connId must be a non-empty string')
+  if (typeof r.bucket !== 'string' || !r.bucket) throw new Error('Invalid delete request: bucket must be a non-empty string')
+  if (!Array.isArray(r.keys) || r.keys.length === 0) throw new Error('Invalid delete request: keys must be a non-empty array')
+  for (const k of r.keys as unknown[]) {
+    if (typeof k !== 'string' || !k) throw new Error('Invalid delete request: each key must be a non-empty string')
+  }
+}
+
+function assertUploadRequest(req: unknown): asserts req is UploadRequest {
+  if (!req || typeof req !== 'object') throw new Error('Invalid upload request')
+  const r = req as Record<string, unknown>
+  if (typeof r.connId !== 'string' || !r.connId) throw new Error('Invalid upload request: connId must be a non-empty string')
+  if (typeof r.bucket !== 'string' || !r.bucket) throw new Error('Invalid upload request: bucket must be a non-empty string')
+  if (typeof r.destPrefix !== 'string') throw new Error('Invalid upload request: destPrefix must be a string')
+}
+
+function assertCreateFolderRequest(req: unknown): asserts req is CreateFolderRequest {
+  if (!req || typeof req !== 'object') throw new Error('Invalid create folder request')
+  const r = req as Record<string, unknown>
+  if (typeof r.connId !== 'string' || !r.connId) throw new Error('Invalid create folder request: connId must be a non-empty string')
+  if (typeof r.bucket !== 'string' || !r.bucket) throw new Error('Invalid create folder request: bucket must be a non-empty string')
+  if (typeof r.key !== 'string' || !r.key) throw new Error('Invalid create folder request: key must be a non-empty string')
+}
+
 function assertDownloadJobRequest(req: unknown): asserts req is DownloadJobRequest {
   if (
     !req ||
@@ -252,9 +281,24 @@ const files = {
     return ipcRenderer.invoke(IPC.files.download, req)
   },
 
-  delete: (req: DeleteFileRequest): Promise<{ success: boolean; error?: string }> => {
-    assertFileOpBase(req)
+  delete: (req: DeleteRequest): Promise<{ success: boolean; deleted: number; error?: string }> => {
+    assertDeleteRequest(req)
     return ipcRenderer.invoke(IPC.files.delete, req)
+  },
+
+  upload: (req: UploadRequest): Promise<{ success: boolean; cancelled?: boolean; uploaded: number; error?: string }> => {
+    assertUploadRequest(req)
+    return ipcRenderer.invoke(IPC.files.upload, req)
+  },
+
+  uploadFolder: (req: UploadRequest): Promise<{ success: boolean; cancelled?: boolean; uploaded: number; error?: string }> => {
+    assertUploadRequest(req)
+    return ipcRenderer.invoke(IPC.files.uploadFolder, req)
+  },
+
+  createFolder: (req: CreateFolderRequest): Promise<{ success: boolean; error?: string }> => {
+    assertCreateFolderRequest(req)
+    return ipcRenderer.invoke(IPC.files.createFolder, req)
   },
 
   getPresignedUrl: (req: PresignedUrlRequest): Promise<{ url: string }> => {

@@ -8,12 +8,16 @@ import { decryptCredential } from '../credentials'
 import { getConnectionById, getCredentials } from '../connections-store'
 import { assertTrustedSender } from '../ipc-guards'
 import {
+  createFolder,
   createS3Client,
   deleteObject,
+  deleteObjects,
   downloadFile,
   getFilePreview,
   getPresignedUrl,
-  listFiles
+  listAllObjects,
+  listFiles,
+  uploadFile
 } from '../s3-client'
 import { getAllSettings } from '../store'
 
@@ -137,6 +141,56 @@ function getClientForConn(connId: string): ReturnType<typeof createS3Client> {
   )
 }
 
+type DeleteArgs = { connId: string; bucket: string; keys: string[] }
+
+function parseDeleteArgs(args: unknown): DeleteArgs {
+  if (!args || typeof args !== 'object') throw new Error('Invalid arguments: expected an object')
+  const a = args as Record<string, unknown>
+  if (typeof a.connId !== 'string' || !a.connId) throw new Error('Invalid arguments: connId must be a non-empty string')
+  if (typeof a.bucket !== 'string' || !a.bucket) throw new Error('Invalid arguments: bucket must be a non-empty string')
+  if (!Array.isArray(a.keys) || a.keys.length === 0) throw new Error('Invalid arguments: keys must be a non-empty array')
+  for (const k of a.keys as unknown[]) {
+    if (typeof k !== 'string' || !k) throw new Error('Invalid arguments: each key must be a non-empty string')
+  }
+  return { connId: a.connId, bucket: a.bucket, keys: a.keys as string[] }
+}
+
+type UploadArgs = { connId: string; bucket: string; destPrefix: string }
+
+function parseUploadArgs(args: unknown): UploadArgs {
+  if (!args || typeof args !== 'object') throw new Error('Invalid arguments: expected an object')
+  const a = args as Record<string, unknown>
+  if (typeof a.connId !== 'string' || !a.connId) throw new Error('Invalid arguments: connId must be a non-empty string')
+  if (typeof a.bucket !== 'string' || !a.bucket) throw new Error('Invalid arguments: bucket must be a non-empty string')
+  if (typeof a.destPrefix !== 'string') throw new Error('Invalid arguments: destPrefix must be a string')
+  return { connId: a.connId, bucket: a.bucket, destPrefix: a.destPrefix }
+}
+
+type CreateFolderArgs = { connId: string; bucket: string; key: string }
+
+function parseCreateFolderArgs(args: unknown): CreateFolderArgs {
+  if (!args || typeof args !== 'object') throw new Error('Invalid arguments: expected an object')
+  const a = args as Record<string, unknown>
+  if (typeof a.connId !== 'string' || !a.connId) throw new Error('Invalid arguments: connId must be a non-empty string')
+  if (typeof a.bucket !== 'string' || !a.bucket) throw new Error('Invalid arguments: bucket must be a non-empty string')
+  if (typeof a.key !== 'string' || !a.key) throw new Error('Invalid arguments: key must be a non-empty string')
+  return { connId: a.connId, bucket: a.bucket, key: a.key }
+}
+
+async function walkDir(dirPath: string): Promise<string[]> {
+  const entries = await fs.readdir(dirPath, { withFileTypes: true })
+  const files: string[] = []
+  for (const entry of entries) {
+    const fullPath = path.join(dirPath, entry.name)
+    if (entry.isDirectory()) {
+      files.push(...(await walkDir(fullPath)))
+    } else {
+      files.push(fullPath)
+    }
+  }
+  return files
+}
+
 export function registerFilesIpcHandlers(): void {
   ipcMain.handle(IPC.files.list, async (event, args: unknown) => {
     assertTrustedSender(event)
@@ -189,10 +243,82 @@ export function registerFilesIpcHandlers(): void {
 
   ipcMain.handle(IPC.files.delete, async (event, args: unknown) => {
     assertTrustedSender(event)
-    const { connId, bucket, key } = parseFileOpArgs(args)
+    const { connId, bucket, keys } = parseDeleteArgs(args)
     try {
       const client = getClientForConn(connId)
-      await deleteObject(client, bucket, key)
+      const allKeys: string[] = []
+      for (const key of keys) {
+        if (key.endsWith('/')) {
+          const folderKeys = await listAllObjects(client, bucket, key)
+          allKeys.push(...folderKeys)
+        } else {
+          allKeys.push(key)
+        }
+      }
+      if (allKeys.length === 0) {
+        for (const key of keys) {
+          await deleteObject(client, bucket, key)
+        }
+        return { success: true, deleted: keys.length }
+      }
+      for (let i = 0; i < allKeys.length; i += 1000) {
+        await deleteObjects(client, bucket, allKeys.slice(i, i + 1000))
+      }
+      return { success: true, deleted: allKeys.length }
+    } catch (err) {
+      return { success: false, deleted: 0, error: err instanceof Error ? err.message : String(err) }
+    }
+  })
+
+  ipcMain.handle(IPC.files.upload, async (event, args: unknown) => {
+    assertTrustedSender(event)
+    const { connId, bucket, destPrefix } = parseUploadArgs(args)
+    try {
+      const win = BrowserWindow.fromWebContents(event.sender)
+      const result = win
+        ? await dialog.showOpenDialog(win, { properties: ['openFile', 'multiSelections'] })
+        : await dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] })
+      if (result.canceled) return { success: false, cancelled: true, uploaded: 0 }
+      const client = getClientForConn(connId)
+      for (const localPath of result.filePaths) {
+        const fileName = path.basename(localPath)
+        await uploadFile(client, bucket, destPrefix + fileName, localPath)
+      }
+      return { success: true, uploaded: result.filePaths.length }
+    } catch (err) {
+      return { success: false, uploaded: 0, error: err instanceof Error ? err.message : String(err) }
+    }
+  })
+
+  ipcMain.handle(IPC.files.uploadFolder, async (event, args: unknown) => {
+    assertTrustedSender(event)
+    const { connId, bucket, destPrefix } = parseUploadArgs(args)
+    try {
+      const win = BrowserWindow.fromWebContents(event.sender)
+      const result = win
+        ? await dialog.showOpenDialog(win, { properties: ['openDirectory'] })
+        : await dialog.showOpenDialog({ properties: ['openDirectory'] })
+      if (result.canceled) return { success: false, cancelled: true, uploaded: 0 }
+      const localFolderPath = result.filePaths[0]
+      const folderName = path.basename(localFolderPath)
+      const client = getClientForConn(connId)
+      const allLocalFiles = await walkDir(localFolderPath)
+      for (const localPath of allLocalFiles) {
+        const relative = path.relative(localFolderPath, localPath).split(path.sep).join('/')
+        await uploadFile(client, bucket, destPrefix + folderName + '/' + relative, localPath)
+      }
+      return { success: true, uploaded: allLocalFiles.length }
+    } catch (err) {
+      return { success: false, uploaded: 0, error: err instanceof Error ? err.message : String(err) }
+    }
+  })
+
+  ipcMain.handle(IPC.files.createFolder, async (event, args: unknown) => {
+    assertTrustedSender(event)
+    const { connId, bucket, key } = parseCreateFolderArgs(args)
+    try {
+      const client = getClientForConn(connId)
+      await createFolder(client, bucket, key)
       return { success: true }
     } catch (err) {
       return { success: false, error: err instanceof Error ? err.message : String(err) }

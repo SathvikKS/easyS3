@@ -1,8 +1,18 @@
 import * as React from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, File, Folder } from 'lucide-react'
 
 import { ActionBar } from '@/components/action-bar'
 import { Button } from '@/components/ui/button'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog'
 import { useDebouncedValue } from '@/hooks/use-debounced-value'
 import { FileCard } from '@/components/file-card'
 import { FileListHeader, FileRow } from '@/components/file-row'
@@ -13,6 +23,8 @@ import { PreviewPanel } from '@/components/preview-panel'
 import { sortFiles, type SortDirection, type SortField } from '@/lib/sort-files'
 import { toastError, toastSuccess } from '@/lib/toast'
 import type { Bucket, Connection, LayoutMode, S3File, ViewerContext } from '@/lib/types'
+
+type DeleteItem = { key: string; displayName: string; isFolder: boolean }
 
 function filterFiles(files: S3File[], query: string): S3File[] {
   const q = query.trim().toLowerCase()
@@ -54,6 +66,8 @@ export function ExplorerScreen({
   const [path, setPath] = React.useState<string[]>([])
   const [newFolderName, setNewFolderName] = React.useState<string | null>(null)
   const [search, setSearch] = React.useState('')
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = React.useState(false)
+  const [pendingDelete, setPendingDelete] = React.useState<DeleteItem[]>([])
   const debouncedSearch = useDebouncedValue(search, 300)
   const [sortField, setSortField] = React.useState<SortField>('name')
   const [sortDirection, setSortDirection] = React.useState<SortDirection>('asc')
@@ -149,6 +163,70 @@ export function ExplorerScreen({
     }
   }, [conn.id, bucket.name, path, selFiles, sortedFiles])
 
+  const handleDelete = React.useCallback((): void => {
+    const prefix = path.length > 0 ? path.join('/') + '/' : ''
+    const selected = sortedFiles.filter((f) => selFiles.has(f.name))
+    if (selected.length === 0) return
+    const items: DeleteItem[] = selected.map((f) => ({
+      key: f.type === 'folder' ? prefix + f.name + '/' : prefix + f.name,
+      displayName: f.type === 'folder' ? f.name + '/' : f.name,
+      isFolder: f.type === 'folder'
+    }))
+    setPendingDelete(items)
+    setDeleteConfirmOpen(true)
+  }, [path, selFiles, sortedFiles])
+
+  const confirmDelete = React.useCallback(async (): Promise<void> => {
+    setDeleteConfirmOpen(false)
+    const keys = pendingDelete.map((d) => d.key)
+    try {
+      const result = await window.api.files.delete({ connId: conn.id, bucket: bucket.name, keys })
+      if (result.success) {
+        const n = result.deleted
+        toastSuccess('Deleted', `${n} item${n === 1 ? '' : 's'} deleted`)
+        setSelFiles(new Set())
+        void fetchFiles()
+      } else {
+        toastError('Delete failed', result.error)
+      }
+    } catch (err) {
+      toastError('Delete failed', err instanceof Error ? err.message : undefined)
+    }
+    setPendingDelete([])
+  }, [conn.id, bucket.name, pendingDelete, setSelFiles, fetchFiles])
+
+  const handleUpload = React.useCallback(async (): Promise<void> => {
+    const prefix = path.length > 0 ? path.join('/') + '/' : ''
+    try {
+      const result = await window.api.files.upload({ connId: conn.id, bucket: bucket.name, destPrefix: prefix })
+      if (result.success) {
+        const n = result.uploaded
+        toastSuccess('Uploaded', `${n} file${n === 1 ? '' : 's'} uploaded`)
+        void fetchFiles()
+      } else if (!result.cancelled) {
+        toastError('Upload failed', result.error)
+      }
+    } catch (err) {
+      toastError('Upload failed', err instanceof Error ? err.message : undefined)
+    }
+  }, [conn.id, bucket.name, path, fetchFiles])
+
+  const handleUploadFolder = React.useCallback(async (): Promise<void> => {
+    const prefix = path.length > 0 ? path.join('/') + '/' : ''
+    try {
+      const result = await window.api.files.uploadFolder({ connId: conn.id, bucket: bucket.name, destPrefix: prefix })
+      if (result.success) {
+        const n = result.uploaded
+        toastSuccess('Uploaded', `${n} file${n === 1 ? '' : 's'} uploaded`)
+        void fetchFiles()
+      } else if (!result.cancelled) {
+        toastError('Upload failed', result.error)
+      }
+    } catch (err) {
+      toastError('Upload failed', err instanceof Error ? err.message : undefined)
+    }
+  }, [conn.id, bucket.name, path, fetchFiles])
+
   const handleSort = (field: SortField): void => {
     if (field === sortField) {
       setSortDirection((d) => (d === 'asc' ? 'desc' : 'asc'))
@@ -168,15 +246,25 @@ export function ExplorerScreen({
     setNewFolderName(name)
   }
 
-  const finalizeFolder = (val: string): void => {
+  const finalizeFolder = async (val: string): Promise<void> => {
     const trimmed = val.trim()
-    if (trimmed) {
-      setRealFiles((prev) => [
-        { name: trimmed, type: 'folder', size: '—', modified: 'just now', mime: 'folder' },
-        ...prev
-      ])
-    }
     setNewFolderName(null)
+    if (!trimmed) return
+    const prefix = path.length > 0 ? path.join('/') + '/' : ''
+    try {
+      const result = await window.api.files.createFolder({
+        connId: conn.id,
+        bucket: bucket.name,
+        key: prefix + trimmed + '/'
+      })
+      if (result.success) {
+        void fetchFiles()
+      } else {
+        toastError('Create folder failed', result.error)
+      }
+    } catch (err) {
+      toastError('Create folder failed', err instanceof Error ? err.message : undefined)
+    }
   }
 
   const allSel = selFiles.size === sortedFiles.length && sortedFiles.length > 0
@@ -395,7 +483,10 @@ export function ExplorerScreen({
           search={search}
           onSearchChange={setSearch}
           onLayout={onLayout}
+          onUpload={handleUpload}
+          onUploadFolder={handleUploadFolder}
           onNewFolder={handleNewFolder}
+          onDelete={handleDelete}
           onDownload={handleDownload}
         />
         {layout === 'list' ? (
@@ -507,6 +598,37 @@ export function ExplorerScreen({
           }}
         />
       )}
+      <AlertDialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Delete {pendingDelete.length} item{pendingDelete.length !== 1 ? 's' : ''}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="max-h-48 overflow-y-auto rounded-md border bg-muted/30 px-3 py-2">
+            {pendingDelete.map((d) => (
+              <div key={d.key} className="flex items-center gap-1.5 py-0.5 text-[12px]">
+                {d.isFolder ? (
+                  <Folder className="size-3 shrink-0 text-muted-foreground" />
+                ) : (
+                  <File className="size-3 shrink-0 text-muted-foreground" />
+                )}
+                <span className="truncate font-mono text-[11.5px]">{d.displayName}</span>
+              </div>
+            ))}
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => void confirmDelete()}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

@@ -23,6 +23,9 @@ export const IPC = {
     list: 'files:list',
     download: 'files:download',
     delete: 'files:delete',
+    upload: 'files:upload',
+    uploadFolder: 'files:uploadFolder',
+    createFolder: 'files:createFolder',
     getPresignedUrl: 'files:getPresignedUrl',
     getS3Url: 'files:getS3Url',
     getPreview: 'files:getPreview'

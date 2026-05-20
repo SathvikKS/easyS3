@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
   Download,
+  FolderUp,
   Grid2x2,
   Link,
   List,
@@ -22,6 +23,7 @@ type ActionBarProps = {
   onSearchChange: (value: string) => void
   onLayout: (mode: LayoutMode) => void
   onUpload?: () => void
+  onUploadFolder?: () => void
   onNewFolder?: () => void
   onDelete?: () => void
   onCopyUrl?: () => void
@@ -35,6 +37,7 @@ export function ActionBar({
   onSearchChange,
   onLayout,
   onUpload,
+  onUploadFolder,
   onNewFolder,
   onDelete,
   onCopyUrl,
@@ -46,6 +49,10 @@ export function ActionBar({
         <Button variant="outline" size="xs" onClick={onUpload}>
           <Upload />
           <span>Upload</span>
+        </Button>
+        <Button variant="outline" size="xs" onClick={onUploadFolder}>
+          <FolderUp />
+          <span>Upload Folder</span>
         </Button>
         <Button variant="outline" size="xs" onClick={onNewFolder}>
           New Folder
