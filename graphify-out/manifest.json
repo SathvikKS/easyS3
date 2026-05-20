@@ -160,9 +160,9 @@
     "semantic_hash": "0d8fac4a2f789833081249b70820a413"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\nav-bar.tsx": {
-    "mtime": 1779187109.748509,
-    "ast_hash": "ee98769e5c2607fba4c51ea3d6611b39",
-    "semantic_hash": "ee98769e5c2607fba4c51ea3d6611b39"
+    "mtime": 1779259854.7176726,
+    "ast_hash": "78cd72b456be847192dde1f490746fd7",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\new-folder.tsx": {
     "mtime": 1779186780.4810197,
@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\screens\\explorer-screen.tsx": {
-    "mtime": 1779253024.6422272,
-    "ast_hash": "94ff5397c89d352951314d0095dc2a94",
+    "mtime": 1779259890.066088,
+    "ast_hash": "acde8a0394e5d7017b2dd2664311c377",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\shared\\ipc.ts": {

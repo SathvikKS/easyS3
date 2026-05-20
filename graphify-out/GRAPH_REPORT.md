@@ -1,16 +1,16 @@
 # Graph Report - easyS3  (2026-05-20)
 
 ## Corpus Check
-- 68 files · ~21,113 words
+- 68 files · ~21,384 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 440 nodes · 717 edges · 26 communities (23 shown, 3 thin omitted)
+- 443 nodes · 748 edges · 26 communities (23 shown, 3 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `577ef175`
+- Built from commit: `133c0118`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -40,14 +40,14 @@
 - [[_COMMUNITY_Community 26|Community 26]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 61 edges
+1. `cn()` - 62 edges
 2. `scripts` - 14 edges
-3. `Button()` - 12 edges
-4. `IPC Security Documentation` - 10 edges
-5. `S3File` - 9 edges
-6. `IPC Security` - 9 edges
-7. `easyS3 CLAUDE Agent Guidelines` - 9 edges
-8. `Connection` - 8 edges
+3. `Button()` - 13 edges
+4. `S3File` - 10 edges
+5. `IPC Security Documentation` - 10 edges
+6. `Connection` - 9 edges
+7. `IPC Security` - 9 edges
+8. `easyS3 CLAUDE Agent Guidelines` - 9 edges
 9. `easyS3 Agent Guidelines` - 8 edges
 10. `GitNexus Guide Skill` - 8 edges
 
@@ -71,24 +71,24 @@
 ## Communities (26 total, 3 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.05
-Nodes (53): FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps, SortableHeader() (+45 more)
+Cohesion: 0.08
+Nodes (44): ActionBar(), FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps (+36 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.07
-Nodes (34): ActionBar(), ActionBarProps, LayoutToggle(), LayoutToggleProps, Crumb, NavBar(), NavBarProps, NavButton() (+26 more)
+Nodes (37): ActionBarProps, LayoutToggle(), LayoutToggleProps, SortableHeader(), Crumb, NavBarProps, NavButton(), NavButtonProps (+29 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.08
-Nodes (31): assertTrustedSender(), isTrustedWebContents(), parseOptionalPath(), parseSettingKey(), parseSettingValue(), getAllSettings(), getSetting(), getStore() (+23 more)
+Cohesion: 0.07
+Nodes (34): registerConnectionIpcHandlers(), registerIpcHandlers(), registerSettingsIpcHandlers(), assertTrustedSender(), isTrustedWebContents(), parseOptionalPath(), parseSettingKey(), parseSettingValue() (+26 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.05
 Nodes (36): author, dependencies, @aws-sdk/client-s3, @aws-sdk/s3-request-presigner, class-variance-authority, clsx, electron-store, @electron-toolkit/utils (+28 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.12
-Nodes (21): Connection, ConnectionFormValues, ConnectResult, formatLastSeen(), registerConnectionIpcHandlers(), toConnection(), registerIpcHandlers(), registerSettingsIpcHandlers() (+13 more)
+Cohesion: 0.16
+Nodes (18): Connection, ConnectionFormValues, ConnectResult, formatLastSeen(), toConnection(), addConnection(), ConnectionsData, CredentialPair (+10 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.18
@@ -103,8 +103,8 @@ Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.07
-Nodes (33): AddConnectionDialog(), AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS, SettingsDialog(), SettingsDialogBody() (+25 more)
+Cohesion: 0.06
+Nodes (40): AddConnectionDialog(), AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS, FileViewer(), FileViewerProps (+32 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.18
@@ -151,7 +151,7 @@ Cohesion: 0.20
 Nodes (9): Build, code:bash ($ npm install), code:bash ($ npm run dev), code:bash (# For windows), Development, easys3, Install, Project Setup (+1 more)
 
 ## Knowledge Gaps
-- **187 isolated node(s):** `name`, `version`, `description`, `main`, `author` (+182 more)
+- **183 isolated node(s):** `name`, `version`, `description`, `main`, `author` (+178 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -159,16 +159,16 @@ Nodes (9): Build, code:bash ($ npm install), code:bash ($ npm run dev), code:bas
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `cn()` connect `Community 1` to `Community 8`, `Community 0`, `Community 3`?**
-  _High betweenness centrality (0.235) - this node is a cross-community bridge._
+  _High betweenness centrality (0.239) - this node is a cross-community bridge._
 - **Why does `clsx` connect `Community 3` to `Community 1`?**
   _High betweenness centrality (0.141) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `description` to the rest of the system?**
-  _188 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _184 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.054385964912280704 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07656341320864991 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.06802721088435375 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06604324956165984 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.08478513356562137 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07446808510638298 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._
