@@ -1,16 +1,16 @@
-# Graph Report - easyS3  (2026-05-19)
+# Graph Report - easyS3  (2026-05-20)
 
 ## Corpus Check
-- 63 files · ~15,451 words
+- 68 files · ~21,113 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 434 nodes · 708 edges · 27 communities (24 shown, 3 thin omitted)
+- 440 nodes · 717 edges · 26 communities (23 shown, 3 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c86f2829`
+- Built from commit: `577ef175`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,7 +24,6 @@
 - [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Community 7|Community 7]]
 - [[_COMMUNITY_Community 8|Community 8]]
-- [[_COMMUNITY_Community 9|Community 9]]
 - [[_COMMUNITY_Community 10|Community 10]]
 - [[_COMMUNITY_Community 11|Community 11]]
 - [[_COMMUNITY_Community 12|Community 12]]
@@ -43,7 +42,7 @@
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 61 edges
 2. `scripts` - 14 edges
-3. `Button()` - 11 edges
+3. `Button()` - 12 edges
 4. `IPC Security Documentation` - 10 edges
 5. `S3File` - 9 edges
 6. `IPC Security` - 9 edges
@@ -69,23 +68,23 @@
 - **GitNexus Agent Workflow Skills** — skill_gitnexus_cli, skill_gitnexus_debugging, skill_gitnexus_exploring, skill_gitnexus_guide, skill_gitnexus_impact_analysis, skill_gitnexus_refactoring [EXTRACTED 1.00]
 - **Electron Build and Distribution Pipeline** — electron_builder_yml_build_config, dev_app_update_yml_auto_update, resources_icon_png, readme_project_overview [INFERRED 0.85]
 
-## Communities (27 total, 3 thin omitted)
+## Communities (26 total, 3 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.06
-Nodes (48): AddConnectionDialog(), FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps (+40 more)
+Cohesion: 0.05
+Nodes (53): FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps, SortableHeader() (+45 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.06
-Nodes (45): ActionBar(), ActionBarProps, LayoutToggle(), LayoutToggleProps, AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef (+37 more)
+Cohesion: 0.07
+Nodes (34): ActionBar(), ActionBarProps, LayoutToggle(), LayoutToggleProps, Crumb, NavBar(), NavBarProps, NavButton() (+26 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.08
 Nodes (31): assertTrustedSender(), isTrustedWebContents(), parseOptionalPath(), parseSettingKey(), parseSettingValue(), getAllSettings(), getSetting(), getStore() (+23 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.06
-Nodes (33): author, dependencies, @aws-sdk/client-s3, class-variance-authority, clsx, electron-store, @electron-toolkit/utils, electron-updater (+25 more)
+Cohesion: 0.05
+Nodes (36): author, dependencies, @aws-sdk/client-s3, @aws-sdk/s3-request-presigner, class-variance-authority, clsx, electron-store, @electron-toolkit/utils (+28 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.12
@@ -104,12 +103,8 @@ Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.18
-Nodes (11): applyThemeClass(), initialState, resolveAppliedTheme(), ThemeProvider(), ThemeProviderContext, ThemeProviderProps, ThemeProviderState, getSettingsSync() (+3 more)
-
-### Community 9 - "Community 9"
-Cohesion: 0.13
-Nodes (13): ConnectionsScreen(), ConnectionsScreenProps, DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem() (+5 more)
+Cohesion: 0.07
+Nodes (33): AddConnectionDialog(), AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS, SettingsDialog(), SettingsDialogBody() (+25 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.18
@@ -156,24 +151,24 @@ Cohesion: 0.20
 Nodes (9): Build, code:bash ($ npm install), code:bash ($ npm run dev), code:bash (# For windows), Development, easys3, Install, Project Setup (+1 more)
 
 ## Knowledge Gaps
-- **182 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+177 more)
+- **187 isolated node(s):** `name`, `version`, `description`, `main`, `author` (+182 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 1` to `Community 0`, `Community 9`, `Community 3`?**
-  _High betweenness centrality (0.232) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 1` to `Community 8`, `Community 0`, `Community 3`?**
+  _High betweenness centrality (0.235) - this node is a cross-community bridge._
 - **Why does `clsx` connect `Community 3` to `Community 1`?**
-  _High betweenness centrality (0.135) - this node is a cross-community bridge._
-- **What connects `$schema`, `style`, `rsc` to the rest of the system?**
-  _183 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.141) - this node is a cross-community bridge._
+- **What connects `name`, `version`, `description` to the rest of the system?**
+  _188 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.058384547848990345 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.054385964912280704 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.06377204884667571 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06802721088435375 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08478513356562137 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._
