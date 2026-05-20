@@ -20,6 +20,11 @@ export const IPC = {
     list: 'buckets:list'
   },
   files: {
-    list: 'files:list'
+    list: 'files:list',
+    download: 'files:download',
+    delete: 'files:delete',
+    getPresignedUrl: 'files:getPresignedUrl',
+    getS3Url: 'files:getS3Url',
+    getPreview: 'files:getPreview'
   }
 } as const

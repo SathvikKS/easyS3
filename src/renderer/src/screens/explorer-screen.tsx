@@ -399,7 +399,13 @@ export function ExplorerScreen({
         <PreviewPanel
           file={previewFile}
           bucket={bucket.name}
+          connId={conn.id}
+          keyPrefix={path.length > 0 ? path.join('/') + '/' : ''}
           onClose={() => setPreviewFile(null)}
+          onDeleted={() => {
+            setPreviewFile(null)
+            void fetchFiles()
+          }}
         />
       )}
     </div>

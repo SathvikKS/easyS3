@@ -162,6 +162,17 @@ const buckets = {
   }
 }
 
+type PreviewResult =
+  | { type: 'url'; url: string }
+  | { type: 'text'; content: string }
+  | { type: 'none' }
+
+type DownloadFileRequest = { connId: string; bucket: string; key: string; destPath: string }
+type DeleteFileRequest = { connId: string; bucket: string; key: string }
+type PresignedUrlRequest = { connId: string; bucket: string; key: string; expiresIn?: number }
+type S3UrlRequest = { connId: string; bucket: string; key: string }
+type PreviewRequest = { connId: string; bucket: string; key: string; fileType: string }
+
 function assertListFilesRequest(req: unknown): asserts req is ListFilesRequest {
   if (
     !req ||
@@ -183,10 +194,63 @@ function assertListFilesRequest(req: unknown): asserts req is ListFilesRequest {
   }
 }
 
+function assertFileOpBase(
+  req: unknown
+): asserts req is { connId: string; bucket: string; key: string } {
+  if (
+    !req ||
+    typeof req !== 'object' ||
+    typeof (req as Record<string, unknown>).connId !== 'string' ||
+    !(req as Record<string, unknown>).connId ||
+    typeof (req as Record<string, unknown>).bucket !== 'string' ||
+    !(req as Record<string, unknown>).bucket ||
+    typeof (req as Record<string, unknown>).key !== 'string' ||
+    !(req as Record<string, unknown>).key
+  ) {
+    throw new Error('Invalid file operation request')
+  }
+}
+
 const files = {
   list: (req: ListFilesRequest): Promise<ListFilesResult> => {
     assertListFilesRequest(req)
     return ipcRenderer.invoke(IPC.files.list, req)
+  },
+
+  download: (req: DownloadFileRequest): Promise<{ success: boolean; error?: string }> => {
+    assertFileOpBase(req)
+    if (typeof req.destPath !== 'string' || !req.destPath) {
+      return Promise.reject(new Error('Invalid file download request: destPath is required'))
+    }
+    return ipcRenderer.invoke(IPC.files.download, req)
+  },
+
+  delete: (req: DeleteFileRequest): Promise<{ success: boolean; error?: string }> => {
+    assertFileOpBase(req)
+    return ipcRenderer.invoke(IPC.files.delete, req)
+  },
+
+  getPresignedUrl: (req: PresignedUrlRequest): Promise<{ url: string }> => {
+    assertFileOpBase(req)
+    if (req.expiresIn !== undefined && (typeof req.expiresIn !== 'number' || req.expiresIn <= 0)) {
+      return Promise.reject(
+        new Error('Invalid presigned URL request: expiresIn must be a positive number')
+      )
+    }
+    return ipcRenderer.invoke(IPC.files.getPresignedUrl, req)
+  },
+
+  getS3Url: (req: S3UrlRequest): Promise<{ url: string }> => {
+    assertFileOpBase(req)
+    return ipcRenderer.invoke(IPC.files.getS3Url, req)
+  },
+
+  getPreview: (req: PreviewRequest): Promise<PreviewResult> => {
+    assertFileOpBase(req)
+    if (typeof req.fileType !== 'string') {
+      return Promise.reject(new Error('Invalid preview request: fileType must be a string'))
+    }
+    return ipcRenderer.invoke(IPC.files.getPreview, req)
   }
 }
 
@@ -205,3 +269,4 @@ export type EasyS3Connections = typeof connections
 export type EasyS3Buckets = typeof buckets
 export type EasyS3Files = typeof files
 export type EasyS3Api = typeof api
+export type EasyS3PreviewResult = PreviewResult

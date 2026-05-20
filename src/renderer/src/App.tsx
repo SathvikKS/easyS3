@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { Toaster } from '@/components/ui/sonner'
 import { AddConnectionDialog } from '@/components/add-connection-dialog'
 import { SettingsDialog } from '@/components/settings-dialog'
 import { FileViewer } from '@/components/file-viewer'
@@ -274,6 +275,7 @@ function App(): React.JSX.Element {
   return (
     <ThemeProvider>
       <EasyS3App />
+      <Toaster />
     </ThemeProvider>
   )
 }

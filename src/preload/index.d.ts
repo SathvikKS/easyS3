@@ -86,8 +86,24 @@ export interface EasyS3Buckets {
   list: (id: string) => Promise<BucketInfo[]>
 }
 
+export type PreviewResult =
+  | { type: 'url'; url: string }
+  | { type: 'text'; content: string }
+  | { type: 'none' }
+
+export type DownloadFileRequest = { connId: string; bucket: string; key: string; destPath: string }
+export type DeleteFileRequest = { connId: string; bucket: string; key: string }
+export type PresignedUrlRequest = { connId: string; bucket: string; key: string; expiresIn?: number }
+export type S3UrlRequest = { connId: string; bucket: string; key: string }
+export type PreviewRequest = { connId: string; bucket: string; key: string; fileType: string }
+
 export interface EasyS3Files {
   list: (req: ListFilesRequest) => Promise<ListFilesResult>
+  download: (req: DownloadFileRequest) => Promise<{ success: boolean; error?: string }>
+  delete: (req: DeleteFileRequest) => Promise<{ success: boolean; error?: string }>
+  getPresignedUrl: (req: PresignedUrlRequest) => Promise<{ url: string }>
+  getS3Url: (req: S3UrlRequest) => Promise<{ url: string }>
+  getPreview: (req: PreviewRequest) => Promise<PreviewResult>
 }
 
 export interface EasyS3Api {

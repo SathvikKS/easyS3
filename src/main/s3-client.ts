@@ -1,9 +1,14 @@
+import { writeFile } from 'fs/promises'
+
 import {
+  DeleteObjectCommand,
   GetBucketLocationCommand,
+  GetObjectCommand,
   ListBucketsCommand,
   ListObjectsV2Command,
   S3Client
 } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 
 const AWS_DEFAULT_ENDPOINT = 's3.amazonaws.com'
 
@@ -225,6 +230,62 @@ export async function listFiles(
     isTruncated: response.IsTruncated ?? false,
     keyCount: response.KeyCount ?? 0
   }
+}
+
+export async function downloadFile(
+  client: S3Client,
+  bucket: string,
+  key: string,
+  destPath: string
+): Promise<void> {
+  const response = await client.send(new GetObjectCommand({ Bucket: bucket, Key: key }))
+  if (!response.Body) throw new Error('Empty response body from S3')
+  const bytes = await response.Body.transformToByteArray()
+  await writeFile(destPath, Buffer.from(bytes))
+}
+
+export async function deleteObject(
+  client: S3Client,
+  bucket: string,
+  key: string
+): Promise<void> {
+  await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }))
+}
+
+export async function getPresignedUrl(
+  client: S3Client,
+  bucket: string,
+  key: string,
+  expiresIn = 3600
+): Promise<string> {
+  const command = new GetObjectCommand({ Bucket: bucket, Key: key })
+  return getSignedUrl(client, command, { expiresIn })
+}
+
+export type PreviewResult =
+  | { type: 'url'; url: string }
+  | { type: 'text'; content: string }
+  | { type: 'none' }
+
+export async function getFilePreview(
+  client: S3Client,
+  bucket: string,
+  key: string,
+  fileType: string
+): Promise<PreviewResult> {
+  if (fileType === 'folder' || fileType === 'other') {
+    return { type: 'none' }
+  }
+  if (fileType === 'image' || fileType === 'audio' || fileType === 'video') {
+    const url = await getPresignedUrl(client, bucket, key, 300)
+    return { type: 'url', url }
+  }
+  const response = await client.send(
+    new GetObjectCommand({ Bucket: bucket, Key: key, Range: 'bytes=0-4095' })
+  )
+  if (!response.Body) return { type: 'text', content: '' }
+  const bytes = await response.Body.transformToByteArray()
+  return { type: 'text', content: Buffer.from(bytes).toString('utf-8') }
 }
 
 export async function listBuckets(client: S3Client, defaultRegion: string): Promise<BucketInfo[]> {
