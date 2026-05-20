@@ -14,6 +14,7 @@ import type {
   LayoutMode,
   S3File,
   Screen,
+  Tab,
   ViewerContext
 } from '@/lib/types'
 import { BucketsScreen } from '@/screens/buckets-screen'
@@ -22,13 +23,8 @@ import { ExplorerScreen } from '@/screens/explorer-screen'
 
 function EasyS3App(): React.JSX.Element {
   const [connections, setConnections] = React.useState<Connection[]>([])
-  const [screen, setScreen] = React.useState<Screen>('connections')
-  const [openConns, setOpenConns] = React.useState<Connection[]>([])
-  const [activeConn, setActiveConn] = React.useState<Connection | null>(null)
-  const [activeBucket, setActiveBucket] = React.useState<Bucket | null>(null)
-  const [buckets, setBuckets] = React.useState<Bucket[]>([])
-  const [bucketsLoading, setBucketsLoading] = React.useState(false)
-  const [bucketsError, setBucketsError] = React.useState<string | null>(null)
+  const [tabs, setTabs] = React.useState<Tab[]>([])
+  const [activeTabId, setActiveTabId] = React.useState<string | null>(null)
   const [layout, setLayout] = React.useState<LayoutMode>('list')
   const [selFiles, setSelFiles] = React.useState<Set<string>>(new Set())
   const [previewFile, setPreviewFile] = React.useState<S3File | null>(null)
@@ -38,24 +34,15 @@ function EasyS3App(): React.JSX.Element {
   const [showSettings, setShowSettings] = React.useState(false)
   const [connectingId, setConnectingId] = React.useState<string | null>(null)
 
+  const activeTab = tabs.find((t) => t.tabId === activeTabId) ?? null
+  const activeConn = activeTab?.conn ?? null
+  const activeBucket = activeTab?.activeBucket ?? null
+  const screen: Screen = !activeTab ? 'connections' : activeTab.screen
+
   React.useEffect(() => {
     window.api.connections.getAll().then((all) => {
       setConnections(all)
     })
-  }, [])
-
-  const fetchBuckets = React.useCallback((connId: string): void => {
-    setBucketsLoading(true)
-    setBucketsError(null)
-    window.api.buckets
-      .list(connId)
-      .then((list) => setBuckets(list))
-      .catch((err: unknown) => {
-        const msg = err instanceof Error ? err.message : 'Failed to load buckets'
-        setBucketsError(msg)
-        setBuckets([])
-      })
-      .finally(() => setBucketsLoading(false))
   }, [])
 
   const resetExplorerState = (): void => {
@@ -64,68 +51,92 @@ function EasyS3App(): React.JSX.Element {
     setViewerFile(null)
   }
 
+  const fetchBucketsForTab = (tabId: string, connId: string): void => {
+    setTabs((prev) =>
+      prev.map((t) => t.tabId === tabId ? { ...t, bucketsLoading: true, bucketsError: null } : t)
+    )
+    window.api.buckets
+      .list(connId)
+      .then((list) => {
+        setTabs((prev) =>
+          prev.map((t) => t.tabId === tabId ? { ...t, buckets: list, bucketsLoading: false } : t)
+        )
+      })
+      .catch((err: unknown) => {
+        const msg = err instanceof Error ? err.message : 'Failed to load buckets'
+        setTabs((prev) =>
+          prev.map((t) =>
+            t.tabId === tabId ? { ...t, bucketsError: msg, buckets: [], bucketsLoading: false } : t
+          )
+        )
+      })
+  }
+
   const openConn = (conn: Connection): void => {
-    setOpenConns((prev) => (prev.find((c) => c.name === conn.name) ? prev : [...prev, conn]))
-    setActiveConn(conn)
-    setActiveBucket(null)
-    setScreen('buckets')
+    const tabId = crypto.randomUUID()
+    const newTab: Tab = {
+      tabId,
+      conn,
+      screen: 'buckets',
+      activeBucket: null,
+      buckets: [],
+      bucketsLoading: true,
+      bucketsError: null
+    }
+    setTabs((prev) => [...prev, newTab])
+    setActiveTabId(tabId)
     resetExplorerState()
-    setBuckets([])
-    fetchBuckets(conn.id)
+    fetchBucketsForTab(tabId, conn.id)
   }
 
-  const switchTab = (conn: Connection): void => {
-    const nextScreen = activeBucket && screen === 'explorer' ? 'explorer' : 'buckets'
-    setActiveConn(conn)
-    setScreen(nextScreen)
-    if (nextScreen === 'buckets' && conn.id !== activeConn?.id) {
-      setBuckets([])
-      fetchBuckets(conn.id)
-    }
+  const switchTab = (tabId: string): void => {
+    setActiveTabId(tabId)
+    resetExplorerState()
   }
 
-  const closeTab = (name: string): void => {
-    const next = openConns.filter((c) => c.name !== name)
-    setOpenConns(next)
-    if (activeConn?.name === name) {
-      if (next.length > 0) {
-        setActiveConn(next[next.length - 1])
-        setScreen('buckets')
-      } else {
-        setActiveConn(null)
-        setActiveBucket(null)
-        setScreen('connections')
+  const closeTab = (tabId: string): void => {
+    setTabs((prev) => {
+      const next = prev.filter((t) => t.tabId !== tabId)
+      if (activeTabId === tabId) {
+        setActiveTabId(next.length > 0 ? next[next.length - 1].tabId : null)
+        resetExplorerState()
       }
-      resetExplorerState()
-    }
+      return next
+    })
   }
 
   const goHome = (): void => {
-    setScreen('connections')
+    setActiveTabId(null)
   }
 
   const browseBucket = (bucket: Bucket): void => {
-    setActiveBucket(bucket)
-    setScreen('explorer')
+    if (!activeTabId) return
+    setTabs((prev) =>
+      prev.map((t) =>
+        t.tabId === activeTabId ? { ...t, activeBucket: bucket, screen: 'explorer' } : t
+      )
+    )
     resetExplorerState()
   }
 
   const disconnect = (): void => {
-    if (!activeConn) return
-    setOpenConns((prev) => prev.filter((c) => c.name !== activeConn.name))
-    setActiveConn(null)
-    setActiveBucket(null)
-    setScreen('connections')
-    resetExplorerState()
+    if (!activeTabId) return
+    closeTab(activeTabId)
   }
 
   const handleCrumb = (idx: number): void => {
+    if (!activeTabId) return
     if (idx === 0) {
-      setScreen('buckets')
-      setActiveBucket(null)
+      setTabs((prev) =>
+        prev.map((t) =>
+          t.tabId === activeTabId ? { ...t, screen: 'buckets', activeBucket: null } : t
+        )
+      )
       resetExplorerState()
     } else if (idx === 1) {
-      setScreen('explorer')
+      setTabs((prev) =>
+        prev.map((t) => t.tabId === activeTabId ? { ...t, screen: 'explorer' } : t)
+      )
     }
   }
 
@@ -150,15 +161,22 @@ function EasyS3App(): React.JSX.Element {
     if (!editConn) return
     const updated = await window.api.connections.update(editConn.id, values)
     setConnections((prev) => prev.map((c) => (c.id === editConn.id ? updated : c)))
-    setOpenConns((prev) => prev.map((c) => (c.id === editConn.id ? updated : c)))
-    if (activeConn?.id === editConn.id) setActiveConn(updated)
+    setTabs((prev) =>
+      prev.map((t) => t.conn.id === editConn.id ? { ...t, conn: updated } : t)
+    )
     setEditConn(null)
   }
 
   const handleDelete = async (conn: Connection): Promise<void> => {
     await window.api.connections.delete(conn.id)
     setConnections((prev) => prev.filter((c) => c.id !== conn.id))
-    closeTab(conn.name)
+    const next = tabs.filter((t) => t.conn.id !== conn.id)
+    const activeWasDeleted = activeTabId !== null && !next.find((t) => t.tabId === activeTabId)
+    setTabs(next)
+    if (activeWasDeleted) {
+      setActiveTabId(next.length > 0 ? next[next.length - 1].tabId : null)
+      resetExplorerState()
+    }
   }
 
   const handleDuplicate = async (conn: Connection): Promise<void> => {
@@ -177,7 +195,7 @@ function EasyS3App(): React.JSX.Element {
           lastSeen: result.lastSeen
         }
         setConnections((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
-        setOpenConns((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
+        setTabs((prev) => prev.map((t) => t.conn.id === updated.id ? { ...t, conn: updated } : t))
         openConn(updated)
       } else {
         console.error('Connect failed:', result.error)
@@ -189,16 +207,17 @@ function EasyS3App(): React.JSX.Element {
     }
   }
 
+  const connectedIds = new Set(tabs.map((t) => t.conn.id))
   const connectionsWithStatus = connections.map((c) => ({
     ...c,
-    status: (openConns.some((o) => o.id === c.id) ? 'connected' : 'disconnected') as ConnectionStatus
+    status: (connectedIds.has(c.id) ? 'connected' : 'disconnected') as ConnectionStatus
   }))
 
   return (
     <div className="flex h-full w-full flex-col overflow-hidden bg-background">
       <TabBar
-        openConns={openConns}
-        activeConn={activeConn}
+        tabs={tabs}
+        activeTabId={activeTabId}
         onHome={goHome}
         onTab={switchTab}
         onNew={() => setShowAddConn(true)}
@@ -219,16 +238,16 @@ function EasyS3App(): React.JSX.Element {
         />
       )}
 
-      {screen === 'buckets' && activeConn && (
+      {screen === 'buckets' && activeConn && activeTab && (
         <BucketsScreen
           conn={activeConn}
-          buckets={buckets}
-          loading={bucketsLoading}
-          error={bucketsError}
+          buckets={activeTab.buckets}
+          loading={activeTab.bucketsLoading}
+          error={activeTab.bucketsError}
           onBrowse={browseBucket}
           onDisconnect={disconnect}
           onEdit={(c) => setEditConn(c)}
-          onRefresh={() => fetchBuckets(activeConn.id)}
+          onRefresh={() => fetchBucketsForTab(activeTab.tabId, activeConn.id)}
         />
       )}
 

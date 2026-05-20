@@ -2,21 +2,21 @@ import { Home, Package, Plus, Settings, X } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import type { Connection } from '@/lib/types'
+import type { Tab } from '@/lib/types'
 
 type TabBarProps = {
-  openConns: Connection[]
-  activeConn: Connection | null
+  tabs: Tab[]
+  activeTabId: string | null
   onHome: () => void
-  onTab: (conn: Connection) => void
-  onClose: (name: string) => void
+  onTab: (tabId: string) => void
+  onClose: (tabId: string) => void
   onNew: () => void
   onOpenSettings?: () => void
 }
 
 export function TabBar({
-  openConns,
-  activeConn,
+  tabs,
+  activeTabId,
   onHome,
   onTab,
   onClose,
@@ -35,15 +35,16 @@ export function TabBar({
           <Home className="size-3" />
           <span>All</span>
         </button>
-        {openConns.length > 0 && <Separator orientation="vertical" className="mx-1 !h-4" />}
+        {tabs.length > 0 && <Separator orientation="vertical" className="mx-1 !h-4" />}
         <div className="flex min-w-0 items-center gap-0.5 overflow-hidden">
-          {openConns.map((c) => {
-            const isActive = activeConn?.name === c.name
+          {tabs.map((t) => {
+            const isActive = activeTabId === t.tabId
             return (
               <button
-                key={c.name}
+                key={t.tabId}
                 type="button"
-                onClick={() => onTab(c)}
+                title={t.activeBucket ? `${t.conn.name} — ${t.activeBucket.name}` : t.conn.name}
+                onClick={() => onTab(t.tabId)}
                 className={cn(
                   'group flex h-[26px] max-w-[160px] shrink-0 items-center gap-1.5 overflow-hidden rounded-md border px-2 text-xs transition-colors',
                   isActive
@@ -52,19 +53,21 @@ export function TabBar({
                 )}
               >
                 <Package className="size-2.5 shrink-0" />
-                <span className="max-w-[110px] truncate">{c.name}</span>
+                <span className="max-w-[110px] truncate">
+                  {t.activeBucket ? `${t.conn.name} / ${t.activeBucket.name}` : t.conn.name}
+                </span>
                 <span
                   role="button"
                   tabIndex={0}
                   onClick={(e) => {
                     e.stopPropagation()
-                    onClose(c.name)
+                    onClose(t.tabId)
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault()
                       e.stopPropagation()
-                      onClose(c.name)
+                      onClose(t.tabId)
                     }
                   }}
                   className="flex size-[13px] shrink-0 items-center justify-center rounded-sm opacity-40 transition-opacity hover:opacity-100"

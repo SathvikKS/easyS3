@@ -50,6 +50,16 @@ export type LayoutMode = 'list' | 'grid'
 
 export type Screen = 'connections' | 'buckets' | 'explorer'
 
+export type Tab = {
+  tabId: string
+  conn: Connection
+  screen: 'buckets' | 'explorer'
+  activeBucket: Bucket | null
+  buckets: Bucket[]
+  bucketsLoading: boolean
+  bucketsError: string | null
+}
+
 export type ConnectionFormValues = {
   name: string
   endpoint: string
