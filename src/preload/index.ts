@@ -167,7 +167,8 @@ type PreviewResult =
   | { type: 'text'; content: string }
   | { type: 'none' }
 
-type DownloadFileRequest = { connId: string; bucket: string; key: string; destPath: string }
+type DownloadItem = { key: string; name: string }
+type DownloadJobRequest = { connId: string; bucket: string; files: DownloadItem[] }
 type DeleteFileRequest = { connId: string; bucket: string; key: string }
 type PresignedUrlRequest = { connId: string; bucket: string; key: string; expiresIn?: number }
 type S3UrlRequest = { connId: string; bucket: string; key: string }
@@ -211,17 +212,43 @@ function assertFileOpBase(
   }
 }
 
+function assertDownloadJobRequest(req: unknown): asserts req is DownloadJobRequest {
+  if (
+    !req ||
+    typeof req !== 'object' ||
+    typeof (req as Record<string, unknown>).connId !== 'string' ||
+    !(req as Record<string, unknown>).connId ||
+    typeof (req as Record<string, unknown>).bucket !== 'string' ||
+    !(req as Record<string, unknown>).bucket
+  ) {
+    throw new Error('Invalid download job request')
+  }
+  const r = req as Record<string, unknown>
+  if (!Array.isArray(r.files) || r.files.length === 0) {
+    throw new Error('Invalid download job request: files must be a non-empty array')
+  }
+  for (const item of r.files as unknown[]) {
+    if (
+      !item ||
+      typeof item !== 'object' ||
+      typeof (item as Record<string, unknown>).key !== 'string' ||
+      !(item as Record<string, unknown>).key ||
+      typeof (item as Record<string, unknown>).name !== 'string' ||
+      !(item as Record<string, unknown>).name
+    ) {
+      throw new Error('Invalid download job request: each file must have a non-empty key and name')
+    }
+  }
+}
+
 const files = {
   list: (req: ListFilesRequest): Promise<ListFilesResult> => {
     assertListFilesRequest(req)
     return ipcRenderer.invoke(IPC.files.list, req)
   },
 
-  download: (req: DownloadFileRequest): Promise<{ success: boolean; error?: string }> => {
-    assertFileOpBase(req)
-    if (typeof req.destPath !== 'string' || !req.destPath) {
-      return Promise.reject(new Error('Invalid file download request: destPath is required'))
-    }
+  download: (req: DownloadJobRequest): Promise<{ success: boolean; cancelled?: boolean; error?: string }> => {
+    assertDownloadJobRequest(req)
     return ipcRenderer.invoke(IPC.files.download, req)
   },
 

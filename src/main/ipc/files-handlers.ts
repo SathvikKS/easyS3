@@ -1,4 +1,7 @@
-import { ipcMain } from 'electron'
+import { promises as fs } from 'fs'
+import path from 'path'
+
+import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 
 import { IPC } from '../../shared/ipc'
 import { decryptCredential } from '../credentials'
@@ -12,6 +15,7 @@ import {
   getPresignedUrl,
   listFiles
 } from '../s3-client'
+import { getAllSettings } from '../store'
 
 type ListFilesArgs = {
   connId: string
@@ -77,6 +81,50 @@ function parseFileOpArgs(args: unknown): FileOpArgs {
   return { connId: a.connId, bucket: a.bucket, key: a.key }
 }
 
+type DownloadItem = {
+  key: string
+  name: string
+}
+
+type DownloadJobArgs = {
+  connId: string
+  bucket: string
+  files: DownloadItem[]
+}
+
+function parseDownloadJobArgs(args: unknown): DownloadJobArgs {
+  if (!args || typeof args !== 'object') {
+    throw new Error('Invalid arguments: expected an object')
+  }
+  const a = args as Record<string, unknown>
+  if (typeof a.connId !== 'string' || !a.connId) {
+    throw new Error('Invalid arguments: connId must be a non-empty string')
+  }
+  if (typeof a.bucket !== 'string' || !a.bucket) {
+    throw new Error('Invalid arguments: bucket must be a non-empty string')
+  }
+  if (!Array.isArray(a.files) || a.files.length === 0) {
+    throw new Error('Invalid arguments: files must be a non-empty array')
+  }
+  for (const item of a.files as unknown[]) {
+    if (
+      !item ||
+      typeof item !== 'object' ||
+      typeof (item as Record<string, unknown>).key !== 'string' ||
+      !(item as Record<string, unknown>).key ||
+      typeof (item as Record<string, unknown>).name !== 'string' ||
+      !(item as Record<string, unknown>).name
+    ) {
+      throw new Error('Invalid arguments: each file must have a non-empty key and name')
+    }
+  }
+  return {
+    connId: a.connId,
+    bucket: a.bucket,
+    files: a.files as DownloadItem[]
+  }
+}
+
 function getClientForConn(connId: string): ReturnType<typeof createS3Client> {
   const conn = getConnectionById(connId)
   if (!conn) throw new Error(`Connection not found: ${connId}`)
@@ -110,14 +158,29 @@ export function registerFilesIpcHandlers(): void {
 
   ipcMain.handle(IPC.files.download, async (event, args: unknown) => {
     assertTrustedSender(event)
-    const base = parseFileOpArgs(args)
-    const a = args as Record<string, unknown>
-    if (typeof a.destPath !== 'string' || !a.destPath) {
-      throw new Error('Invalid arguments: destPath must be a non-empty string')
-    }
+    const { connId, bucket, files } = parseDownloadJobArgs(args)
     try {
-      const client = getClientForConn(base.connId)
-      await downloadFile(client, base.bucket, base.key, a.destPath)
+      const { promptBeforeDownload, downloadPath } = getAllSettings()
+      let destFolder: string
+      if (promptBeforeDownload) {
+        const win = BrowserWindow.fromWebContents(event.sender)
+        const result = win
+          ? await dialog.showOpenDialog(win, {
+              properties: ['openDirectory', 'createDirectory']
+            })
+          : await dialog.showOpenDialog({ properties: ['openDirectory', 'createDirectory'] })
+        if (result.canceled) {
+          return { success: false, cancelled: true }
+        }
+        destFolder = result.filePaths[0]
+      } else {
+        destFolder = downloadPath || app.getPath('downloads')
+      }
+      await fs.mkdir(destFolder, { recursive: true })
+      const client = getClientForConn(connId)
+      for (const item of files) {
+        await downloadFile(client, bucket, item.key, path.join(destFolder, item.name))
+      }
       return { success: true }
     } catch (err) {
       return { success: false, error: err instanceof Error ? err.message : String(err) }

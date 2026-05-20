@@ -128,6 +128,17 @@ export function ExplorerScreen({
     [filteredFiles, sortField, sortDirection]
   )
 
+  const handleDownload = React.useCallback(async (): Promise<void> => {
+    const selected = sortedFiles.filter((f) => selFiles.has(f.name) && f.type !== 'folder')
+    if (selected.length === 0) return
+    const prefix = path.length > 0 ? path.join('/') + '/' : ''
+    await window.api.files.download({
+      connId: conn.id,
+      bucket: bucket.name,
+      files: selected.map((f) => ({ key: prefix + f.name, name: f.name }))
+    })
+  }, [conn.id, bucket.name, path, selFiles, sortedFiles])
+
   const handleSort = (field: SortField): void => {
     if (field === sortField) {
       setSortDirection((d) => (d === 'asc' ? 'desc' : 'asc'))
@@ -375,6 +386,7 @@ export function ExplorerScreen({
           onSearchChange={setSearch}
           onLayout={onLayout}
           onNewFolder={handleNewFolder}
+          onDownload={handleDownload}
         />
         {layout === 'list' ? (
           <>

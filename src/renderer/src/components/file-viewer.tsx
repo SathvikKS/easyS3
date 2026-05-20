@@ -127,11 +127,13 @@ export function FileViewer({
   const handleDownload = async (): Promise<void> => {
     setDownloadLoading(true)
     try {
-      const s = window.api.settings.getAllSync()
-      const destPath = `${s.downloadPath}/${currentFile.name}`
-      const result = await window.api.files.download({ connId, bucket, key: fullKey, destPath })
+      const result = await window.api.files.download({
+        connId,
+        bucket,
+        files: [{ key: fullKey, name: currentFile.name }]
+      })
       if (result.success) toastSuccess('Downloaded', currentFile.name)
-      else toastError('Download failed', result.error)
+      else if (!result.cancelled) toastError('Download failed', result.error)
     } catch (err) {
       toastError('Download failed', err instanceof Error ? err.message : undefined)
     } finally {
