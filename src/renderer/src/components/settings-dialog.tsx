@@ -15,6 +15,7 @@ import {
   getSettingsSync,
   setDownloadPath,
   setDownloadPrompt,
+  setFetchBucketStats,
   type ThemeMode
 } from '@/lib/settings'
 import { cn } from '@/lib/utils'
@@ -48,6 +49,7 @@ function SettingsDialogBody(): React.JSX.Element {
   const [promptBeforeDownload, setPromptBeforeDownload] = React.useState(
     initial.promptBeforeDownload
   )
+  const [fetchBucketStats, setFetchBucketStatsState] = React.useState(initial.fetchBucketStats)
 
   const saveDownloadPath = (path: string): void => {
     setDownloadPathState(path)
@@ -58,6 +60,12 @@ function SettingsDialogBody(): React.JSX.Element {
     const next = !promptBeforeDownload
     setPromptBeforeDownload(next)
     void setDownloadPrompt(next)
+  }
+
+  const toggleFetchBucketStats = (): void => {
+    const next = !fetchBucketStats
+    setFetchBucketStatsState(next)
+    void setFetchBucketStats(next)
   }
 
   const handleBrowse = async (): Promise<void> => {
@@ -140,6 +148,32 @@ function SettingsDialogBody(): React.JSX.Element {
             <ArrowUpRight className="mr-0.5 inline size-3 align-[-2px]" />
             Prompt = ask location before each download
           </p>
+        </section>
+
+        <section className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-0.5">
+            <Label className="text-xs font-medium text-foreground/80">Fetch Bucket Statistics</Label>
+            <p className="text-[11px] text-muted-foreground">
+              Show object count and size for each bucket. Disable to speed up loading.
+            </p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={fetchBucketStats}
+            onClick={toggleFetchBucketStats}
+            className={cn(
+              'relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none',
+              fetchBucketStats ? 'bg-[color:var(--info)]' : 'bg-input'
+            )}
+          >
+            <span
+              className={cn(
+                'pointer-events-none block size-4 rounded-full bg-background shadow-sm ring-0 transition-transform',
+                fetchBucketStats ? 'translate-x-4' : 'translate-x-0'
+              )}
+            />
+          </button>
         </section>
       </div>
     </DialogContent>

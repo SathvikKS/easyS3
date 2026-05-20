@@ -4,4 +4,5 @@ export type AppSettings = {
   theme: ThemeMode
   downloadPath: string
   promptBeforeDownload: boolean
+  fetchBucketStats: boolean
 }

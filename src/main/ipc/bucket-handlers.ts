@@ -4,6 +4,7 @@ import { IPC } from '../../shared/ipc'
 import { decryptCredential } from '../credentials'
 import { getConnectionById, getCredentials } from '../connections-store'
 import { assertTrustedSender } from '../ipc-guards'
+import { getSetting } from '../store'
 import { createS3Client, listBuckets } from '../s3-client'
 
 function parseId(id: unknown): string {
@@ -26,6 +27,7 @@ export function registerBucketIpcHandlers(): void {
       decryptCredential(rawCreds.secret)
     )
 
-    return listBuckets(client, conn.region)
+    const fetchStats = getSetting('fetchBucketStats')
+    return listBuckets(client, conn.region, fetchStats)
   })
 }

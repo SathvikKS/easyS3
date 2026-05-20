@@ -6,6 +6,7 @@ import { SettingsDialog } from '@/components/settings-dialog'
 import { FileViewer } from '@/components/file-viewer'
 import { TabBar } from '@/components/tab-bar'
 import { ThemeProvider } from '@/components/theme-provider'
+import { getSettingsSync } from '@/lib/settings'
 import type {
   Bucket,
   Connection,
@@ -33,6 +34,9 @@ function EasyS3App(): React.JSX.Element {
   const [editConn, setEditConn] = React.useState<Connection | null>(null)
   const [showSettings, setShowSettings] = React.useState(false)
   const [connectingId, setConnectingId] = React.useState<string | null>(null)
+  const [fetchBucketStats, setFetchBucketStats] = React.useState(
+    () => getSettingsSync().fetchBucketStats
+  )
 
   const activeTab = tabs.find((t) => t.tabId === activeTabId) ?? null
   const activeConn = activeTab?.conn ?? null
@@ -244,6 +248,7 @@ function EasyS3App(): React.JSX.Element {
           buckets={activeTab.buckets}
           loading={activeTab.bucketsLoading}
           error={activeTab.bucketsError}
+          fetchBucketStats={fetchBucketStats}
           onBrowse={browseBucket}
           onDisconnect={disconnect}
           onEdit={(c) => setEditConn(c)}
@@ -286,7 +291,13 @@ function EasyS3App(): React.JSX.Element {
         onSave={handleSaveEdit}
       />
 
-      <SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
+      <SettingsDialog
+        open={showSettings}
+        onOpenChange={(open) => {
+          setShowSettings(open)
+          if (!open) setFetchBucketStats(getSettingsSync().fetchBucketStats)
+        }}
+      />
     </div>
   )
 }

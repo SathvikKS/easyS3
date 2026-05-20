@@ -288,7 +288,11 @@ export async function getFilePreview(
   return { type: 'text', content: Buffer.from(bytes).toString('utf-8') }
 }
 
-export async function listBuckets(client: S3Client, defaultRegion: string): Promise<BucketInfo[]> {
+export async function listBuckets(
+  client: S3Client,
+  defaultRegion: string,
+  fetchStats = true
+): Promise<BucketInfo[]> {
   const response = await client.send(new ListBucketsCommand({}))
   const buckets = response.Buckets ?? []
 
@@ -302,7 +306,9 @@ export async function listBuckets(client: S3Client, defaultRegion: string): Prom
         // permission denied or unsupported — fall back to connection default
       }
 
-      const stats = await getBucketStats(client, b.Name!)
+      const stats = fetchStats
+        ? await getBucketStats(client, b.Name!)
+        : { objectCount: 0, totalBytes: 0, isTruncated: false, lastModified: null }
 
       return {
         name: b.Name!,

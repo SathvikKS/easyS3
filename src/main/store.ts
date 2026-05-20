@@ -28,6 +28,10 @@ export function getStore(): Store<AppSettings> {
     promptBeforeDownload: {
       type: 'boolean',
       default: false
+    },
+    fetchBucketStats: {
+      type: 'boolean',
+      default: true
     }
   }
 

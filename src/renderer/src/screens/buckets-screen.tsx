@@ -16,6 +16,7 @@ type BucketsScreenProps = {
   buckets: Bucket[]
   loading: boolean
   error: string | null
+  fetchBucketStats: boolean
 }
 
 function formatBytes(bytes: number): string {
@@ -65,7 +66,8 @@ export function BucketsScreen({
   onRefresh,
   buckets,
   loading,
-  error
+  error,
+  fetchBucketStats
 }: BucketsScreenProps): React.JSX.Element {
   const [search, setSearch] = React.useState('')
   const debouncedSearch = useDebouncedValue(search, 300)
@@ -94,25 +96,29 @@ export function BucketsScreen({
       label: 'Buckets',
       value: loading ? null : String(buckets.length),
       icon: <Package className="size-[18px]" />,
-      sub: 'in this connection'
+      sub: 'in this connection',
+      disabled: false
     },
     {
       label: 'Total Storage',
-      value: loading ? null : formatBytes(totalBytes),
+      value: loading ? null : fetchBucketStats ? formatBytes(totalBytes) : '—',
       icon: <HardDrive className="size-[18px]" />,
-      sub: anyTruncated ? 'lower bound (>1k objects)' : 'across all buckets'
+      sub: !fetchBucketStats ? 'stats disabled' : anyTruncated ? 'lower bound (>1k objects)' : 'across all buckets',
+      disabled: !fetchBucketStats
     },
     {
       label: 'Total Objects',
-      value: loading ? null : formatCount(totalObjects, anyTruncated),
+      value: loading ? null : fetchBucketStats ? formatCount(totalObjects, anyTruncated) : '—',
       icon: <File className="size-[18px]" />,
-      sub: anyTruncated ? 'lower bound (>1k objects)' : 'across all buckets'
+      sub: !fetchBucketStats ? 'stats disabled' : anyTruncated ? 'lower bound (>1k objects)' : 'across all buckets',
+      disabled: !fetchBucketStats
     },
     {
       label: 'Last Modified',
-      value: loading ? null : formatRelative(lastModified),
+      value: loading ? null : fetchBucketStats ? formatRelative(lastModified) : '—',
       icon: <CalendarClock className="size-[18px]" />,
-      sub: conn.lastSeen ? `connected ${conn.lastSeen}` : 'no activity found'
+      sub: !fetchBucketStats ? 'stats disabled' : conn.lastSeen ? `connected ${conn.lastSeen}` : 'no activity found',
+      disabled: !fetchBucketStats
     }
   ]
 
@@ -159,7 +165,7 @@ export function BucketsScreen({
       {/* Stats */}
       <div className="mb-5 grid shrink-0 grid-cols-4 gap-2.5 px-6">
         {stats.map((s) => (
-          <div key={s.label} className="flex flex-col gap-1 rounded-lg border bg-card px-4 py-3.5">
+          <div key={s.label} className={cn('flex flex-col gap-1 rounded-lg border bg-card px-4 py-3.5', s.disabled && 'opacity-50')}>
             <span className="text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
               {s.label}
             </span>
@@ -173,7 +179,9 @@ export function BucketsScreen({
                 </span>
               )}
             </div>
-            <span className="text-[11px] text-muted-foreground">{s.sub}</span>
+            <span className={cn('text-[11px]', s.disabled ? 'italic text-muted-foreground/60' : 'text-muted-foreground')}>
+              {s.sub}
+            </span>
           </div>
         ))}
       </div>
@@ -275,10 +283,10 @@ export function BucketsScreen({
               <span className="text-[13px] font-medium">{b.name}</span>
               <span className="font-mono text-[11.5px] text-muted-foreground">{b.region}</span>
               <span className="text-[12px] text-muted-foreground">
-                {formatCount(b.objectCount, b.isTruncated)}
+                {fetchBucketStats ? formatCount(b.objectCount, b.isTruncated) : '—'}
               </span>
               <span className="text-[12px] text-muted-foreground">
-                {b.isTruncated ? `${formatBytes(b.totalBytes)}+` : formatBytes(b.totalBytes)}
+                {fetchBucketStats ? (b.isTruncated ? `${formatBytes(b.totalBytes)}+` : formatBytes(b.totalBytes)) : '—'}
               </span>
               <div className="flex items-center justify-between">
                 <span className="text-[12px] text-muted-foreground">{formatDate(b.createdAt)}</span>

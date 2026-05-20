@@ -3,7 +3,8 @@ import type { AppSettings, ThemeMode } from './settings'
 export const APP_SETTING_KEYS = [
   'theme',
   'downloadPath',
-  'promptBeforeDownload'
+  'promptBeforeDownload',
+  'fetchBucketStats'
 ] as const satisfies ReadonlyArray<keyof AppSettings>
 
 export function isAppSettingKey(key: unknown): key is keyof AppSettings {
@@ -24,6 +25,8 @@ export function isValidSettingValue<K extends keyof AppSettings>(
     case 'downloadPath':
       return typeof value === 'string' && value.trim().length > 0
     case 'promptBeforeDownload':
+      return typeof value === 'boolean'
+    case 'fetchBucketStats':
       return typeof value === 'boolean'
     default:
       return false

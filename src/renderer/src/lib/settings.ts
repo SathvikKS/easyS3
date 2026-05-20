@@ -21,3 +21,7 @@ export async function setDownloadPath(path: string): Promise<void> {
 export async function setDownloadPrompt(prompt: boolean): Promise<void> {
   await window.api.settings.set('promptBeforeDownload', prompt)
 }
+
+export async function setFetchBucketStats(enabled: boolean): Promise<void> {
+  await window.api.settings.set('fetchBucketStats', enabled)
+}
