@@ -11,7 +11,7 @@ import { NavBar } from '@/components/nav-bar'
 import { NewFolderCard, NewFolderRow } from '@/components/new-folder'
 import { PreviewPanel } from '@/components/preview-panel'
 import { sortFiles, type SortDirection, type SortField } from '@/lib/sort-files'
-import { toastError } from '@/lib/toast'
+import { toastError, toastSuccess } from '@/lib/toast'
 import type { Bucket, Connection, LayoutMode, S3File, ViewerContext } from '@/lib/types'
 
 function filterFiles(files: S3File[], query: string): S3File[] {
@@ -132,11 +132,21 @@ export function ExplorerScreen({
     const selected = sortedFiles.filter((f) => selFiles.has(f.name) && f.type !== 'folder')
     if (selected.length === 0) return
     const prefix = path.length > 0 ? path.join('/') + '/' : ''
-    await window.api.files.download({
-      connId: conn.id,
-      bucket: bucket.name,
-      files: selected.map((f) => ({ key: prefix + f.name, name: f.name }))
-    })
+    try {
+      const result = await window.api.files.download({
+        connId: conn.id,
+        bucket: bucket.name,
+        files: selected.map((f) => ({ key: prefix + f.name, name: f.name }))
+      })
+      if (result.success) {
+        const label = selected.length === 1 ? selected[0].name : `${selected.length} files`
+        toastSuccess('Downloaded', label)
+      } else if (!result.cancelled) {
+        toastError('Download failed', result.error)
+      }
+    } catch (err) {
+      toastError('Download failed', err instanceof Error ? err.message : undefined)
+    }
   }, [conn.id, bucket.name, path, selFiles, sortedFiles])
 
   const handleSort = (field: SortField): void => {
