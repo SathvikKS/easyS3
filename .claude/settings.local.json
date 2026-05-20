@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npx tsc *)",
       "Bash(git -C \"C:\\\\Users\\\\sathv\\\\work\\\\easyS3\\\\.claude\\\\worktrees\\\\agent-a05e24d65ff453325\" status)",
-      "Bash(git -C \"C:\\\\Users\\\\sathv\\\\work\\\\easyS3\\\\.claude\\\\worktrees\\\\agent-a05e24d65ff453325\" log --oneline -3)"
+      "Bash(git -C \"C:\\\\Users\\\\sathv\\\\work\\\\easyS3\\\\.claude\\\\worktrees\\\\agent-a05e24d65ff453325\" log --oneline -3)",
+      "Bash(npx graphify *)"
     ]
   }
 }

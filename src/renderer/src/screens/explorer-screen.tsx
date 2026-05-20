@@ -189,6 +189,26 @@ export function ExplorerScreen({
     }
   }
 
+  const previewTimerRef = React.useRef<number | null>(null)
+
+  const handleClick = (file: S3File): void => {
+    if (previewTimerRef.current !== null) {
+      window.clearTimeout(previewTimerRef.current)
+    }
+    previewTimerRef.current = window.setTimeout(() => {
+      previewTimerRef.current = null
+      setPreviewFile(file)
+    }, 250)
+  }
+
+  const handleDoubleClick = (file: S3File): void => {
+    if (previewTimerRef.current !== null) {
+      window.clearTimeout(previewTimerRef.current)
+      previewTimerRef.current = null
+    }
+    handleOpenItem(file)
+  }
+
   const handleNavCrumb = (idx: number): void => {
     if (idx === 0) {
       onCrumb(0)
@@ -320,8 +340,8 @@ export function ExplorerScreen({
                   file={f}
                   selected={selFiles.has(f.name)}
                   onSelect={() => toggleFile(f.name)}
-                  onClick={() => setPreviewFile(f)}
-                  onDoubleClick={() => handleOpenItem(f)}
+                  onClick={() => handleClick(f)}
+                  onDoubleClick={() => handleDoubleClick(f)}
                 />
               ))}
             </div>
@@ -359,8 +379,8 @@ export function ExplorerScreen({
                   file={f}
                   selected={selFiles.has(f.name)}
                   onSelect={() => toggleFile(f.name)}
-                  onClick={() => setPreviewFile(f)}
-                  onDoubleClick={() => handleOpenItem(f)}
+                  onClick={() => handleClick(f)}
+                  onDoubleClick={() => handleDoubleClick(f)}
                 />
               ))}
             </div>
