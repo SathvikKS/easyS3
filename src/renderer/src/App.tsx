@@ -13,7 +13,8 @@ import type {
   ConnectionStatus,
   LayoutMode,
   S3File,
-  Screen
+  Screen,
+  ViewerContext
 } from '@/lib/types'
 import { BucketsScreen } from '@/screens/buckets-screen'
 import { ConnectionsScreen } from '@/screens/connections-screen'
@@ -31,7 +32,7 @@ function EasyS3App(): React.JSX.Element {
   const [layout, setLayout] = React.useState<LayoutMode>('list')
   const [selFiles, setSelFiles] = React.useState<Set<string>>(new Set())
   const [previewFile, setPreviewFile] = React.useState<S3File | null>(null)
-  const [viewerFile, setViewerFile] = React.useState<S3File | null>(null)
+  const [viewerFile, setViewerFile] = React.useState<ViewerContext | null>(null)
   const [showAddConn, setShowAddConn] = React.useState(false)
   const [editConn, setEditConn] = React.useState<Connection | null>(null)
   const [showSettings, setShowSettings] = React.useState(false)
@@ -249,7 +250,7 @@ function EasyS3App(): React.JSX.Element {
         />
       )}
 
-      {viewerFile && <FileViewer file={viewerFile} onClose={() => setViewerFile(null)} />}
+      {viewerFile && <FileViewer {...viewerFile} onClose={() => setViewerFile(null)} />}
 
       <AddConnectionDialog
         open={showAddConn}

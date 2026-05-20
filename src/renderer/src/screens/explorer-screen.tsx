@@ -11,7 +11,7 @@ import { NavBar } from '@/components/nav-bar'
 import { NewFolderCard, NewFolderRow } from '@/components/new-folder'
 import { PreviewPanel } from '@/components/preview-panel'
 import { sortFiles, type SortDirection, type SortField } from '@/lib/sort-files'
-import type { Bucket, Connection, LayoutMode, S3File } from '@/lib/types'
+import type { Bucket, Connection, LayoutMode, S3File, ViewerContext } from '@/lib/types'
 
 function filterFiles(files: S3File[], query: string): S3File[] {
   const q = query.trim().toLowerCase()
@@ -34,7 +34,7 @@ type ExplorerScreenProps = {
   setSelFiles: (s: Set<string>) => void
   previewFile: S3File | null
   setPreviewFile: (f: S3File | null) => void
-  setViewerFile: (f: S3File | null) => void
+  setViewerFile: (ctx: ViewerContext | null) => void
   onCrumb: (idx: number) => void
 }
 
@@ -185,7 +185,13 @@ export function ExplorerScreen({
     if (file.type === 'folder') {
       navigateIntoFolder(file)
     } else {
-      setViewerFile(file)
+      setViewerFile({
+        file,
+        connId: conn.id,
+        bucket: bucket.name,
+        keyPrefix: path.length > 0 ? path.join('/') + '/' : '',
+        siblings: sortedFiles.filter((f) => f.type !== 'folder')
+      })
     }
   }
 

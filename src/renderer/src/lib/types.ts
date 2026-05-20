@@ -38,6 +38,14 @@ export type S3File = {
   mime: string
 }
 
+export type ViewerContext = {
+  file: S3File
+  connId: string
+  bucket: string
+  keyPrefix: string
+  siblings: S3File[]
+}
+
 export type LayoutMode = 'list' | 'grid'
 
 export type Screen = 'connections' | 'buckets' | 'explorer'
