@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ChevronLeft, ChevronRight, Download, Loader2, Lock, Play, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Download, Loader2, Lock, Play, RefreshCw, X } from 'lucide-react'
 import JsonView from '@uiw/react-json-view'
 
 import { Button } from '@/components/ui/button'
@@ -83,6 +83,8 @@ export function FileViewer({
     status: 'idle' | 'loading' | 'loaded'
     data: PreviewResult | null
   }>({ status: 'idle', data: null })
+  const [refreshKey, setRefreshKey] = React.useState(0)
+  const [lastFetched, setLastFetched] = React.useState<Date | null>(null)
   const [downloadLoading, setDownloadLoading] = React.useState(false)
   const [urlLoading, setUrlLoading] = React.useState(false)
 
@@ -111,18 +113,25 @@ export function FileViewer({
     }
     let cancelled = false
     setPreview({ status: 'loading', data: null })
+    setLastFetched(null)
     window.api.files
       .getPreview({ connId, bucket, key: fullKey, fileType: currentFile.type })
       .then((result) => {
-        if (!cancelled) setPreview({ status: 'loaded', data: result })
+        if (!cancelled) {
+          setPreview({ status: 'loaded', data: result })
+          setLastFetched(new Date())
+        }
       })
       .catch(() => {
-        if (!cancelled) setPreview({ status: 'loaded', data: { type: 'none' } })
+        if (!cancelled) {
+          setPreview({ status: 'loaded', data: { type: 'none' } })
+          setLastFetched(new Date())
+        }
       })
     return () => {
       cancelled = true
     }
-  }, [fullKey, currentFile.type, connId, bucket, previewable])
+  }, [fullKey, currentFile.type, connId, bucket, previewable, refreshKey])
 
   const handleDownload = async (): Promise<void> => {
     setDownloadLoading(true)
@@ -313,6 +322,21 @@ export function FileViewer({
         <span className="flex-1 text-center text-[12.5px] font-medium text-muted-foreground">
           {currentFile.name}
         </span>
+        {previewable && (
+          <button
+            type="button"
+            onClick={() => setRefreshKey((k) => k + 1)}
+            disabled={preview.status === 'loading'}
+            className="mr-0.5 flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-40"
+            aria-label="Refresh preview"
+          >
+            {preview.status === 'loading' ? (
+              <Loader2 className="size-3 animate-spin" />
+            ) : (
+              <RefreshCw className="size-3" />
+            )}
+          </button>
+        )}
         <button
           type="button"
           onClick={onClose}
@@ -324,6 +348,18 @@ export function FileViewer({
       </div>
 
       {renderContent()}
+
+      {previewable && (
+        <div className="flex items-center px-3.5 pb-1.5 pt-0.5">
+          {preview.status === 'loading' ? (
+            <span className="text-[10.5px] text-muted-foreground">Fetching…</span>
+          ) : lastFetched ? (
+            <span className="text-[10.5px] text-muted-foreground">
+              Fetched at {lastFetched.toLocaleTimeString()}
+            </span>
+          ) : null}
+        </div>
+      )}
 
       <div className="flex items-center justify-between gap-2 px-3.5 pb-3.5">
         {isImg ? (
