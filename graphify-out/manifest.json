@@ -75,14 +75,14 @@
     "semantic_hash": "41acdf0e819ba83ce736bf734e6de0e8"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\s3-client.ts": {
-    "mtime": 1779249883.606651,
-    "ast_hash": "1aa7124c8929dc45cc48b984c89b5f53",
+    "mtime": 1779262541.3497002,
+    "ast_hash": "3729a8e60808df806a04d41ccf8f878e",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\store.ts": {
-    "mtime": 1779195031.6837816,
-    "ast_hash": "ab9fd939f87d35432ad5d475a44c3705",
-    "semantic_hash": "ab9fd939f87d35432ad5d475a44c3705"
+    "mtime": 1779262528.2380419,
+    "ast_hash": "cdf6c9d98c69a22f7141da0a207b274f",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\ipc\\connection-handlers.ts": {
     "mtime": 1779197400.1171582,
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\App.tsx": {
-    "mtime": 1779261178.4827785,
-    "ast_hash": "7e6780ac717d165577c8bed51534f8eb",
+    "mtime": 1779262937.5896542,
+    "ast_hash": "084f48397383f166175703ffaeeb0e4e",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\env.d.ts": {
@@ -175,9 +175,9 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\settings-dialog.tsx": {
-    "mtime": 1779195079.1117415,
-    "ast_hash": "c0b66f11555d52722eacea1a51a987ad",
-    "semantic_hash": "c0b66f11555d52722eacea1a51a987ad"
+    "mtime": 1779262576.0393262,
+    "ast_hash": "1c8280bf7946ea1470259dd7077d6fa9",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\tab-bar.tsx": {
     "mtime": 1779262403.6042874,
@@ -255,9 +255,9 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\lib\\settings.ts": {
-    "mtime": 1779195041.5841048,
-    "ast_hash": "e6d766045db1ed1fd751a0bc7d44adc8",
-    "semantic_hash": "e6d766045db1ed1fd751a0bc7d44adc8"
+    "mtime": 1779262532.6950977,
+    "ast_hash": "5443be3f957ac4d58f76ff9aab506eea",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\lib\\sort-files.ts": {
     "mtime": 1779189331.4981146,
@@ -275,8 +275,8 @@
     "semantic_hash": "29a85703c58a9889341b1eb10dac5f05"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\screens\\buckets-screen.tsx": {
-    "mtime": 1779203126.4149828,
-    "ast_hash": "6bf05806457e87831c03ded89a31234a",
+    "mtime": 1779262917.0737514,
+    "ast_hash": "e3fd3c6b084f61f8016aff9482a8cacf",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\screens\\connections-screen.tsx": {
@@ -295,14 +295,14 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\shared\\settings-validation.ts": {
-    "mtime": 1779195726.5302656,
-    "ast_hash": "1e80d8571a6e8805fb77238b2fc40399",
-    "semantic_hash": "1e80d8571a6e8805fb77238b2fc40399"
+    "mtime": 1779262525.3234377,
+    "ast_hash": "1a753de6a6442ae6fed894c4c69cc185",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\shared\\settings.ts": {
-    "mtime": 1779195029.7709787,
-    "ast_hash": "e85ae477bb464607436c922a485905de",
-    "semantic_hash": "e85ae477bb464607436c922a485905de"
+    "mtime": 1779262518.592024,
+    "ast_hash": "e8be209d9fa38a1571f2ff7dd0a41d64",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\.prettierrc.yaml": {
     "mtime": 1779169043.2313795,
@@ -380,8 +380,8 @@
     "semantic_hash": "a2cf889708d9c4959c6808b4584848e4"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\ipc\\bucket-handlers.ts": {
-    "mtime": 1779200821.1944084,
-    "ast_hash": "decca26903ad7296882bf0603935cca0",
+    "mtime": 1779262549.7038007,
+    "ast_hash": "c4d67d61cf14ac9988b284803d9e00f0",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\main\\ipc\\files-handlers.ts": {
