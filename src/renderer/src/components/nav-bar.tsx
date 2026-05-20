@@ -16,6 +16,15 @@ type NavBarProps = {
   onFwd?: () => void
   onUp?: () => void
   onCrumb?: (index: number) => void
+  onNavigate?: (rawPath: string) => void
+}
+
+function formatPath(raw: string): string {
+  return raw
+    .split('/')
+    .map((s) => s.trim())
+    .join(' / ')
+    .replace(/\s{2,}/g, ' ')
 }
 
 export function NavBar({
@@ -25,7 +34,8 @@ export function NavBar({
   onBack,
   onFwd,
   onUp,
-  onCrumb
+  onCrumb,
+  onNavigate
 }: NavBarProps): React.JSX.Element {
   const [editing, setEditing] = React.useState(false)
   const [val, setVal] = React.useState('')
@@ -54,10 +64,18 @@ export function NavBar({
         <input
           autoFocus
           value={val}
-          onChange={(e) => setVal(e.target.value)}
+          onChange={(e) => {
+            const raw = e.target.value
+            setVal(raw.endsWith('/') ? formatPath(raw) : raw)
+          }}
           onBlur={() => setEditing(false)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === 'Escape') setEditing(false)
+            if (e.key === 'Enter') {
+              onNavigate?.(val.trim())
+              setEditing(false)
+            } else if (e.key === 'Escape') {
+              setEditing(false)
+            }
           }}
           className="h-[26px] flex-1 rounded-md border border-[color:var(--info)] bg-background px-2 font-mono text-[11.5px] text-foreground shadow-[0_0_0_2px_var(--info-soft)] outline-none"
         />
