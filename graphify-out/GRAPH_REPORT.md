@@ -1,16 +1,16 @@
-# Graph Report - easyS3  (2026-05-20)
+# Graph Report - easyS3  (2026-05-21)
 
 ## Corpus Check
-- 68 files · ~24,103 words
+- 68 files · ~24,167 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 568 nodes · 1217 edges · 28 communities (25 shown, 3 thin omitted)
+- 572 nodes · 1261 edges · 28 communities (25 shown, 3 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.88)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2ec58d0c`
+- Built from commit: `ef975e0a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -42,12 +42,12 @@
 - [[_COMMUNITY_Community 27|Community 27]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 79 edges
-2. `Button()` - 19 edges
-3. `S3File` - 16 edges
+1. `cn()` - 80 edges
+2. `Button()` - 20 edges
+3. `S3File` - 17 edges
 4. `Connection` - 15 edges
 5. `scripts` - 14 edges
-6. `AppSettings` - 12 edges
+6. `AppSettings` - 13 edges
 7. `Bucket` - 12 edges
 8. `LayoutMode` - 11 edges
 9. `IPC` - 10 edges
@@ -74,15 +74,15 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.08
-Nodes (49): ActionBar(), FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps (+41 more)
+Nodes (50): ActionBar(), FileCard(), FileCardProps, FileIcon(), FileIconProps, FileListHeader(), FileRow(), FileRowProps (+42 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.06
-Nodes (54): ActionBarProps, LayoutToggle(), LayoutToggleProps, AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS (+46 more)
+Cohesion: 0.05
+Nodes (54): AddConnectionDialogBody(), AddConnectionDialogProps, DialogBodyProps, FieldDef, FIELDS, SortableHeader(), SettingsDialogBody(), SettingsDialogProps (+46 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.07
-Nodes (42): Context Isolation Requirement, Content Security Policy for Renderer, Electron IPC Security Pattern, IPC Security Documentation, Main Process Entry (BrowserWindow), IPC Guards (assertTrustedSender), Main IPC Handlers Directory, api (+34 more)
+Nodes (43): isTrustedWebContents(), parseOptionalPath(), parseSettingKey(), parseSettingValue(), api, assertDownloadJobRequest(), assertFileOpBase(), assertFormValues() (+35 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.05
@@ -90,27 +90,27 @@ Nodes (36): author, dependencies, @aws-sdk/client-s3, @aws-sdk/s3-request-presig
 
 ### Community 4 - "Community 4"
 Cohesion: 0.06
-Nodes (57): parseId(), registerBucketIpcHandlers(), Connection, ConnectionFormValues, ConnectResult, formatLastSeen(), registerConnectionIpcHandlers(), toConnection() (+49 more)
+Nodes (61): parseId(), registerBucketIpcHandlers(), Connection, ConnectionFormValues, ConnectResult, formatLastSeen(), registerConnectionIpcHandlers(), toConnection() (+53 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.51
-Nodes (10): easyS3 Agent Guidelines, easyS3 CLAUDE Agent Guidelines, Mandatory Impact Analysis Before Edits, GitNexus Code Knowledge Graph, GitNexus CLI Skill, GitNexus Debugging Skill, GitNexus Exploring Skill, GitNexus Guide Skill (+2 more)
+Cohesion: 0.20
+Nodes (18): easyS3 Agent Guidelines, easyS3 CLAUDE Agent Guidelines, Context Isolation Requirement, Content Security Policy for Renderer, Mandatory Impact Analysis Before Edits, GitNexus Code Knowledge Graph, Electron IPC Security Pattern, IPC Security Documentation (+10 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.13
-Nodes (23): applyThemeClass(), initialState, resolveAppliedTheme(), ThemeProviderContext, ThemeProviderProps, ThemeProviderState, getSettings(), getSettingsSync() (+15 more)
+Cohesion: 0.25
+Nodes (9): ActionBarProps, LayoutToggle(), LayoutToggleProps, Crumb, formatPath(), NavBarProps, NavButton(), NavButtonProps (+1 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (35): AddConnectionDialog(), FileViewer(), SettingsDialog(), TabBar(), TabBarProps, ThemeProvider(), FILES_BY_PATH, getFilesAtPath() (+27 more)
 
 ### Community 9 - "Community 9"
-Cohesion: 0.09
-Nodes (21): BucketInfo, Connection, ConnectionFormValues, ConnectResult, DeleteFileRequest, DownloadItem, DownloadJobRequest, EasyS3Api (+13 more)
+Cohesion: 0.15
+Nodes (23): BucketInfo, Connection, ConnectionFormValues, ConnectResult, CreateFolderRequest, DeleteFileRequest, DownloadItem, DownloadJobRequest (+15 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.18
@@ -161,24 +161,24 @@ Cohesion: 0.10
 Nodes (20): devDependencies, electron, electron-builder, @electron-toolkit/eslint-config-prettier, @electron-toolkit/eslint-config-ts, @electron-toolkit/tsconfig, electron-vite, eslint (+12 more)
 
 ## Knowledge Gaps
-- **186 isolated node(s):** `DeleteArgs`, `UploadArgs`, `CreateFolderArgs`, `DeleteRequest`, `UploadRequest` (+181 more)
+- **164 isolated node(s):** `UploadRequest`, `CreateFolderRequest`, `DeleteArgs`, `UploadArgs`, `CreateFolderArgs` (+159 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 1` to `Community 8`, `Community 0`, `Community 3`?**
+- **Why does `cn()` connect `Community 1` to `Community 0`, `Community 8`, `Community 3`, `Community 6`?**
   _High betweenness centrality (0.269) - this node is a cross-community bridge._
-- **Why does `AppSettings` connect `Community 6` to `Community 9`, `Community 2`?**
-  _High betweenness centrality (0.217) - this node is a cross-community bridge._
-- **What connects `DeleteArgs`, `UploadArgs`, `CreateFolderArgs` to the rest of the system?**
-  _187 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `AppSettings` connect `Community 2` to `Community 9`, `Community 4`, `Community 1`?**
+  _High betweenness centrality (0.224) - this node is a cross-community bridge._
+- **What connects `UploadRequest`, `CreateFolderRequest`, `DeleteArgs` to the rest of the system?**
+  _165 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.0761904761904762 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0821917808219178 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.05671466353217749 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05339506172839506 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.0700354609929078 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07474600870827286 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.05405405405405406 - nodes in this community are weakly interconnected._
