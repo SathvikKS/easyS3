@@ -125,9 +125,9 @@
     "semantic_hash": "d8329e3eae97b5f1fe6b9d1ff1dfcbc4"
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\action-bar.tsx": {
-    "mtime": 1779189668.0467334,
-    "ast_hash": "aee4f49e7eba407f6007564b194d3d21",
-    "semantic_hash": "aee4f49e7eba407f6007564b194d3d21"
+    "mtime": 1779268250.7559168,
+    "ast_hash": "5879a7f09dfc10e377bfcccf419745f9",
+    "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\components\\add-connection-dialog.tsx": {
     "mtime": 1779197602.0047193,
@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\renderer\\src\\screens\\explorer-screen.tsx": {
-    "mtime": 1779260631.067039,
-    "ast_hash": "37129c06efab1d36e19f1100b1d2eac2",
+    "mtime": 1779268304.9526842,
+    "ast_hash": "35d8f0290641e1284712015b6dfda37b",
     "semantic_hash": ""
   },
   "C:\\Users\\sathv\\work\\easyS3\\src\\shared\\ipc.ts": {

@@ -93,7 +93,9 @@ export type PreviewResult =
 
 export type DownloadItem = { key: string; name: string }
 export type DownloadJobRequest = { connId: string; bucket: string; files: DownloadItem[] }
-export type DeleteFileRequest = { connId: string; bucket: string; key: string }
+export type DeleteFileRequest = { connId: string; bucket: string; keys: string[] }
+export type UploadRequest = { connId: string; bucket: string; destPrefix: string }
+export type CreateFolderRequest = { connId: string; bucket: string; key: string }
 export type PresignedUrlRequest = { connId: string; bucket: string; key: string; expiresIn?: number }
 export type S3UrlRequest = { connId: string; bucket: string; key: string }
 export type PreviewRequest = { connId: string; bucket: string; key: string; fileType: string }
@@ -101,7 +103,10 @@ export type PreviewRequest = { connId: string; bucket: string; key: string; file
 export interface EasyS3Files {
   list: (req: ListFilesRequest) => Promise<ListFilesResult>
   download: (req: DownloadJobRequest) => Promise<{ success: boolean; cancelled?: boolean; error?: string }>
-  delete: (req: DeleteFileRequest) => Promise<{ success: boolean; error?: string }>
+  delete: (req: DeleteFileRequest) => Promise<{ success: boolean; deleted: number; error?: string }>
+  upload: (req: UploadRequest) => Promise<{ success: boolean; cancelled?: boolean; uploaded: number; error?: string }>
+  uploadFolder: (req: UploadRequest) => Promise<{ success: boolean; cancelled?: boolean; uploaded: number; error?: string }>
+  createFolder: (req: CreateFolderRequest) => Promise<{ success: boolean; error?: string }>
   getPresignedUrl: (req: PresignedUrlRequest) => Promise<{ url: string }>
   getS3Url: (req: S3UrlRequest) => Promise<{ url: string }>
   getPreview: (req: PreviewRequest) => Promise<PreviewResult>

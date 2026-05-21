@@ -124,7 +124,7 @@ export function PreviewPanel({
   const handleDelete = async (): Promise<void> => {
     setDeleteLoading(true)
     try {
-      const result = await window.api.files.delete({ connId, bucket, key: fullKey })
+      const result = await window.api.files.delete({ connId, bucket, keys: [fullKey] })
       if (result.success) {
         toastSuccess('Deleted', file.name)
         onDeleted?.()
