@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { Toaster } from '@/components/ui/sonner'
+import { toastError, toastWarning } from '@/lib/toast'
 import { AddConnectionDialog } from '@/components/add-connection-dialog'
 import { SettingsDialog } from '@/components/settings-dialog'
 import { FileViewer } from '@/components/file-viewer'
@@ -198,14 +199,17 @@ function EasyS3App(): React.JSX.Element {
           buckets: result.buckets,
           lastSeen: result.lastSeen
         }
+        if (result.buckets === null) {
+          toastWarning('Limited access', 'Bucket list unavailable — connected to configured bucket only.')
+        }
         setConnections((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
         setTabs((prev) => prev.map((t) => t.conn.id === updated.id ? { ...t, conn: updated } : t))
         openConn(updated)
       } else {
-        console.error('Connect failed:', result.error)
+        toastError('Connection failed', result.error)
       }
     } catch (err) {
-      console.error('Connect error:', err)
+      toastError('Connection failed', err instanceof Error ? err.message : String(err))
     } finally {
       setConnectingId(null)
     }

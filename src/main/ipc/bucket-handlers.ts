@@ -5,7 +5,7 @@ import { decryptCredential } from '../credentials'
 import { getConnectionById, getCredentials } from '../connections-store'
 import { assertTrustedSender } from '../ipc-guards'
 import { getSetting } from '../store'
-import { createS3Client, listBuckets } from '../s3-client'
+import { createS3Client, getBucketInfo, listBuckets } from '../s3-client'
 
 function parseId(id: unknown): string {
   if (typeof id !== 'string' || !id) throw new Error('Invalid connection id')
@@ -28,6 +28,15 @@ export function registerBucketIpcHandlers(): void {
     )
 
     const fetchStats = getSetting('fetchBucketStats')
-    return listBuckets(client, conn.region, fetchStats)
+    try {
+      return await listBuckets(client, conn.region, fetchStats)
+    } catch {
+      // Provider doesn't allow listing all buckets (e.g. GCP bucket-scoped HMAC).
+      // Fall back to returning info for the single configured bucket.
+      if (conn.bucket) {
+        return [await getBucketInfo(client, conn.bucket, conn.region, fetchStats)]
+      }
+      throw new Error('Access denied: cannot list buckets and no specific bucket is configured')
+    }
   })
 }

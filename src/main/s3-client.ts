@@ -26,7 +26,7 @@ export function createS3Client(
     endpoint === AWS_DEFAULT_ENDPOINT ||
     endpoint.endsWith('.amazonaws.com')
 
-  return new S3Client({
+  const client = new S3Client({
     region: resolvedRegion,
     credentials: { accessKeyId, secretAccessKey },
     ...(isDefaultEndpoint
@@ -36,11 +36,52 @@ export function createS3Client(
           forcePathStyle: true
         })
   })
+
+  if (!isDefaultEndpoint) {
+    // GCP (and some other S3-compatible providers) reject the `x-id` query
+    // parameter that AWS SDK v3 appends to distinguish operation variants.
+    client.middlewareStack.add(
+      (next) => async (args) => {
+        const req = args.request as { query?: Record<string, string> }
+        if (req.query) delete req.query['x-id']
+        return next(args)
+      },
+      { step: 'build', name: 'stripXIdParam', priority: 'low' }
+    )
+  }
+
+  return client
 }
 
 export async function listBucketCount(client: S3Client): Promise<number> {
   const response = await client.send(new ListBucketsCommand({}))
   return response.Buckets?.length ?? 0
+}
+
+// Lightweight check for providers that don't allow ListBuckets (e.g. GCP bucket-scoped HMAC).
+export async function checkBucketAccess(client: S3Client, bucket: string): Promise<void> {
+  await client.send(new ListObjectsV2Command({ Bucket: bucket, MaxKeys: 1 }))
+}
+
+export async function getBucketInfo(
+  client: S3Client,
+  bucketName: string,
+  defaultRegion: string,
+  fetchStats: boolean
+): Promise<BucketInfo> {
+  let region = defaultRegion
+  try {
+    const loc = await client.send(new GetBucketLocationCommand({ Bucket: bucketName }))
+    region = loc.LocationConstraint ?? 'us-east-1'
+  } catch {
+    // fall back to connection default
+  }
+
+  const stats = fetchStats
+    ? await getBucketStats(client, bucketName)
+    : { objectCount: 0, totalBytes: 0, isTruncated: false, lastModified: null }
+
+  return { name: bucketName, region, createdAt: null, ...stats }
 }
 
 export type BucketInfo = {

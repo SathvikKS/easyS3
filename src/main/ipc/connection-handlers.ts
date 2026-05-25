@@ -13,7 +13,7 @@ import {
 } from '../connections-store'
 import type { StoredConnection } from '../connections-store'
 import { assertTrustedSender } from '../ipc-guards'
-import { createS3Client, listBucketCount } from '../s3-client'
+import { checkBucketAccess, createS3Client, listBucketCount } from '../s3-client'
 
 type Connection = {
   id: string
@@ -198,14 +198,23 @@ export function registerConnectionIpcHandlers(): void {
         decryptCredential(rawCreds.key),
         decryptCredential(rawCreds.secret)
       )
-      const buckets = await listBucketCount(client)
+
+      let buckets: number | null = null
+      try {
+        buckets = await listBucketCount(client)
+      } catch {
+        // Provider may not allow listing all buckets (e.g. GCP bucket-scoped HMAC).
+        // Verify access to the specific configured bucket instead.
+        if (conn.bucket) {
+          await checkBucketAccess(client, conn.bucket)
+        } else {
+          throw new Error('Access denied and no specific bucket configured')
+        }
+      }
+
       const iso = new Date().toISOString()
       setLastSeen(connId, iso)
-      return {
-        success: true,
-        buckets,
-        lastSeen: formatLastSeen(iso)
-      } satisfies ConnectResult
+      return { success: true, buckets, lastSeen: formatLastSeen(iso) } satisfies ConnectResult
     } catch (err) {
       const error = err instanceof Error ? err.message : String(err)
       return { success: false, buckets: null, lastSeen: null, error } satisfies ConnectResult
