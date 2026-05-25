@@ -79,7 +79,7 @@ export interface EasyS3Connections {
   delete: (id: string) => Promise<void>
   duplicate: (id: string) => Promise<Connection>
   connect: (id: string) => Promise<ConnectResult>
-  testConnect: (values: ConnectionFormValues) => Promise<ConnectResult>
+  testConnect: (values: ConnectionFormValues, id?: string) => Promise<ConnectResult>
 }
 
 export interface EasyS3Buckets {

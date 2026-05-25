@@ -221,12 +221,35 @@ export function registerConnectionIpcHandlers(): void {
     }
   })
 
-  ipcMain.handle(IPC.connections.testConnect, async (event, values: unknown) => {
+  ipcMain.handle(IPC.connections.testConnect, async (event, values: unknown, id: unknown) => {
     assertTrustedSender(event)
     const form = parseFormValues(values)
+    const connId = typeof id === 'string' && id ? id : null
+
+    let key = form.key
+    let secret = form.secret
+
+    if ((!key || !secret) && connId) {
+      const existing = getConnectionById(connId)
+      if (existing) {
+        const rawCreds = getCredentials(existing.credentialKey)
+        if (!key) key = decryptCredential(rawCreds.key)
+        if (!secret) secret = decryptCredential(rawCreds.secret)
+      }
+    }
+
     try {
-      const client = createS3Client(form.endpoint, form.region, form.key, form.secret)
-      const buckets = await listBucketCount(client)
+      const client = createS3Client(form.endpoint, form.region, key, secret)
+      let buckets: number | null = null
+      try {
+        buckets = await listBucketCount(client)
+      } catch {
+        if (form.bucket) {
+          await checkBucketAccess(client, form.bucket)
+        } else {
+          throw new Error('Access denied and no specific bucket configured')
+        }
+      }
       const lastSeen = formatLastSeen(new Date().toISOString())
       return { success: true, buckets, lastSeen } satisfies ConnectResult
     } catch (err) {

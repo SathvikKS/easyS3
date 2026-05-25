@@ -149,9 +149,10 @@ const connections = {
     return ipcRenderer.invoke(IPC.connections.connect, id)
   },
 
-  testConnect: (values: ConnectionFormValues): Promise<ConnectResult> => {
+  testConnect: (values: ConnectionFormValues, id?: string): Promise<ConnectResult> => {
     assertFormValues(values)
-    return ipcRenderer.invoke(IPC.connections.testConnect, values)
+    if (id !== undefined) assertId(id)
+    return ipcRenderer.invoke(IPC.connections.testConnect, values, id)
   }
 }
 

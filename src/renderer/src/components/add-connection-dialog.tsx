@@ -146,7 +146,7 @@ function AddConnectionDialogBody({
     setIsTesting(true)
     setTestResult(null)
     try {
-      const result = await window.api.connections.testConnect(form)
+      const result = await window.api.connections.testConnect(form, initialValues?.id)
       setTestResult(result)
     } catch (err) {
       setTestResult({
