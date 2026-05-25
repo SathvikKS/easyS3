@@ -207,6 +207,7 @@ export function registerConnectionIpcHandlers(): void {
         // Verify access to the specific configured bucket instead.
         if (conn.bucket) {
           await checkBucketAccess(client, conn.bucket)
+          buckets = 1
         } else {
           throw new Error('Access denied and no specific bucket configured')
         }
