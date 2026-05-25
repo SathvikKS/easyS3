@@ -55,16 +55,16 @@
     {
       "label": "connection-handlers.ts",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L1",
-      "id": "main_ipc_connection_handlers_ts",
+      "id": "connection_handlers_ts",
       "community": 4,
       "norm_label": "connection-handlers.ts"
     },
     {
       "label": "Connection",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L18",
       "id": "ipc_connection_handlers_connection",
       "community": 4,
@@ -73,7 +73,7 @@
     {
       "label": "ConnectionFormValues",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L29",
       "id": "ipc_connection_handlers_connectionformvalues",
       "community": 4,
@@ -82,7 +82,7 @@
     {
       "label": "ConnectResult",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L38",
       "id": "ipc_connection_handlers_connectresult",
       "community": 4,
@@ -91,7 +91,7 @@
     {
       "label": "formatLastSeen()",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L45",
       "id": "ipc_connection_handlers_formatlastseen",
       "community": 4,
@@ -100,7 +100,7 @@
     {
       "label": "toConnection()",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L58",
       "id": "ipc_connection_handlers_toconnection",
       "community": 4,
@@ -109,7 +109,7 @@
     {
       "label": "parseFormValues()",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L71",
       "id": "ipc_connection_handlers_parseformvalues",
       "community": 4,
@@ -118,7 +118,7 @@
     {
       "label": "parseId()",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L88",
       "id": "ipc_connection_handlers_parseid",
       "community": 4,
@@ -127,632 +127,641 @@
     {
       "label": "registerConnectionIpcHandlers()",
       "file_type": "code",
-      "source_file": "main/ipc/connection-handlers.ts",
+      "source_file": "connection-handlers.ts",
       "source_location": "L93",
       "id": "ipc_connection_handlers_registerconnectionipchandlers",
       "community": 4,
       "norm_label": "registerconnectionipchandlers()"
     },
     {
+      "label": "connection-handlers.ts",
+      "file_type": "code",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L1",
+      "community": 4,
+      "norm_label": "connection-handlers.ts",
+      "id": "main_ipc_connection_handlers_ts"
+    },
+    {
       "label": "index.d.ts",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L1",
-      "id": "preload_index_d_ts",
       "community": 9,
-      "norm_label": "index.d.ts"
+      "norm_label": "index.d.ts",
+      "id": "preload_index_d_ts"
     },
     {
       "label": "Connection",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L5",
-      "id": "preload_index_d_connection",
       "community": 9,
-      "norm_label": "connection"
+      "norm_label": "connection",
+      "id": "preload_index_d_connection"
     },
     {
       "label": "ConnectionFormValues",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L16",
-      "id": "preload_index_d_connectionformvalues",
       "community": 9,
-      "norm_label": "connectionformvalues"
+      "norm_label": "connectionformvalues",
+      "id": "preload_index_d_connectionformvalues"
     },
     {
       "label": "ConnectResult",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L25",
-      "id": "preload_index_d_connectresult",
       "community": 9,
-      "norm_label": "connectresult"
+      "norm_label": "connectresult",
+      "id": "preload_index_d_connectresult"
     },
     {
       "label": "BucketInfo",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L32",
-      "id": "preload_index_d_bucketinfo",
       "community": 9,
-      "norm_label": "bucketinfo"
+      "norm_label": "bucketinfo",
+      "id": "preload_index_d_bucketinfo"
     },
     {
       "label": "S3FileType",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L42",
-      "id": "preload_index_d_s3filetype",
       "community": 9,
-      "norm_label": "s3filetype"
+      "norm_label": "s3filetype",
+      "id": "preload_index_d_s3filetype"
     },
     {
       "label": "FileEntry",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L44",
-      "id": "preload_index_d_fileentry",
       "community": 9,
-      "norm_label": "fileentry"
+      "norm_label": "fileentry",
+      "id": "preload_index_d_fileentry"
     },
     {
       "label": "ListFilesRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L52",
-      "id": "preload_index_d_listfilesrequest",
       "community": 9,
-      "norm_label": "listfilesrequest"
+      "norm_label": "listfilesrequest",
+      "id": "preload_index_d_listfilesrequest"
     },
     {
       "label": "ListFilesResult",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L60",
-      "id": "preload_index_d_listfilesresult",
       "community": 9,
-      "norm_label": "listfilesresult"
+      "norm_label": "listfilesresult",
+      "id": "preload_index_d_listfilesresult"
     },
     {
       "label": "EasyS3Settings",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L67",
-      "id": "preload_index_d_easys3settings",
       "community": 9,
-      "norm_label": "easys3settings"
+      "norm_label": "easys3settings",
+      "id": "preload_index_d_easys3settings"
     },
     {
       "label": "EasyS3Connections",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L75",
-      "id": "preload_index_d_easys3connections",
       "community": 9,
-      "norm_label": "easys3connections"
+      "norm_label": "easys3connections",
+      "id": "preload_index_d_easys3connections"
     },
     {
       "label": "EasyS3Buckets",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L85",
-      "id": "preload_index_d_easys3buckets",
       "community": 9,
-      "norm_label": "easys3buckets"
+      "norm_label": "easys3buckets",
+      "id": "preload_index_d_easys3buckets"
     },
     {
       "label": "PreviewResult",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L89",
-      "id": "preload_index_d_previewresult",
       "community": 9,
-      "norm_label": "previewresult"
+      "norm_label": "previewresult",
+      "id": "preload_index_d_previewresult"
     },
     {
       "label": "DownloadItem",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L94",
-      "id": "preload_index_d_downloaditem",
       "community": 9,
-      "norm_label": "downloaditem"
+      "norm_label": "downloaditem",
+      "id": "preload_index_d_downloaditem"
     },
     {
       "label": "DownloadJobRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L95",
-      "id": "preload_index_d_downloadjobrequest",
       "community": 9,
-      "norm_label": "downloadjobrequest"
+      "norm_label": "downloadjobrequest",
+      "id": "preload_index_d_downloadjobrequest"
     },
     {
       "label": "DeleteFileRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L96",
-      "id": "preload_index_d_deletefilerequest",
       "community": 9,
-      "norm_label": "deletefilerequest"
+      "norm_label": "deletefilerequest",
+      "id": "preload_index_d_deletefilerequest"
     },
     {
       "label": "UploadRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L97",
-      "id": "preload_index_d_uploadrequest",
       "community": 9,
-      "norm_label": "uploadrequest"
+      "norm_label": "uploadrequest",
+      "id": "preload_index_d_uploadrequest"
     },
     {
       "label": "CreateFolderRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L98",
-      "id": "preload_index_d_createfolderrequest",
       "community": 9,
-      "norm_label": "createfolderrequest"
+      "norm_label": "createfolderrequest",
+      "id": "preload_index_d_createfolderrequest"
     },
     {
       "label": "PresignedUrlRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L99",
-      "id": "preload_index_d_presignedurlrequest",
       "community": 9,
-      "norm_label": "presignedurlrequest"
+      "norm_label": "presignedurlrequest",
+      "id": "preload_index_d_presignedurlrequest"
     },
     {
       "label": "S3UrlRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L100",
-      "id": "preload_index_d_s3urlrequest",
       "community": 9,
-      "norm_label": "s3urlrequest"
+      "norm_label": "s3urlrequest",
+      "id": "preload_index_d_s3urlrequest"
     },
     {
       "label": "PreviewRequest",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L101",
-      "id": "preload_index_d_previewrequest",
       "community": 9,
-      "norm_label": "previewrequest"
+      "norm_label": "previewrequest",
+      "id": "preload_index_d_previewrequest"
     },
     {
       "label": "EasyS3Files",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L103",
-      "id": "preload_index_d_easys3files",
       "community": 9,
-      "norm_label": "easys3files"
+      "norm_label": "easys3files",
+      "id": "preload_index_d_easys3files"
     },
     {
       "label": "EasyS3Api",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L115",
-      "id": "preload_index_d_easys3api",
       "community": 9,
-      "norm_label": "easys3api"
+      "norm_label": "easys3api",
+      "id": "preload_index_d_easys3api"
     },
     {
       "label": "Window",
       "file_type": "code",
       "source_file": "preload/index.d.ts",
       "source_location": "L123",
-      "id": "preload_index_d_window",
       "community": 9,
-      "norm_label": "window"
+      "norm_label": "window",
+      "id": "preload_index_d_window"
     },
     {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L1",
-      "id": "preload_index_ts",
       "community": 2,
-      "norm_label": "index.ts"
+      "norm_label": "index.ts",
+      "id": "preload_index_ts"
     },
     {
       "label": "Connection",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L7",
-      "id": "preload_index_connection",
       "community": 2,
-      "norm_label": "connection"
+      "norm_label": "connection",
+      "id": "preload_index_connection"
     },
     {
       "label": "ConnectionFormValues",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L18",
-      "id": "preload_index_connectionformvalues",
       "community": 2,
-      "norm_label": "connectionformvalues"
+      "norm_label": "connectionformvalues",
+      "id": "preload_index_connectionformvalues"
     },
     {
       "label": "ConnectResult",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L27",
-      "id": "preload_index_connectresult",
       "community": 2,
-      "norm_label": "connectresult"
+      "norm_label": "connectresult",
+      "id": "preload_index_connectresult"
     },
     {
       "label": "BucketInfo",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L34",
-      "id": "preload_index_bucketinfo",
       "community": 2,
-      "norm_label": "bucketinfo"
+      "norm_label": "bucketinfo",
+      "id": "preload_index_bucketinfo"
     },
     {
       "label": "S3FileType",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L44",
-      "id": "preload_index_s3filetype",
       "community": 2,
-      "norm_label": "s3filetype"
+      "norm_label": "s3filetype",
+      "id": "preload_index_s3filetype"
     },
     {
       "label": "FileEntry",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L46",
-      "id": "preload_index_fileentry",
       "community": 2,
-      "norm_label": "fileentry"
+      "norm_label": "fileentry",
+      "id": "preload_index_fileentry"
     },
     {
       "label": "ListFilesRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L54",
-      "id": "preload_index_listfilesrequest",
       "community": 2,
-      "norm_label": "listfilesrequest"
+      "norm_label": "listfilesrequest",
+      "id": "preload_index_listfilesrequest"
     },
     {
       "label": "ListFilesResult",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L62",
-      "id": "preload_index_listfilesresult",
       "community": 2,
-      "norm_label": "listfilesresult"
+      "norm_label": "listfilesresult",
+      "id": "preload_index_listfilesresult"
     },
     {
       "label": "settings",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L73",
-      "id": "preload_index_settings",
       "community": 2,
-      "norm_label": "settings"
+      "norm_label": "settings",
+      "id": "preload_index_settings"
     },
     {
       "label": "assertId()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L104",
-      "id": "preload_index_assertid",
       "community": 2,
-      "norm_label": "assertid()"
+      "norm_label": "assertid()",
+      "id": "preload_index_assertid"
     },
     {
       "label": "assertFormValues()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L108",
-      "id": "preload_index_assertformvalues",
       "community": 2,
-      "norm_label": "assertformvalues()"
+      "norm_label": "assertformvalues()",
+      "id": "preload_index_assertformvalues"
     },
     {
       "label": "connections",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L123",
-      "id": "preload_index_connections",
       "community": 2,
-      "norm_label": "connections"
+      "norm_label": "connections",
+      "id": "preload_index_connections"
     },
     {
       "label": "buckets",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L159",
-      "id": "preload_index_buckets",
       "community": 2,
-      "norm_label": "buckets"
+      "norm_label": "buckets",
+      "id": "preload_index_buckets"
     },
     {
       "label": "PreviewResult",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L166",
-      "id": "preload_index_previewresult",
       "community": 2,
-      "norm_label": "previewresult"
+      "norm_label": "previewresult",
+      "id": "preload_index_previewresult"
     },
     {
       "label": "DownloadItem",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L171",
-      "id": "preload_index_downloaditem",
       "community": 2,
-      "norm_label": "downloaditem"
+      "norm_label": "downloaditem",
+      "id": "preload_index_downloaditem"
     },
     {
       "label": "DownloadJobRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L172",
-      "id": "preload_index_downloadjobrequest",
       "community": 2,
-      "norm_label": "downloadjobrequest"
+      "norm_label": "downloadjobrequest",
+      "id": "preload_index_downloadjobrequest"
     },
     {
       "label": "DeleteRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L173",
-      "id": "preload_index_deleterequest",
       "community": 2,
-      "norm_label": "deleterequest"
+      "norm_label": "deleterequest",
+      "id": "preload_index_deleterequest"
     },
     {
       "label": "UploadRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L174",
-      "id": "preload_index_uploadrequest",
       "community": 2,
-      "norm_label": "uploadrequest"
+      "norm_label": "uploadrequest",
+      "id": "preload_index_uploadrequest"
     },
     {
       "label": "CreateFolderRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L175",
-      "id": "preload_index_createfolderrequest",
       "community": 2,
-      "norm_label": "createfolderrequest"
+      "norm_label": "createfolderrequest",
+      "id": "preload_index_createfolderrequest"
     },
     {
       "label": "PresignedUrlRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L176",
-      "id": "preload_index_presignedurlrequest",
       "community": 2,
-      "norm_label": "presignedurlrequest"
+      "norm_label": "presignedurlrequest",
+      "id": "preload_index_presignedurlrequest"
     },
     {
       "label": "S3UrlRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L177",
-      "id": "preload_index_s3urlrequest",
       "community": 2,
-      "norm_label": "s3urlrequest"
+      "norm_label": "s3urlrequest",
+      "id": "preload_index_s3urlrequest"
     },
     {
       "label": "PreviewRequest",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L178",
-      "id": "preload_index_previewrequest",
       "community": 2,
-      "norm_label": "previewrequest"
+      "norm_label": "previewrequest",
+      "id": "preload_index_previewrequest"
     },
     {
       "label": "assertListFilesRequest()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L180",
-      "id": "preload_index_assertlistfilesrequest",
       "community": 2,
-      "norm_label": "assertlistfilesrequest()"
+      "norm_label": "assertlistfilesrequest()",
+      "id": "preload_index_assertlistfilesrequest"
     },
     {
       "label": "assertFileOpBase()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L201",
-      "id": "preload_index_assertfileopbase",
       "community": 2,
-      "norm_label": "assertfileopbase()"
+      "norm_label": "assertfileopbase()",
+      "id": "preload_index_assertfileopbase"
     },
     {
       "label": "assertDeleteRequest()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L218",
-      "id": "preload_index_assertdeleterequest",
       "community": 2,
-      "norm_label": "assertdeleterequest()"
+      "norm_label": "assertdeleterequest()",
+      "id": "preload_index_assertdeleterequest"
     },
     {
       "label": "assertUploadRequest()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L229",
-      "id": "preload_index_assertuploadrequest",
       "community": 2,
-      "norm_label": "assertuploadrequest()"
+      "norm_label": "assertuploadrequest()",
+      "id": "preload_index_assertuploadrequest"
     },
     {
       "label": "assertCreateFolderRequest()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L237",
-      "id": "preload_index_assertcreatefolderrequest",
       "community": 2,
-      "norm_label": "assertcreatefolderrequest()"
+      "norm_label": "assertcreatefolderrequest()",
+      "id": "preload_index_assertcreatefolderrequest"
     },
     {
       "label": "assertDownloadJobRequest()",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L245",
-      "id": "preload_index_assertdownloadjobrequest",
       "community": 2,
-      "norm_label": "assertdownloadjobrequest()"
+      "norm_label": "assertdownloadjobrequest()",
+      "id": "preload_index_assertdownloadjobrequest"
     },
     {
       "label": "files",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L274",
-      "id": "preload_index_files",
       "community": 2,
-      "norm_label": "files"
+      "norm_label": "files",
+      "id": "preload_index_files"
     },
     {
       "label": "api",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L329",
-      "id": "preload_index_api",
       "community": 2,
-      "norm_label": "api"
+      "norm_label": "api",
+      "id": "preload_index_api"
     },
     {
       "label": "EasyS3Settings",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L339",
-      "id": "preload_index_easys3settings",
       "community": 2,
-      "norm_label": "easys3settings"
+      "norm_label": "easys3settings",
+      "id": "preload_index_easys3settings"
     },
     {
       "label": "EasyS3Connections",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L340",
-      "id": "preload_index_easys3connections",
       "community": 2,
-      "norm_label": "easys3connections"
+      "norm_label": "easys3connections",
+      "id": "preload_index_easys3connections"
     },
     {
       "label": "EasyS3Buckets",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L341",
-      "id": "preload_index_easys3buckets",
       "community": 2,
-      "norm_label": "easys3buckets"
+      "norm_label": "easys3buckets",
+      "id": "preload_index_easys3buckets"
     },
     {
       "label": "EasyS3Files",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L342",
-      "id": "preload_index_easys3files",
       "community": 2,
-      "norm_label": "easys3files"
+      "norm_label": "easys3files",
+      "id": "preload_index_easys3files"
     },
     {
       "label": "EasyS3Api",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L343",
-      "id": "preload_index_easys3api",
       "community": 2,
-      "norm_label": "easys3api"
+      "norm_label": "easys3api",
+      "id": "preload_index_easys3api"
     },
     {
       "label": "EasyS3PreviewResult",
       "file_type": "code",
       "source_file": "preload/index.ts",
       "source_location": "L344",
-      "id": "preload_index_easys3previewresult",
       "community": 2,
-      "norm_label": "easys3previewresult"
+      "norm_label": "easys3previewresult",
+      "id": "preload_index_easys3previewresult"
     },
     {
       "label": "add-connection-dialog.tsx",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L1",
-      "id": "renderer_src_components_add_connection_dialog_tsx",
       "community": 1,
-      "norm_label": "add-connection-dialog.tsx"
+      "norm_label": "add-connection-dialog.tsx",
+      "id": "renderer_src_components_add_connection_dialog_tsx"
     },
     {
       "label": "AddConnectionDialogProps",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L17",
-      "id": "components_add_connection_dialog_addconnectiondialogprops",
       "community": 1,
-      "norm_label": "addconnectiondialogprops"
+      "norm_label": "addconnectiondialogprops",
+      "id": "components_add_connection_dialog_addconnectiondialogprops"
     },
     {
       "label": "FieldDef",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L24",
-      "id": "components_add_connection_dialog_fielddef",
       "community": 1,
-      "norm_label": "fielddef"
+      "norm_label": "fielddef",
+      "id": "components_add_connection_dialog_fielddef"
     },
     {
       "label": "FIELDS",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L32",
-      "id": "components_add_connection_dialog_fields",
       "community": 1,
-      "norm_label": "fields"
+      "norm_label": "fields",
+      "id": "components_add_connection_dialog_fields"
     },
     {
       "label": "buildInitialForm()",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L77",
-      "id": "components_add_connection_dialog_buildinitialform",
       "community": 1,
-      "norm_label": "buildinitialform()"
+      "norm_label": "buildinitialform()",
+      "id": "components_add_connection_dialog_buildinitialform"
     },
     {
       "label": "AddConnectionDialog()",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L86",
-      "id": "components_add_connection_dialog_addconnectiondialog",
       "community": 0,
-      "norm_label": "addconnectiondialog()"
+      "norm_label": "addconnectiondialog()",
+      "id": "components_add_connection_dialog_addconnectiondialog"
     },
     {
       "label": "DialogBodyProps",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L108",
-      "id": "components_add_connection_dialog_dialogbodyprops",
       "community": 1,
-      "norm_label": "dialogbodyprops"
+      "norm_label": "dialogbodyprops",
+      "id": "components_add_connection_dialog_dialogbodyprops"
     },
     {
       "label": "AddConnectionDialogBody()",
       "file_type": "code",
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L114",
-      "id": "components_add_connection_dialog_addconnectiondialogbody",
       "community": 1,
-      "norm_label": "addconnectiondialogbody()"
+      "norm_label": "addconnectiondialogbody()",
+      "id": "components_add_connection_dialog_addconnectiondialogbody"
     },
     {
       "label": "bucket-handlers.ts",
@@ -1038,7 +1047,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/preview-panel.tsx",
       "source_location": "L1",
-      "community": 1,
+      "community": 28,
       "norm_label": "preview-panel.tsx",
       "id": "renderer_src_components_preview_panel_tsx"
     },
@@ -1047,7 +1056,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/preview-panel.tsx",
       "source_location": "L21",
-      "community": 1,
+      "community": 28,
       "norm_label": "previewresult",
       "id": "components_preview_panel_previewresult"
     },
@@ -1056,7 +1065,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/preview-panel.tsx",
       "source_location": "L26",
-      "community": 1,
+      "community": 28,
       "norm_label": "previewstate",
       "id": "components_preview_panel_previewstate"
     },
@@ -1065,7 +1074,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/preview-panel.tsx",
       "source_location": "L28",
-      "community": 1,
+      "community": 28,
       "norm_label": "previewpanelprops",
       "id": "components_preview_panel_previewpanelprops"
     },
@@ -1389,7 +1398,7 @@
       "file_type": "code",
       "source_file": "main/store.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "store.ts",
       "id": "main_store_ts"
     },
@@ -1398,7 +1407,7 @@
       "file_type": "code",
       "source_file": "main/store.ts",
       "source_location": "L14",
-      "community": 9,
+      "community": 2,
       "norm_label": "getstore()",
       "id": "main_store_getstore"
     },
@@ -1407,7 +1416,7 @@
       "file_type": "code",
       "source_file": "main/store.ts",
       "source_location": "L47",
-      "community": 9,
+      "community": 2,
       "norm_label": "getallsettings()",
       "id": "main_store_getallsettings"
     },
@@ -1416,7 +1425,7 @@
       "file_type": "code",
       "source_file": "main/store.ts",
       "source_location": "L51",
-      "community": 9,
+      "community": 2,
       "norm_label": "getsetting()",
       "id": "main_store_getsetting"
     },
@@ -1425,7 +1434,7 @@
       "file_type": "code",
       "source_file": "main/store.ts",
       "source_location": "L55",
-      "community": 9,
+      "community": 2,
       "norm_label": "setsetting()",
       "id": "main_store_setsetting"
     },
@@ -1434,7 +1443,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/settings-dialog.tsx",
       "source_location": "L1",
-      "community": 6,
+      "community": 1,
       "norm_label": "settings-dialog.tsx",
       "id": "renderer_src_components_settings_dialog_tsx"
     },
@@ -1443,7 +1452,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/settings-dialog.tsx",
       "source_location": "L23",
-      "community": 6,
+      "community": 1,
       "norm_label": "theme_options",
       "id": "components_settings_dialog_theme_options"
     },
@@ -1452,7 +1461,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/settings-dialog.tsx",
       "source_location": "L29",
-      "community": 6,
+      "community": 1,
       "norm_label": "settingsdialogprops",
       "id": "components_settings_dialog_settingsdialogprops"
     },
@@ -1470,7 +1479,7 @@
       "file_type": "code",
       "source_file": "renderer/src/components/settings-dialog.tsx",
       "source_location": "L45",
-      "community": 6,
+      "community": 1,
       "norm_label": "settingsdialogbody()",
       "id": "components_settings_dialog_settingsdialogbody"
     },
@@ -1614,7 +1623,7 @@
       "file_type": "code",
       "source_file": "shared/settings-validation.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "settings-validation.ts",
       "id": "shared_settings_validation_ts"
     },
@@ -1623,7 +1632,7 @@
       "file_type": "code",
       "source_file": "shared/settings-validation.ts",
       "source_location": "L10",
-      "community": 9,
+      "community": 2,
       "norm_label": "isappsettingkey()",
       "id": "shared_settings_validation_isappsettingkey"
     },
@@ -1632,7 +1641,7 @@
       "file_type": "code",
       "source_file": "shared/settings-validation.ts",
       "source_location": "L14",
-      "community": 9,
+      "community": 2,
       "norm_label": "isthememode()",
       "id": "shared_settings_validation_isthememode"
     },
@@ -1641,7 +1650,7 @@
       "file_type": "code",
       "source_file": "shared/settings-validation.ts",
       "source_location": "L18",
-      "community": 9,
+      "community": 2,
       "norm_label": "isvalidsettingvalue()",
       "id": "shared_settings_validation_isvalidsettingvalue"
     },
@@ -1650,7 +1659,7 @@
       "file_type": "code",
       "source_file": "shared/settings.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "settings.ts",
       "id": "shared_settings_ts"
     },
@@ -1659,7 +1668,7 @@
       "file_type": "code",
       "source_file": "shared/settings.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "thememode",
       "id": "shared_settings_thememode"
     },
@@ -1668,7 +1677,7 @@
       "file_type": "code",
       "source_file": "shared/settings.ts",
       "source_location": "L3",
-      "community": 9,
+      "community": 2,
       "norm_label": "appsettings",
       "id": "shared_settings_appsettings"
     },
@@ -2010,7 +2019,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L1",
-      "community": 3,
+      "community": 30,
       "norm_label": "package.json",
       "id": "package_json"
     },
@@ -2019,7 +2028,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L2",
-      "community": 3,
+      "community": 30,
       "norm_label": "name",
       "id": "easys3_package_name"
     },
@@ -2028,7 +2037,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L3",
-      "community": 3,
+      "community": 30,
       "norm_label": "version",
       "id": "easys3_package_version"
     },
@@ -2037,7 +2046,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L4",
-      "community": 3,
+      "community": 30,
       "norm_label": "description",
       "id": "easys3_package_description"
     },
@@ -2046,7 +2055,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L5",
-      "community": 3,
+      "community": 30,
       "norm_label": "main",
       "id": "easys3_package_main"
     },
@@ -2055,7 +2064,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L6",
-      "community": 3,
+      "community": 30,
       "norm_label": "author",
       "id": "easys3_package_author"
     },
@@ -2064,7 +2073,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L7",
-      "community": 3,
+      "community": 30,
       "norm_label": "homepage",
       "id": "easys3_package_homepage"
     },
@@ -2073,7 +2082,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L8",
-      "community": 3,
+      "community": 29,
       "norm_label": "scripts",
       "id": "easys3_package_scripts"
     },
@@ -2082,7 +2091,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L9",
-      "community": 3,
+      "community": 29,
       "norm_label": "format",
       "id": "easys3_package_scripts_format"
     },
@@ -2091,7 +2100,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L10",
-      "community": 3,
+      "community": 29,
       "norm_label": "lint",
       "id": "easys3_package_scripts_lint"
     },
@@ -2100,7 +2109,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L11",
-      "community": 3,
+      "community": 29,
       "norm_label": "typecheck:node",
       "id": "easys3_package_scripts_typecheck_node"
     },
@@ -2109,7 +2118,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L12",
-      "community": 3,
+      "community": 29,
       "norm_label": "typecheck:web",
       "id": "easys3_package_scripts_typecheck_web"
     },
@@ -2118,7 +2127,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L13",
-      "community": 3,
+      "community": 29,
       "norm_label": "typecheck",
       "id": "easys3_package_scripts_typecheck"
     },
@@ -2127,7 +2136,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L14",
-      "community": 3,
+      "community": 29,
       "norm_label": "start",
       "id": "easys3_package_scripts_start"
     },
@@ -2136,7 +2145,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L15",
-      "community": 3,
+      "community": 29,
       "norm_label": "dev",
       "id": "easys3_package_scripts_dev"
     },
@@ -2145,7 +2154,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L16",
-      "community": 3,
+      "community": 29,
       "norm_label": "build",
       "id": "easys3_package_scripts_build"
     },
@@ -2154,7 +2163,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L17",
-      "community": 3,
+      "community": 29,
       "norm_label": "postinstall",
       "id": "easys3_package_scripts_postinstall"
     },
@@ -2163,7 +2172,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L18",
-      "community": 3,
+      "community": 29,
       "norm_label": "build:unpack",
       "id": "easys3_package_scripts_build_unpack"
     },
@@ -2172,7 +2181,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L19",
-      "community": 3,
+      "community": 29,
       "norm_label": "build:win",
       "id": "easys3_package_scripts_build_win"
     },
@@ -2181,7 +2190,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L20",
-      "community": 3,
+      "community": 29,
       "norm_label": "build:mac",
       "id": "easys3_package_scripts_build_mac"
     },
@@ -2190,7 +2199,7 @@
       "file_type": "code",
       "source_file": "package.json",
       "source_location": "L21",
-      "community": 3,
+      "community": 29,
       "norm_label": "build:linux",
       "id": "easys3_package_scripts_build_linux"
     },
@@ -2964,7 +2973,7 @@
       "file_type": "code",
       "source_file": "src/main/ipc-guards.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "ipc-guards.ts",
       "id": "src_main_ipc_guards_ts"
     },
@@ -2982,7 +2991,7 @@
       "file_type": "code",
       "source_file": "src/main/ipc-guards.ts",
       "source_location": "L14",
-      "community": 9,
+      "community": 2,
       "norm_label": "istrustedwebcontents()",
       "id": "main_ipc_guards_istrustedwebcontents"
     },
@@ -2991,7 +3000,7 @@
       "file_type": "code",
       "source_file": "src/main/ipc-guards.ts",
       "source_location": "L20",
-      "community": 9,
+      "community": 2,
       "norm_label": "parsesettingkey()",
       "id": "main_ipc_guards_parsesettingkey"
     },
@@ -3000,7 +3009,7 @@
       "file_type": "code",
       "source_file": "src/main/ipc-guards.ts",
       "source_location": "L27",
-      "community": 9,
+      "community": 2,
       "norm_label": "parsesettingvalue()",
       "id": "main_ipc_guards_parsesettingvalue"
     },
@@ -3009,7 +3018,7 @@
       "file_type": "code",
       "source_file": "src/main/ipc-guards.ts",
       "source_location": "L37",
-      "community": 9,
+      "community": 2,
       "norm_label": "parseoptionalpath()",
       "id": "main_ipc_guards_parseoptionalpath"
     },
@@ -3027,7 +3036,7 @@
       "file_type": "code",
       "source_file": "src/main/store.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "store.ts",
       "id": "src_main_store_ts"
     },
@@ -3081,7 +3090,7 @@
       "file_type": "code",
       "source_file": "src/main/ipc/settings-handlers.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "settings-handlers.ts",
       "id": "src_main_ipc_settings_handlers_ts"
     },
@@ -3090,7 +3099,7 @@
       "file_type": "code",
       "source_file": "src/main/ipc/settings-handlers.ts",
       "source_location": "L13",
-      "community": 9,
+      "community": 2,
       "norm_label": "resolvebrowsedefaultpath()",
       "id": "ipc_settings_handlers_resolvebrowsedefaultpath"
     },
@@ -3414,7 +3423,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/preview-panel.tsx",
       "source_location": "L1",
-      "community": 1,
+      "community": 28,
       "norm_label": "preview-panel.tsx",
       "id": "src_renderer_src_components_preview_panel_tsx"
     },
@@ -3513,7 +3522,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/theme-provider.tsx",
       "source_location": "L62",
-      "community": 6,
+      "community": 1,
       "norm_label": "usetheme()",
       "id": "components_theme_provider_usetheme"
     },
@@ -3522,7 +3531,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L1",
-      "community": 1,
+      "community": 28,
       "norm_label": "alert-dialog.tsx",
       "id": "src_renderer_src_components_ui_alert_dialog_tsx"
     },
@@ -3531,7 +3540,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L7",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialog()",
       "id": "ui_alert_dialog_alertdialog"
     },
@@ -3540,7 +3549,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L11",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogtrigger()",
       "id": "ui_alert_dialog_alertdialogtrigger"
     },
@@ -3549,7 +3558,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L17",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogportal()",
       "id": "ui_alert_dialog_alertdialogportal"
     },
@@ -3558,7 +3567,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L23",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogoverlay()",
       "id": "ui_alert_dialog_alertdialogoverlay"
     },
@@ -3567,7 +3576,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L39",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogcontent()",
       "id": "ui_alert_dialog_alertdialogcontent"
     },
@@ -3576,7 +3585,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L58",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogheader()",
       "id": "ui_alert_dialog_alertdialogheader"
     },
@@ -3585,7 +3594,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L68",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogfooter()",
       "id": "ui_alert_dialog_alertdialogfooter"
     },
@@ -3594,7 +3603,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L78",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogtitle()",
       "id": "ui_alert_dialog_alertdialogtitle"
     },
@@ -3603,7 +3612,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L91",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogdescription()",
       "id": "ui_alert_dialog_alertdialogdescription"
     },
@@ -3612,7 +3621,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L104",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogaction()",
       "id": "ui_alert_dialog_alertdialogaction"
     },
@@ -3621,7 +3630,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/alert-dialog.tsx",
       "source_location": "L117",
-      "community": 1,
+      "community": 28,
       "norm_label": "alertdialogcancel()",
       "id": "ui_alert_dialog_alertdialogcancel"
     },
@@ -3666,7 +3675,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/button.tsx",
       "source_location": "L7",
-      "community": 1,
+      "community": 28,
       "norm_label": "buttonvariants",
       "id": "ui_button_buttonvariants"
     },
@@ -4098,7 +4107,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/sonner.tsx",
       "source_location": "L1",
-      "community": 6,
+      "community": 0,
       "norm_label": "sonner.tsx",
       "id": "src_renderer_src_components_ui_sonner_tsx"
     },
@@ -4107,7 +4116,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/components/ui/sonner.tsx",
       "source_location": "L5",
-      "community": 6,
+      "community": 0,
       "norm_label": "toaster()",
       "id": "ui_sonner_toaster"
     },
@@ -4161,7 +4170,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/hooks/use-debounced-value.ts",
       "source_location": "L1",
-      "community": 0,
+      "community": 8,
       "norm_label": "use-debounced-value.ts",
       "id": "src_renderer_src_hooks_use_debounced_value_ts"
     },
@@ -4170,7 +4179,7 @@
       "file_type": "code",
       "source_file": "src/renderer/src/hooks/use-debounced-value.ts",
       "source_location": "L7",
-      "community": 0,
+      "community": 8,
       "norm_label": "usedebouncedvalue()",
       "id": "hooks_use_debounced_value_usedebouncedvalue"
     },
@@ -4458,7 +4467,7 @@
       "file_type": "code",
       "source_file": "src/shared/settings-validation.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "settings-validation.ts",
       "id": "src_shared_settings_validation_ts"
     },
@@ -4467,7 +4476,7 @@
       "file_type": "code",
       "source_file": "src/shared/settings.ts",
       "source_location": "L1",
-      "community": 9,
+      "community": 2,
       "norm_label": "settings.ts",
       "id": "src_shared_settings_ts"
     },
@@ -5348,6 +5357,422 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "shared_ipc_ipc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_addconnection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_deleteconnection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_getallconnections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_getconnectionbyid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_getcredentials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_setlastseen",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_updateconnection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_connections_store_storedconnection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_ipc_guards_asserttrustedsender",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_s3_client_checkbucketaccess",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_s3_client_creates3client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "main_s3_client_listbucketcount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_connection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_connectionformvalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_connectresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_formatlastseen",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_toconnection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_parseformvalues",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_parseid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "connection-handlers.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "connection_handlers_ts",
+      "target": "ipc_connection_handlers_registerconnectionipchandlers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_connection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_connection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_connectionformvalues"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_connectionformvalues"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_connectresult"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_connectresult"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "ipc_connection_handlers_toconnection",
+      "target": "ipc_connection_handlers_formatlastseen"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_formatlastseen"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_formatlastseen"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_toconnection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_toconnection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_parseformvalues"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_parseformvalues"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_parseid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_parseid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main/ipc/connection-handlers.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_registerconnectionipchandlers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/connection-handlers.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_connection_handlers_ts",
+      "target": "ipc_connection_handlers_registerconnectionipchandlers"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main/ipc/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ipc_index_ts",
+      "target": "ipc_connection_handlers_registerconnectionipchandlers"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/main/ipc/index.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "ipc_index_registeripchandlers",
+      "target": "ipc_connection_handlers_registerconnectionipchandlers"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "main/ipc/connection-handlers.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -5488,86 +5913,6 @@
       "target": "main_s3_client_listbucketcount"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_connection"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_connectionformvalues"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L38",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_connectresult"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_formatlastseen"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_toconnection"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L71",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_parseformvalues"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L88",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_parseid"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main/ipc/connection-handlers.ts",
-      "source_location": "L93",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_registerconnectionipchandlers"
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5577,119 +5922,6 @@
       "confidence_score": 1.0,
       "source": "main_ipc_connection_handlers_ts",
       "target": "main_s3_client_ts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_connection"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_connectionformvalues"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L38",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_connectresult"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "ipc_connection_handlers_toconnection",
-      "target": "ipc_connection_handlers_formatlastseen"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_formatlastseen"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_toconnection"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L71",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_parseformvalues"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L88",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_parseid"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/connection-handlers.ts",
-      "source_location": "L93",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_connection_handlers_ts",
-      "target": "ipc_connection_handlers_registerconnectionipchandlers"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main/ipc/index.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_ipc_index_ts",
-      "target": "ipc_connection_handlers_registerconnectionipchandlers"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/main/ipc/index.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "ipc_index_registeripchandlers",
-      "target": "ipc_connection_handlers_registerconnectionipchandlers"
     },
     {
       "relation": "imports",
@@ -6895,9 +7127,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_button_button",
-      "confidence_score": 1.0
+      "target": "ui_button_button"
     },
     {
       "relation": "imports",
@@ -6906,9 +7138,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_dialog_dialog",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialog"
     },
     {
       "relation": "imports",
@@ -6917,9 +7149,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_dialog_dialogcontent",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogcontent"
     },
     {
       "relation": "imports",
@@ -6928,9 +7160,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_dialog_dialogfooter",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogfooter"
     },
     {
       "relation": "imports",
@@ -6939,9 +7171,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_dialog_dialogheader",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogheader"
     },
     {
       "relation": "imports",
@@ -6950,9 +7182,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_dialog_dialogtitle",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogtitle"
     },
     {
       "relation": "imports",
@@ -6961,9 +7193,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_input_input",
-      "confidence_score": 1.0
+      "target": "ui_input_input"
     },
     {
       "relation": "imports",
@@ -6972,9 +7204,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "ui_label_label",
-      "confidence_score": 1.0
+      "target": "ui_label_label"
     },
     {
       "relation": "imports",
@@ -6983,9 +7215,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "lib_utils_cn",
-      "confidence_score": 1.0
+      "target": "lib_utils_cn"
     },
     {
       "relation": "imports",
@@ -6994,9 +7226,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "lib_types_connection",
-      "confidence_score": 1.0
+      "target": "lib_types_connection"
     },
     {
       "relation": "imports",
@@ -7005,9 +7237,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "lib_types_connectionformvalues",
-      "confidence_score": 1.0
+      "target": "lib_types_connectionformvalues"
     },
     {
       "relation": "contains",
@@ -7015,9 +7247,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "components_add_connection_dialog_addconnectiondialogprops",
-      "confidence_score": 1.0
+      "target": "components_add_connection_dialog_addconnectiondialogprops"
     },
     {
       "relation": "contains",
@@ -7025,9 +7257,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "components_add_connection_dialog_fielddef",
-      "confidence_score": 1.0
+      "target": "components_add_connection_dialog_fielddef"
     },
     {
       "relation": "contains",
@@ -7035,9 +7267,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "components_add_connection_dialog_fields",
-      "confidence_score": 1.0
+      "target": "components_add_connection_dialog_fields"
     },
     {
       "relation": "contains",
@@ -7045,9 +7277,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "components_add_connection_dialog_buildinitialform",
-      "confidence_score": 1.0
+      "target": "components_add_connection_dialog_buildinitialform"
     },
     {
       "relation": "contains",
@@ -7055,9 +7287,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "components_add_connection_dialog_addconnectiondialog",
-      "confidence_score": 1.0
+      "target": "components_add_connection_dialog_addconnectiondialog"
     },
     {
       "relation": "contains",
@@ -7065,9 +7297,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L108",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "components_add_connection_dialog_dialogbodyprops",
-      "confidence_score": 1.0
+      "target": "components_add_connection_dialog_dialogbodyprops"
     },
     {
       "relation": "contains",
@@ -7075,9 +7307,9 @@
       "source_file": "renderer/src/components/add-connection-dialog.tsx",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "renderer_src_components_add_connection_dialog_tsx",
-      "target": "components_add_connection_dialog_addconnectiondialogbody",
-      "confidence_score": 1.0
+      "target": "components_add_connection_dialog_addconnectiondialogbody"
     },
     {
       "relation": "contains",
@@ -19106,5 +19338,5 @@
       "source_file": "electron-builder.yml"
     }
   ],
-  "built_at_commit": "0d04d2258e7832da2a472a54cc95c146f143eda2"
+  "built_at_commit": "4401563220a84fe89037c81a857424c5d28ecceb"
 }
